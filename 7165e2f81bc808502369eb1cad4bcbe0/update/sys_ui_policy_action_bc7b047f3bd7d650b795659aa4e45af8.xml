@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>enable_log_purging</field>
+        <mandatory>true</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-31 06:32:03</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>bc7b047f3bd7d650b795659aa4e45af8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>enable_log_purging</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ui_policy_action_bc7b047f3bd7d650b795659aa4e45af8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-31 06:32:03</sys_updated_on>
+        <table>x_avx_appviewx_aut_connection_settings_table</table>
+        <ui_policy display_value="Display Retention Period for Log Purging">6a3b84fb3bd7d650b795659aa4e45a78</ui_policy>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

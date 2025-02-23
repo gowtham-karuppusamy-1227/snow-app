@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-12-08 06:22:50</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>879129c7dbe3d19016a0285b1396199c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_avx_appviewx_aut.app_admin</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_security_acl display_value="get_cert_attributes">029129c7dbe3d19016a0285b13961917</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_879129c7dbe3d19016a0285b1396199c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-12-08 06:22:50</sys_updated_on>
+        <sys_user_role display_value="x_avx_appviewx_aut.app_admin" name="x_avx_appviewx_aut.app_admin">092df9ef1ba9489061858480cd4bcba7</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_user_criteria_mtom">
+    <sc_cat_item_user_criteria_mtom action="INSERT_OR_UPDATE">
+        <sc_cat_item display_value="Renew Certificate">9e85ab541b1595102369eb1cad4bcb62</sc_cat_item>
+        <sys_class_name>sc_cat_item_user_criteria_mtom</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-22 04:37:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>ae27e85adb06155016a0285b1396194c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Renew Certificate.AppViewX Role Based Catalog Access</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sc_cat_item_user_criteria_mtom_ae27e85adb06155016a0285b1396194c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-28 07:13:39</sys_updated_on>
+        <user_criteria display_value="AppViewX Role Based Catalog Access">969c1b141b95ca50cda7db91dd4bcbab</user_criteria>
+    </sc_cat_item_user_criteria_mtom>
+</record_update>

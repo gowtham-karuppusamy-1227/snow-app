@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.appviewx_oauth_token_generation</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Triggers AppViewX's OAuth Service to obtain an authentication token, which will be used for subsequent requests.</description>
+        <name>appviewx_oauth_token_generation</name>
+        <script><![CDATA[var appviewx_oauth_token_generation = Class.create();
+appviewx_oauth_token_generation.prototype = {
+    initialize: function() {},
+    TestConnection: function(client_id, company_name) {
+        try {
+            var logger = new GlideRecordSecure("x_avx_appviewx_aut_logs");
+            var r = new sn_ws.RESTMessageV2();
+            gs.info("Testing AppViewX Gateway API connection from ServiceNow");
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                if (!client_id) {
+                    gr.addQuery('company', company_name);
+                } else {
+                    gr.addQuery('client_id', client_id);
+                }
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX details to test the connection.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    client_id = gr.getValue('client_id') || '';
+                    var client_secret = gr.getValue('client_secret') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    client_secret = gr.client_secret.getDecryptedValue();
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                client_id = gs.getProperty("x_avx_appviewx_aut.Client ID");
+                client_secret = gs.getProperty("x_avx_appviewx_aut.Client Secret");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+            }
+            var request_body = "grant_type=client_credentials";
+            var urls =
+                url + "/avxapi/acctmgmt-get-service-token?gwsource=web&gwkey=f000ca01";
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            var retry_count = 0;
+            while (retry_count < 5) {
+                r.setEndpoint(urls);
+                r.setHttpMethod("post");
+                r.setBasicAuth(client_id, client_secret);
+                r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                r.setRequestHeader("User-Agent", "snow");
+                r.setRequestBody(request_body);
+                r.setHttpTimeout(30000);
+                logger.initialize();
+                logger.level = "Info";
+                logger.script = "appviewx_test_connection";
+                logger.application = "AppViewX";
+                logger.message = "Triggerring test connection between ServiceNow and AppViewX from script include";
+                logger.company = company_name;
+                logger.insert();
+                var response = r.executeAsync();
+                var status = response.getStatusCode();
+                var responseBody, data;
+                if (status == 0) {
+                    var message = "Please check your AppViewX Instance URL";
+                }
+                if (status == 200) {
+                    responseBody = response.getBody();
+                    data = JSON.parse(responseBody);
+                    return [status, JSON.stringify(data)];
+                } else {
+                    try {
+                        responseBody = response.getBody();
+                        logger.message += responseBody;
+                        data = JSON.parse(responseBody);
+                        message = JSON.strinify(data);
+                    } catch (err) {
+                        message = response.getBody();
+                    }
+                }
+				if (retry_count == 4) {
+					return [status, message];
+				}
+				retry_count = retry_count + 1;
+            }
+        } catch (exe) {
+            gs.addErrorMessage("AppViewX REST API test failed: " + exe);
+            logger.initialize();
+            logger.level = "Error";
+            logger.script = "appviewx_test_connection";
+            logger.application = "AppViewX";
+            logger.message =
+                "Connection test result - Failed \n" + "Response - " + exe;
+            logger.company = company_name;
+            logger.insert();
+        }
+    },
+    type: 'appviewx_oauth_token_generation'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-16 12:05:32</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>bdc92b961b91515061858480cd4bcbe8</sys_id>
+        <sys_mod_count>116</sys_mod_count>
+        <sys_name>appviewx_oauth_token_generation</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_bdc92b961b91515061858480cd4bcbe8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-07-30 09:51:47</sys_updated_on>
+    </sys_script_include>
+</record_update>

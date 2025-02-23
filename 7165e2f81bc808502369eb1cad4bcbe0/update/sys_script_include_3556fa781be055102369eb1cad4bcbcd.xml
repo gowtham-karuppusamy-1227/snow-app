@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_hash_details</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches the Policy details of the selected CA Account (based on CA Tag Name)</description>
+        <name>get_hash_details</name>
+        <script><![CDATA[var get_hash_details = Class.create();
+get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getHashDetails: function() {
+        try {
+            var return_value = {};
+            var message;
+			var client_id;
+            var policy = this.getParameter("sysparm_certPolicy");
+			var company = this.getParameter("sysparm_company");
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company);
+				gr.query();
+				if (!gr.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr.next()) {
+					var url = gr.getValue('instance_url') || '';
+					var mid_server = gr.getValue('mid_server') || '';
+					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+				}
+			} else {
+				url = gs.getProperty("x_avx_appviewx_aut.URL");
+				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+			}
+            if (cmdb_sync == "true") {
+                var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_policy_table');
+                response_obj.initialize();
+                response_obj.addQuery('policy_name', policy);
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					response_obj.addQuery('company', company);
+				}
+                response_obj.query();
+                if (!response_obj.hasNext()) {
+                    throw 'Could not find the policy response for the given policy name ' + policy + 'in the policy table';
+                }
+                while (response_obj.next()) {
+                    var table_response = response_obj.getValue('policy_details');
+                }
+                return table_response;
+            } else {
+                var script_include_call = new appviewx_oauth_token_generation();
+                var token_generation = script_include_call.TestConnection(client_id, company);
+                if (token_generation.length == 2 && token_generation[0] == 200) {
+                    var parse_response = JSON.parse(token_generation[1]);
+                    var token = parse_response['response'];
+                } else {
+                    throw "Error while generating the OAuth Token.";
+                }
+                var r = new sn_ws.RESTMessageV2();
+                var payload = {};
+                if (mid_server != "") {
+                    r.setMIDServer(mid_server);
+                    r.setEccParameter('skip_sensor', 'true');
+                }
+                r.setHttpMethod("get");
+                r.setRequestHeader("token", token);
+                r.setRequestHeader('User-Agent', 'snow');
+                r.setRequestHeader("Content-Type", "application/json");
+                r.setEndpoint(url + "/avxapi/cert-policy-get-by-name?policyName=" + policy + "&gwsource=external");
+                r.setRequestBody(JSON.stringify(payload));
+                r.setHttpTimeout(60000);
+                var response = r.executeAsync();
+                var responseBody, responseMessage;
+                if (response.haveError()) {
+                    responseBody = response.getBody();
+                    try {
+                        var res = JSON.parse(responseBody);
+                        message = res.message;
+                    } catch (err) {
+                        message = responseBody;
+                    }
+                    throw message;
+                } else {
+                    responseBody = response.getBody();
+                    responseBody = JSON.parse(responseBody);
+                    return_value['error'] = responseBody;
+                    return JSON.stringify(responseBody);
+                }
+            }
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'get_hash_details';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching CA policy details from appviewx  -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+
+    type: 'get_hash_details'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-05 09:54:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>3556fa781be055102369eb1cad4bcbcd</sys_id>
+        <sys_mod_count>31</sys_mod_count>
+        <sys_name>get_hash_details</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_3556fa781be055102369eb1cad4bcbcd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:29:45</sys_updated_on>
+    </sys_script_include>
+</record_update>

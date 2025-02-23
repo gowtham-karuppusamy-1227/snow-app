@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m">
+    <sys_properties_category_m2m action="INSERT_OR_UPDATE">
+        <category display_value="AppViewX Settings">3ee5bfca1b49955061858480cd4bcbc0</category>
+        <order>500</order>
+        <property display_value="x_avx_appviewx_aut.CMDB Sync" name="x_avx_appviewx_aut.CMDB Sync">202b64dedb20a15016a0285b139619a0</property>
+        <sys_class_name>sys_properties_category_m2m</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-02-27 14:47:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c00edcd91b152110cda7db91dd4bcb2b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_avx_appviewx_aut.CMDB Sync.AppViewX Settings</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_properties_category_m2m_c00edcd91b152110cda7db91dd4bcb2b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-02-27 14:47:21</sys_updated_on>
+    </sys_properties_category_m2m>
+</record_update>

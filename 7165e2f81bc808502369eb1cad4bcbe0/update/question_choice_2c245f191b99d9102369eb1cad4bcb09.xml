@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <order>102</order>
+        <published_ref/>
+        <question/>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-13 07:51:56</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2c245f191b99d9102369eb1cad4bcb09</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Send To Certificate Requestor Email</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>question_choice_2c245f191b99d9102369eb1cad4bcb09</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-08-13 07:51:56</sys_updated_on>
+        <text>Send To Certificate Requestor Email</text>
+        <value>Send To Certificate Requestor Email</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=2c245f191b99d9102369eb1cad4bcb09"/>
+</record_update>

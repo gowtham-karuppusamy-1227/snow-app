@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="renewal_method" table="x_avx_appviewx_aut_clm_settings" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>renewal_method</element>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-11 10:14:11</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>50788ab6dbbc461016a0285b13961975</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>renewal_method</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_choice_x_avx_appviewx_aut_clm_settings_renewal_method</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-11 10:14:11</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>renewal_method</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Use existing key</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-11 10:14:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a868ceb6dbbc461016a0285b139619fa</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-11 10:14:21</sys_updated_on>
+            <value>Use existing key</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>renewal_method</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Generate with new key</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-11 10:16:19</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c3c84a76dbbc461016a0285b1396192a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-11 10:16:19</sys_updated_on>
+            <value>Create with new key</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

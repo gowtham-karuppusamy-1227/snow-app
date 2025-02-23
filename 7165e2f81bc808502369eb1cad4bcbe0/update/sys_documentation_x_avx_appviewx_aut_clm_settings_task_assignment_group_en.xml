@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="task_assignment_group" label="Task Assignment Group" language="en" table="x_avx_appviewx_aut_clm_settings">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>task_assignment_group</element>
+            <help/>
+            <hint/>
+            <label>Task Assignment Group</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <plural>Task Assignment Groups</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-05-29 05:54:21</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>fbac4f16db0b251016a0285b139619ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Task Assignment Group</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_documentation_x_avx_appviewx_aut_clm_settings_task_assignment_group_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-05-29 05:54:21</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

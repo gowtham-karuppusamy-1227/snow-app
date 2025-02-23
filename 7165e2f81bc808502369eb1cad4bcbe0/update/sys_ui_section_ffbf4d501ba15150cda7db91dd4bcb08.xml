@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Certificate Issuance" section_id="ffbf4d501ba15150cda7db91dd4bcb08" sys_domain="global" table="x_avx_appviewx_aut_clm_settings" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>6cfd3dc41b2b4250cda7db91dd4bcbf7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <text>Issuance Settings</text>
+            <type display_value="Section Separator">443e806c0fd30000b12e6903cfe01281</type>
+        </sys_ui_annotation>
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>64fd3dc41b2b4250cda7db91dd4bcbf8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <text>Push To End Device</text>
+            <type display_value="Section Separator">443e806c0fd30000b12e6903cfe01281</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>6cfd3dc41b2b4250cda7db91dd4bcbf7</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a8fd3dc41b2b4250cda7db91dd4bcbfe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>send_certificate_to_end_user</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>2cfd3dc41b2b4250cda7db91dd4bcbfe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>certificate_retrieval_mode</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>acfd3dc41b2b4250cda7db91dd4bcbfe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>certificate_retrieval_file_format</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>20fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>zip_the_certificate_file</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a0fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>attach_trust_cert</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>24fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>64fd3dc41b2b4250cda7db91dd4bcbf8</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a4fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>push_to_end_device</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>28fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>vendor_name</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a8fd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>time_zone</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>2cfd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assignment_group_selection</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>acfd3dc41b2b4250cda7db91dd4bcbff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>push_user_group</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>20fd7dc41b2b4250cda7db91dd4bcb00</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>json_data</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a0fd7dc41b2b4250cda7db91dd4bcb00</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>old</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>24fd7dc41b2b4250cda7db91dd4bcb00</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>new</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a4fd7dc41b2b4250cda7db91dd4bcb00</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>send_update_email</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>28fd7dc41b2b4250cda7db91dd4bcb00</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Certificate Issuance" display_value="Certificate Issuance" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">ffbf4d501ba15150cda7db91dd4bcb08</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Certificate Issuance</caption>
+            <header>false</header>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-22 05:55:19</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ffbf4d501ba15150cda7db91dd4bcb08</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_avx_appviewx_aut_clm_settings</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_section_ffbf4d501ba15150cda7db91dd4bcb08</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-22 05:55:19</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

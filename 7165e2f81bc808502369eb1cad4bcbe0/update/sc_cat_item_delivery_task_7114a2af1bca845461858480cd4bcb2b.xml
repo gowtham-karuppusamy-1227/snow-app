@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_delivery_task">
+    <sc_cat_item_delivery_task action="INSERT_OR_UPDATE">
+        <assigned_to/>
+        <condition/>
+        <condition_script/>
+        <delivery_plan/>
+        <delivery_time/>
+        <generation_script/>
+        <group/>
+        <instructions/>
+        <name>Approval Stage</name>
+        <order>100</order>
+        <short_description/>
+        <sla/>
+        <sys_class_name>sc_cat_item_delivery_task</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-01-06 05:59:49</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>7114a2af1bca845461858480cd4bcb2b</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Approval Stage</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sc_cat_item_delivery_task_7114a2af1bca845461858480cd4bcb2b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-01-06 06:00:31</sys_updated_on>
+        <work_notes/>
+    </sc_cat_item_delivery_task>
+</record_update>

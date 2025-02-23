@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <can_iterate>false</can_iterate>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 06:00:00</entered_time>
+        <max_drift/>
+        <name>AppViewX Inventory Scheduler</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2025-02-12 23:45:19</run_start>
+        <run_time>1970-01-01 06:00:00</run_time>
+        <run_type>on_demand</run_type>
+        <script><![CDATA[fetchAppviewxData();
+
+function fetchAppviewxData() {
+    try {
+        var value = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+        var domain_partition = gs.getProperty("glide.sys.domain.partitioning");
+        var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+        if (domain_partition == 'true') {
+            var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+            gr.query();
+            while (gr.next()) {
+                var client_id = gr.getValue('client_id') || '';
+                var sync_status = gr.getDisplayValue('enable_appviewx_inventory_sync') || 'false';
+                var company_name = gr.getValue('company') || '';
+                var company_gr = new GlideRecordSecure('core_company');
+                company_gr.addQuery('sys_id', company_name);
+                company_gr.query();
+                while (company_gr.next()) {
+                    var company_display_name = company_gr.getValue('name');
+                }
+                if (sync_status == 'true') {
+                    log.initialize();
+                    log.level = 'Info';
+                    log.script = 'Scheduler';
+                    log.application = 'AppViewX';
+                    log.message = "Schedule job for the company - " + company_display_name + " is started.";
+                    log.company = company_name;
+                    log.insert();
+                    new x_avx_appviewx_aut.scheduler_for_policy_sync().schedulerForPolicySync(company_name);
+                    new x_avx_appviewx_aut.update_inventory_certificates().updateCertificateTable(company_name);
+                    new x_avx_appviewx_aut.update_device_inventory().updateDeviceInventory(company_name);
+                    new x_avx_appviewx_aut.scheduler_for_ca_settings_sync().schedulerForCaSettingsSync(company_name);
+                    new x_avx_appviewx_aut.update_certificate_attributes().updateCertificateAttributes(company_name);
+                    log.initialize();
+                    log.level = 'Info';
+                    log.script = 'Scheduler';
+                    log.application = 'AppViewX';
+                    log.message = "Schedule job for the company - " + company_display_name + " is completed. ";
+                    log.company = company_name;
+                    log.insert();
+                }
+            }
+
+        } else if (value == "true") {
+            log.initialize();
+            log.level = 'Info';
+            log.script = 'Scheduler';
+            log.application = 'AppViewX';
+            log.message = "AppViewX Inventory Sync is Initiated";
+            log.insert();
+            new x_avx_appviewx_aut.scheduler_for_policy_sync().schedulerForPolicySync();
+            new x_avx_appviewx_aut.update_inventory_certificates().updateCertificateTable();
+            new x_avx_appviewx_aut.update_device_inventory().updateDeviceInventory();
+            new x_avx_appviewx_aut.scheduler_for_ca_settings_sync().schedulerForCaSettingsSync();
+            new x_avx_appviewx_aut.update_certificate_attributes().updateCertificateAttributes();
+        } else {
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Info';
+            log.script = 'Scheduler';
+            log.application = 'AppViewX';
+            log.message = "AppViewX Inventory Sync is disabled.";
+            log.insert();
+        }
+    } catch (error) {
+        log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+        log.initialize();
+        log.level = 'Info';
+        log.script = 'Scheduler Error';
+        log.application = 'AppViewX';
+        log.message = "AppViewX Inventory Sync is Failed. - " + error;
+        log.company = company_name;
+        log.insert();
+    }
+}]]></script>
+        <source_filter/>
+        <source_table>cmdb_ci_appl_dot_net</source_table>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-01-19 05:32:54</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>21f86964db282d1016a0285b13961977</sys_id>
+        <sys_mod_count>92</sys_mod_count>
+        <sys_name>AppViewX Inventory Scheduler</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sysauto_script_21f86964db282d1016a0285b13961977</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-21 05:02:15</sys_updated_on>
+        <time_zone>GMT</time_zone>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

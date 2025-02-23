@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_ui_policy">
+    <catalog_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_req_item>true</applies_req_item>
+        <applies_sc_task>true</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <catalog_conditions>IO:f7059ed01b0d1d1061858480cd4bcb6c=Submitted^EQ</catalog_conditions>
+        <catalog_item display_value="Enroll Certificate">d830d29c1bc91d1061858480cd4bcbe1</catalog_item>
+        <conditions/>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <published_ref/>
+        <reverse_if_false>false</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+
+}]]></script_false>
+        <script_true><![CDATA[function changeFieldLabel(oldLabel, newLabel) {
+    $j("span").filter(function() {
+        return ($j(this).text() === oldLabel);
+    }).html(newLabel);
+}
+
+function set_digicert_custom_attribute(profile_name) {
+    try {
+        var custom_attributes = [];
+        var digicert_mpki_profile = g_form.getValue('digicert_mpki_profiles');
+        for (var iterator = 0; iterator < profile_name.length; iterator++) {
+            if (profile_name[iterator].profileName == digicert_mpki_profile) {
+                custom_attributes = profile_name[iterator].customAttributes || [];
+                break;
+            }
+        }
+        var custom_attributes_length = custom_attributes.length;
+        if (custom_attributes_length > 0) {
+            for (var meta_data = 1; meta_data < custom_attributes_length + 1; meta_data++) {
+                g_form.setDisplay('custom_meta_data_' + meta_data, true);
+                var label_name = custom_attributes[meta_data - 1].label;
+                try {
+                    changeFieldLabel('Custom Meta Data ' + (meta_data).toString(), label_name);
+                } catch (error) {
+                    g_form.setLabelOf('custom_meta_data_' + meta_data, label_name);
+                }
+                if (custom_attributes[meta_data - 1].mandatory) {
+                    g_form.setMandatory('custom_meta_data_' + meta_data, true);
+                }
+            }
+        }
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error);
+        var message = 'Error occurred while setting RITM data - ' + error;
+        var ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "Enroll cert - Requested Item View");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+}
+
+function onCondition() {
+    var enable_san_value = g_form.getValue('enable_san_fields');
+    var san_names = g_form.getValue('san_names');
+    if (enable_san_value == '1') {
+        san_names = JSON.parse(san_names);
+    }
+	var csr_parameter_values = g_form.getValue('csr_parameter_values');
+	csr_parameter_values = csr_parameter_values.split(',');
+    g_form.setReadOnly('status', true);
+    g_form.setMandatory('certificate_authority', false);
+    g_form.setDisplay('certificate_authority', false);
+    g_form.setDisplay('san_fields', false);
+    g_form.setDisplay('add_dns_values', false);
+    g_form.setDisplay('add_ip_address', false);
+    if (g_form.getValue('certificate_authority') == 'DigiCert') {
+        g_form.setDisplay('division', true);
+        g_form.setMandatory('division', true);
+        g_form.setDisplay('certificate_type', true);
+        g_form.setMandatory('certificate_type', true);
+    } else {
+        g_form.setMandatory('division', false);
+        g_form.setDisplay('division', false);
+        g_form.setMandatory('certificate_type', false);
+        g_form.setDisplay('certificate_type', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'GoDaddy') {
+        g_form.setDisplay('godaddy_certificate_type', true);
+        g_form.setMandatory('godaddy_certificate_type', true);
+        var slot_size = g_form.getValue('godaddy_slot_size');
+        if (slot_size !== '') {
+            g_form.setDisplay('godaddy_slot_size', true);
+            g_form.setMandatory('godaddy_slot_size', true);
+        } else {
+            g_form.setMandatory('godaddy_slot_size', false);
+            g_form.setDisplay('godaddy_slot_size', false);
+        }
+    } else {
+        g_form.setMandatory('godaddy_certificate_type', false);
+        g_form.setDisplay('godaddy_certificate_type', false);
+        g_form.setMandatory('godaddy_slot_size', false);
+        g_form.setDisplay('godaddy_slot_size', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'Comodo Certificate Manager') {
+        g_form.setDisplay('sectigo_certificate_type', true);
+        g_form.setMandatory('sectigo_certificate_type', true);
+        g_form.setDisplay('sectigo_server_type', true);
+        g_form.setMandatory('sectigo_server_type', false);
+    } else {
+        g_form.setMandatory('sectigo_certificate_type', false);
+        g_form.setDisplay('sectigo_certificate_type', false);
+        g_form.setMandatory('sectigo_server_type', false);
+        g_form.setDisplay('sectigo_server_type', false);
+    }
+    if (g_form.getValue('certificate_authority') === 'Amazon Private CA') {
+        g_form.setDisplay('ca_signing_algorithm', true);
+        g_form.setMandatory('ca_signing_algorithm', true);
+        g_form.setDisplay('region', true);
+        g_form.setMandatory('region', true);
+        g_form.setDisplay('issuer', true);
+        g_form.setMandatory('issuer', true);
+    } else {
+        g_form.setMandatory('ca_signing_algorithm', false);
+        g_form.setDisplay('ca_signing_algorithm', false);
+        g_form.setMandatory('region', false);
+        g_form.setDisplay('region', false);
+        g_form.setMandatory('issuer', false);
+        g_form.setDisplay('issuer', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'Ejbca') {
+        g_form.setDisplay('ejbca_end_entity_profile_name', true);
+        g_form.setMandatory('ejbca_end_entity_profile_name', true);
+        g_form.setDisplay('ejbca_end_entity_user_name', true);
+        g_form.setDisplay('ejbca_issuer_common_name', true);
+        g_form.setMandatory('ejbca_issuer_common_name', true);
+        g_form.setDisplay('ejbca_certificate_profile_name', true);
+        g_form.setMandatory('ejbca_certificate_profile_name', true);
+
+        g_form.setDisplay('ejbca_ca_details', false);
+    } else {
+        g_form.setMandatory('ejbca_end_entity_profile_name', false);
+        g_form.setDisplay('ejbca_end_entity_profile_name', false);
+        g_form.setDisplay('ejbca_end_entity_user_name', false);
+        g_form.setMandatory('ejbca_issuer_common_name', false);
+        g_form.setDisplay('ejbca_issuer_common_name', false);
+        g_form.setMandatory('ejbca_certificate_profile_name', false);
+        g_form.setDisplay('ejbca_certificate_profile_name', false);
+
+        g_form.setDisplay('ejbca_ca_details', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'DigiCert' && g_form.getValue('certificate_category') == 'Server') {
+        g_form.setDisplay('server_type', true);
+        g_form.setMandatory('server_type', true);
+    } else {
+        g_form.setMandatory('server_type', false);
+        g_form.setDisplay('server_type', false);
+    }
+    g_form.setDisplay('ca_policy_details', false);
+
+    /* Hiding all the CSR parameters from the form during the first load.*/
+    if (g_form.getValue('csr_input_method') == 'Upload CSR') {
+        g_form.setDisplay('csr_upload_option', true);
+        g_form.setMandatory('csr_upload_option', true);
+        if (g_form.getValue('csr_upload_option') == 'Paste CSR') {
+            g_form.setDisplay('paste_csr', true);
+            g_form.setMandatory('paste_csr', true);
+            g_form.setMandatory('upload_csr', false);
+            g_form.setDisplay('upload_csr', false);
+        } else {
+            g_form.setDisplay('upload_csr', true);
+            g_form.setMandatory('upload_csr', true);
+            g_form.setMandatory('paste_csr', false);
+            g_form.setDisplay('paste_csr', false);
+        }
+		g_form.setDisplay('parsed_csr_values', true);
+    } else {
+		g_form.setDisplay('parsed_csr_values', false);
+        g_form.setMandatory('csr_upload_option', false);
+        g_form.setDisplay('csr_upload_option', false);
+        g_form.setMandatory('upload_csr', false);
+        g_form.setDisplay('upload_csr', false);
+        g_form.setMandatory('paste_csr', false);
+        g_form.setDisplay('paste_csr', false);
+    }
+    if (g_form.getValue('certificate_authority') === 'Amazon') {
+        g_form.setDisplay('common_name', true);
+        g_form.setMandatory('common_name', true);
+        g_form.setDisplay('certificate_validation_type', true);
+        g_form.setMandatory('certificate_validation_type', true);
+        g_form.setDisplay('certificate_transparency_logging_preference', true);
+        g_form.setMandatory('certificate_transparency_logging_preference', true);
+        if (enable_san_value == '1') {
+            g_form.setDisplay('san_fields', true);
+            if (san_names.includes('DNS')) {
+                g_form.setDisplay('add_dns_values', true);
+            }
+        }
+        g_form.setDisplay('add_ip_address', false);
+        g_form.setMandatory('key_type', false);
+        g_form.setDisplay('key_type', false);
+        g_form.setMandatory('bit_length', false);
+        g_form.setDisplay('bit_length', false);
+        g_form.setMandatory('hash_function', false);
+        g_form.setDisplay('hash_function', false);
+        g_form.setDisplay('subject_alternative_name', true);
+    } else if (g_form.getValue('csr_input_method') == 'Manual') {
+        g_form.setDisplay('common_name', true);
+        g_form.setMandatory('common_name', true);
+		if (g_form.getValue('certificate_category') === 'CodeSigning' || g_form.getValue('certificate_category') === 'Client') {
+			g_form.setDisplay('san_fields', false);
+			g_form.setDisplay('add_dns_values', false);
+			g_form.setDisplay('add_ip_address', false);
+		} else {
+            if (enable_san_value == '1') {
+                g_form.setDisplay('san_fields', true);
+                if (san_names.includes('DNS')) {
+                    g_form.setDisplay('add_dns_values', true);
+                }
+                if (san_names.includes('IP Address')) {
+                    g_form.setDisplay('add_ip_address', true);
+                }
+            }
+		}
+        g_form.setDisplay('key_type', true);
+        g_form.setMandatory('key_type', true);
+        g_form.setDisplay('bit_length', true);
+        g_form.setMandatory('bit_length', true);
+        g_form.setMandatory('hash_function', true);
+        g_form.setDisplay('hash_function', true);
+        if (g_form.getValue('certificate_category') === 'Server' || g_form.getValue('certificate_category') === 'Client') {
+            g_form.setDisplay('subject_alternative_name', true);
+        } else {
+			g_form.setDisplay('subject_alternative_name', false);
+		}
+        g_form.setMandatory('certificate_validation_type', false);
+        g_form.setDisplay('certificate_validation_type', false);
+        g_form.setMandatory('certificate_transparency_logging_preference', false);
+        g_form.setDisplay('certificate_transparency_logging_preference', false);
+    } else {
+        g_form.setMandatory('common_name', false);
+        g_form.setDisplay('common_name', false);
+		if (g_form.getValue('certificate_category') === 'Server') {
+            if (enable_san_value == '1'){
+                g_form.setDisplay('san_fields', true);
+                if (san_names.includes('DNS')) {
+                    g_form.setDisplay('add_dns_values', true);
+                }
+                if (san_names.includes('IP Address')) {
+                    g_form.setDisplay('add_ip_address', true);
+                }
+            }
+		} else {
+			g_form.setDisplay('san_fields', false);
+			g_form.setDisplay('add_dns_values', false);
+			g_form.setDisplay('add_ip_address', false);
+		}
+		if (g_form.getValue('certificate_category') === 'CodeSigning') {
+			g_form.setDisplay('subject_alternative_name', false);
+		}
+        g_form.setMandatory('key_type', false);
+        g_form.setDisplay('key_type', false);
+        g_form.setMandatory('bit_length', false);
+        g_form.setDisplay('bit_length', false);
+        g_form.setMandatory('hash_function', false);
+        g_form.setDisplay('hash_function', false);
+        g_form.setMandatory('certificate_validation_type', false);
+        g_form.setDisplay('certificate_validation_type', false);
+        g_form.setMandatory('certificate_transparency_logging_preference', false);
+        g_form.setDisplay('certificate_transparency_logging_preference', false);
+    }
+    if ((g_form.getValue('certificate_authority') == 'DigiCert' || g_form.getValue('certificate_authority') == 'Entrust' || g_form.getValue('certificate_authority') == 'Trustwave') && g_form.getValue('csr_input_method') == 'Manual') {
+        g_form.setDisplay('organization', true);
+        if (g_form.getValue('certificate_authority') != 'Trustwave') {
+            g_form.setMandatory('organization', true);
+        }
+    } else {
+        g_form.setMandatory('organization', false);
+        g_form.setDisplay('organization', false);
+    }
+    g_form.setDisplay('organization_unit', false);
+    g_form.setDisplay('locality', false);
+    g_form.setDisplay('challenge_password', false);
+    if ((g_form.getValue('certificate_category') == 'Client' && g_form.getValue('csr_input_method') == 'Manual') || g_form.getValue('certificate_authority') == 'DigiCert MPKI') {
+        g_form.setDisplay('email_address', true);
+        g_form.setMandatory('email_address', true);
+    } else {
+        g_form.setMandatory('email_address', false);
+        g_form.setDisplay('email_address', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'Microsoft Enterprise') {
+        g_form.setDisplay('microsoft_template', true);
+        g_form.setMandatory('microsoft_template', true);
+        g_form.setDisplay('add_email_address', false);
+        if (enable_san_value == '1') {
+            if (san_names.includes('Email Address')) {
+                g_form.setDisplay('add_email_address', true);
+            }
+        }
+
+    } else {
+        g_form.setMandatory('microsoft_template', false);
+        g_form.setDisplay('microsoft_template', false);
+        g_form.setDisplay('add_email_address', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'Microsoft Enterprise' || g_form.getValue('certificate_authority') == 'Ejbca' || g_form.getValue('certificate_authority') == 'Amazon' || g_form.getValue('certificate_authority') == 'DigiCert MPKI') {
+        g_form.setMandatory('validity_unit', false);
+        g_form.setDisplay('validity_unit', false);
+        g_form.setMandatory('validity_value', false);
+        g_form.setDisplay('validity_value', false);
+    } else {
+        g_form.setDisplay('validity_unit', true);
+        g_form.setMandatory('validity_unit', true);
+        g_form.setDisplay('validity_value', true);
+        g_form.setMandatory('validity_value', true);
+    }
+    if (g_form.getValue('certificate_authority') == 'Entrust') {
+        g_form.setDisplay('entrust_certificate_type', true);
+        g_form.setMandatory('entrust_certificate_type', true);
+    } else {
+        g_form.setMandatory('entrust_certificate_type', false);
+        g_form.setDisplay('entrust_certificate_type', false);
+
+    }
+    if (g_form.getValue('certificate_authority') == 'HydrantID') {
+        g_form.setDisplay('hydrantid_policy_name', true);
+        g_form.setMandatory('hydrantid_policy_name', true);
+    } else {
+        g_form.setMandatory('hydrantid_policy_name', false);
+        g_form.setDisplay('hydrantid_policy_name', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'DigiCert MPKI') {
+        g_form.setDisplay('digicert_mpki_profiles', true);
+        g_form.setMandatory('digicert_mpki_profiles', true);
+    } else {
+        g_form.setMandatory('digicert_mpki_profiles', false);
+        g_form.setDisplay('digicert_mpki_profiles', false);
+    }
+    if (g_form.getValue('certificate_authority') == 'Entrust' && g_form.getValue('csr_input_method') == 'Manual') {
+        g_form.setDisplay('country', true);
+        g_form.setMandatory('country', true);
+    } else {
+        g_form.setMandatory('country', false);
+        g_form.setDisplay('country', false);
+    }
+    if (g_form.getValue('csr_input_method') == 'Manual' && (g_form.getValue('certificate_authority') === 'GlobalSign' || g_form.getValue('certificate_authority') === 'GlobalSignMSSL')) {
+		g_form.setDisplay('organization_address', true);
+        g_form.setDisplay('csr_zip_code', true);
+    } else {
+		g_form.setDisplay('organization_address', false);
+        g_form.setDisplay('csr_zip_code', false);
+	}
+    if (g_form.getValue('certificate_authority') === 'GlobalSign') {
+        g_form.setDisplay('globalsign_certificate_type', true);
+        g_form.setMandatory('globalsign_certificate_type', true);
+        if (!g_form.getValue('domain_admin_email')) {
+            g_form.setMandatory('domain_admin_email', false);
+            g_form.setDisplay('domain_admin_email', false);
+        } else {
+            g_form.setDisplay('domain_admin_email', true);
+            g_form.setMandatory('domain_admin_email', true);
+        }
+        if (!g_form.getValue('business_category')) {
+            g_form.setMandatory('business_category', false);
+            g_form.setDisplay('business_category', false);
+        } else {
+            g_form.setDisplay('business_category', true);
+            g_form.setMandatory('business_category', true);
+        }
+        if (!g_form.getValue('incorporating_agency_reg_no')) {
+            g_form.setMandatory('incorporating_agency_reg_no', false);
+            g_form.setDisplay('incorporating_agency_reg_no', false);
+        } else {
+            g_form.setDisplay('incorporating_agency_reg_no', true);
+            g_form.setMandatory('incorporating_agency_reg_no', true);
+        }
+        if (!g_form.getValue('designation')) {
+            g_form.setMandatory('designation', false);
+            g_form.setDisplay('designation', false);
+        } else {
+            g_form.setDisplay('designation', true);
+            g_form.setMandatory('designation', true);
+        }
+    } else {
+        g_form.setMandatory('globalsign_certificate_type', false);
+        g_form.setDisplay('globalsign_certificate_type', false);
+        g_form.setMandatory('domain_admin_email', false);
+        g_form.setDisplay('domain_admin_email', false);
+        g_form.setMandatory('business_category', false);
+        g_form.setDisplay('business_category', false);
+        g_form.setMandatory('incorporating_agency_reg_no', false);
+        g_form.setDisplay('incorporating_agency_reg_no', false);
+        g_form.setMandatory('designation', false);
+        g_form.setDisplay('designation', false);
+    }
+    if (g_form.getValue('certificate_authority') === 'GlobalSignMSSL') {
+        g_form.setDisplay('globalsign_mssl_certificate_type', true);
+        g_form.setMandatory('globalsign_mssl_certificate_type', true);
+        if (!g_form.getValue('globalsign_mssl_certificate_type')) {
+            g_form.setMandatory('globalsign_mssl_profile_name', false);
+            g_form.setDisplay('globalsign_mssl_profile_name', false);
+        } else {
+            g_form.setDisplay('globalsign_mssl_profile_name', true);
+            g_form.setMandatory('globalsign_mssl_profile_name', true);
+        }
+    } else {
+        g_form.setMandatory('globalsign_mssl_certificate_type', false);
+        g_form.setDisplay('globalsign_mssl_certificate_type', false);
+        g_form.setMandatory('globalsign_mssl_profile_name', false);
+        g_form.setDisplay('globalsign_mssl_profile_name', false);
+    }
+    if (g_form.getValue('certificate_authority') === 'AppViewX PKIaaS') {
+        g_form.setDisplay('avx_issuer_name', true);
+        g_form.setMandatory('avx_issuer_name', true);
+        g_form.setDisplay('avx_issuer_location', true);
+        g_form.setMandatory('avx_issuer_location', true);
+    } else {
+        g_form.setMandatory('avx_issuer_name', false);
+        g_form.setDisplay('avx_issuer_name', false);
+        g_form.setMandatory('avx_issuer_location', false);
+        g_form.setDisplay('avx_issuer_location', false);
+    }
+    if (g_form.getValue('certificate_authority') === 'SwissSign') {
+        g_form.setDisplay('swisssign_product', true);
+        g_form.setMandatory('swisssign_product', true);
+        g_form.setDisplay('swisssign_client_name', true);
+        g_form.setMandatory('swisssign_client_name', true);
+    } else {
+        g_form.setMandatory('swisssign_client_name', false);
+        g_form.setDisplay('swisssign_client_name', false);
+        g_form.setMandatory('swisssign_product', false);
+        g_form.setDisplay('swisssign_product', false);
+    }
+    if (g_form.getValue('csr_input_method') == 'Manual' && g_form.getValue('key_type') == 'EC') {
+        g_form.setDisplay('ecdsa_curve', true);
+        g_form.setMandatory('ecdsa_curve', true);
+    } else {
+        g_form.setMandatory('ecdsa_curve', false);
+        g_form.setDisplay('ecdsa_curve', false);
+    }
+    g_form.setDisplay('certificate_attributes', true);
+    if (g_form.getValue('certificate_authority') === 'Microsoft Enterprise') {
+        g_form.setMandatory('certificate_category', false);
+        g_form.setDisplay('certificate_category', false);
+    } else {
+        g_form.setDisplay('certificate_category', true);
+        g_form.setMandatory('certificate_category', true);
+    }
+    if (g_form.getValue('certificate_authority') == 'Trustwave') {
+        g_form.setDisplay('trustwave_certificate_type', true);
+        g_form.setMandatory('trustwave_certificate_type', true);
+        if (enable_san_value == '1') {
+            g_form.setDisplay('san_fields', true);
+            if (san_names.includes('DNS')) {
+                g_form.setDisplay('add_dns_values', true);
+            }
+        }
+        g_form.setDisplay('add_ip_address', false);
+    } else {
+        g_form.setMandatory('trustwave_certificate_type', false);
+        g_form.setDisplay('trustwave_certificate_type', false);
+    }
+    g_form.setDisplay('request_id', true);
+    g_form.setDisplay('cert_attribute_length', false);
+    g_form.setDisplay('appviewx_response', true);
+    g_form.setMandatory('ca_account', false);
+    g_form.setDisplay('ca_account', false);
+    var push_enabled_or_disabled = g_form.getValue('push_enabled_or_disabled');
+    var push_to_end_device = g_form.getValue('push_to_end_device');
+    var send_certificate_to_end_user = g_form.getValue('send_certificate_to_end_user');
+    var certificate_retrieval_mode = g_form.getValue('certificate_retrieval_mode');
+    if ((!g_form.getValue('email_id')) || send_certificate_to_end_user != '1') {
+        g_form.setMandatory('email_id', false);
+        g_form.setDisplay('email_id', false);
+    } else if (send_certificate_to_end_user == '1' && g_form.getValue('email_id')) {
+        g_form.setDisplay('email_id', true);
+        g_form.setMandatory('email_id', true);
+    }
+    if (send_certificate_to_end_user == '1') {
+        g_form.setDisplay('certificate_issuance_format', true);
+        g_form.setMandatory('certificate_issuance_format', true);
+    } else {
+        g_form.setMandatory('certificate_issuance_format', false);
+        g_form.setDisplay('certificate_issuance_format', false);
+    }
+    if (g_form.getValue('ticket_assignment_group_value') != "Allow user to select assignment group") {
+        g_form.setMandatory('ticket_assignment_group', false);
+        g_form.setDisplay('ticket_assignment_group', false);
+    }
+    var push_flag = 0;
+    var cmdb_sync = g_form.getValue('cmdb_sync');
+    if (push_enabled_or_disabled == '1') {
+        g_form.setDisplay('push_to_end_device', true);
+        if (push_to_end_device == 'true') {
+            var customize_push_location = g_form.getValue('customize_push_location');
+            g_form.setDisplay('device_name', true);
+            g_form.setMandatory('device_name', true);
+            if (cmdb_sync == 'true') {
+                g_form.setDisplay('profile_name_reference', true);
+                g_form.setReadOnly('profile_name_reference', true);
+                g_form.setMandatory('profile_name', false);
+                g_form.setDisplay('profile_name', false);
+            } else {
+                g_form.setDisplay('profile_name', true);
+                g_form.setMandatory('profile_name', true);
+                g_form.setMandatory('profile_name_reference', false);
+                g_form.setDisplay('profile_name_reference', false);
+            }
+            g_form.setDisplay('vendor_name', true);
+            g_form.setMandatory('vendor_name', true);
+            var assignment_group_selection = g_form.getValue('assignment_group_selection');
+            if (assignment_group_selection == 'Allow user to enter assignment group') {
+                g_form.setDisplay('push_assignment_group', true);
+                g_form.setMandatory('push_assignment_group', true);
+            } else {
+                g_form.setMandatory('push_assignment_group', false);
+                g_form.setDisplay('push_assignment_group', false);
+            }
+			if (vendor_name == 'Silverline') {
+				g_form.setDisplay('push_root_and_intermediate_certificates', false);
+			}
+			else {
+				g_form.setDisplay('push_root_and_intermediate_certificates', true);
+			}
+            var vendor_name = g_form.getValue('vendor_name');
+            if (vendor_name != 'F5' && vendor_name != 'IIS' && vendor_name != 'Silverline') {
+                g_form.setDisplay('push_certificate_format', true);
+                g_form.setMandatory('push_certificate_format', true);
+            } else {
+                g_form.setMandatory('push_certificate_format', false);
+                g_form.setDisplay('push_certificate_format', false);
+            }
+            if (vendor_name == 'Apache') {
+                g_form.setDisplay('service_restart', true);
+                g_form.setDisplay('customize_push_location', true);
+                g_form.setDisplay('private_key_in_device', true);
+            } else {
+                g_form.setDisplay('service_restart', false);
+                g_form.setDisplay('customize_push_location', false);
+                g_form.setDisplay('private_key_in_device', false);
+            }
+            if (customize_push_location == 'true') {
+                g_form.setDisplay('apache_certificate_directory', true);
+                g_form.setMandatory('apache_certificate_directory', true);
+                g_form.setDisplay('apache_key_directory', true);
+                g_form.setMandatory('apache_key_directory', true);
+                g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', true);
+                g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', true);
+            } else {
+                g_form.setMandatory('apache_certificate_directory', false);
+                g_form.setDisplay('apache_certificate_directory', false);
+                g_form.setMandatory('apache_key_directory', false);
+                g_form.setDisplay('apache_key_directory', false);
+                g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', false);
+                g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', false);
+            }
+        } else {
+            push_flag = 1;
+        }
+    } else {
+        push_flag = 1;
+        g_form.setDisplay('push_to_end_device', false);
+    }
+    if (push_flag == 1) {
+        g_form.setMandatory('device_name', false);
+        g_form.setDisplay('device_name', false);
+        g_form.setMandatory('profile_name', false);
+        g_form.setDisplay('profile_name', false);
+        g_form.setMandatory('profile_name_reference', false);
+        g_form.setDisplay('profile_name_reference', false);
+        g_form.setMandatory('vendor_name', false);
+        g_form.setDisplay('vendor_name', false);
+        g_form.setMandatory('push_assignment_group', false);
+        g_form.setDisplay('push_assignment_group', false);
+        g_form.setDisplay('push_root_and_intermediate_certificates', false);
+        g_form.setMandatory('push_certificate_format', false);
+        g_form.setDisplay('push_certificate_format', false);
+        g_form.setDisplay('service_restart', false);
+        g_form.setDisplay('customize_push_location', false);
+        g_form.setDisplay('private_key_in_device', false);
+        g_form.setMandatory('apache_certificate_directory', false);
+        g_form.setDisplay('apache_certificate_directory', false);
+        g_form.setMandatory('apache_key_directory', false);
+        g_form.setDisplay('apache_key_directory', false);
+        g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', false);
+        g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', false);
+    }
+	if (g_form.getValue('csr_input_method') == 'Manual') {
+		if (csr_parameter_values.indexOf("Organization") >= 0) {
+			g_form.setDisplay('organization', true);
+		}
+		if (csr_parameter_values.indexOf("Organization Unit") >= 0) {
+			g_form.setDisplay('organization_unit', true);
+		}
+		if (csr_parameter_values.indexOf("Locality") >= 0) {
+			g_form.setDisplay('locality', true);
+		}
+		if (csr_parameter_values.indexOf("Country") >= 0) {
+			g_form.setDisplay('country', true);
+		}
+		if (csr_parameter_values.indexOf("Email Address") >= 0) {
+			g_form.setDisplay('email_address', true);
+		}
+	}
+    var meta_data_info = {};
+    var mandatory_attributes = {};
+    var meta_data_field_name = {};
+    if (g_form.getValue('meta_data_info')) {
+        meta_data_info = JSON.parse(g_form.getValue('meta_data_info'));
+        meta_data_field_name = JSON.parse(g_form.getValue('meta_data_field_name'));
+    }
+    if (g_form.getValue('mandatory_attributes')) {
+        mandatory_attributes = JSON.parse(g_form.getValue('mandatory_attributes'));
+    }
+    var meta_length = g_form.getValue('cert_attribute_length');
+    for (var i = 0; i < 10; i++) {
+        if (i < meta_length) {
+            changeFieldLabel('Meta Data ' + (i + 1).toString(), meta_data_field_name[i]);
+            if (mandatory_attributes.indexOf(meta_data_info[i]) !== -1) {
+                g_form.setMandatory('meta_data_' + (i + 1).toString(), true);
+            }
+        } else {
+            g_form.setDisplay('meta_data_' + (i + 1).toString(), false);
+        }
+    }
+    for (var iterator = 1; iterator <= 10; iterator++) {
+        g_form.setMandatory('custom_meta_data_' + iterator, false);
+        g_form.setDisplay('custom_meta_data_' + iterator, false);
+    }
+    var digicert_mpki_ca_details = g_form.getValue('digicert_mpki_ca_details');
+    var CA = g_form.getValue('certificate_authority');
+    if (CA == 'DigiCert MPKI') {
+        try {
+            digicert_mpki_ca_details = JSON.parse(digicert_mpki_ca_details);
+        } catch (err) {
+            alert("Couldn't parse the DigiCert MPKI ca details to fetch the specific fields.");
+        }
+        digicert_mpki_ca_details = digicert_mpki_ca_details.endEntityProfiles;
+        set_digicert_custom_attribute(digicert_mpki_ca_details);
+    }
+
+}]]></script_true>
+        <set_values/>
+        <short_description>Enroll cert - Requested Item View</short_description>
+        <sys_class_name>catalog_ui_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-12-16 10:10:03</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>ad22abe5b3bf9510cda7cf626f0762ae</sys_id>
+        <sys_mod_count>54</sys_mod_count>
+        <sys_name>Enroll cert - Requested Item View</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_ui_policy_ad22abe5b3bf9510cda7cf626f0762ae</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-04 17:53:57</sys_updated_on>
+        <table/>
+        <ui_type>0</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_ui_policy>
+</record_update>

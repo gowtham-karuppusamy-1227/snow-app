@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="approver_selection" label="Level 1 Approver" language="en" table="x_avx_appviewx_aut_clm_settings">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>approver_selection</element>
+            <help/>
+            <hint>Select the approver for certificate create</hint>
+            <label>Level 1 Approver</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <plural>Level 1 Approvers</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-08 09:03:04</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>c6c3ed031b5d1d10cda7db91dd4bcbdb</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_name>Level 1 Approver</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_documentation_x_avx_appviewx_aut_clm_settings_approver_selection_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-25 07:04:48</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

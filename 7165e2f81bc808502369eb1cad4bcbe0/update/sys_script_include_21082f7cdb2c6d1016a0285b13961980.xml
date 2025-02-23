@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.update_device_inventory</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>update_device_inventory</name>
+        <script><![CDATA[var update_device_inventory = Class.create();
+update_device_inventory.prototype = {
+    initialize: function() {},
+    updateDeviceInventory: function(company_name) {
+        try {
+            var script_include_call = new appviewx_oauth_token_generation();
+			var client_id;
+            var token_generation = script_include_call.TestConnection(client_id, company_name);
+            if (token_generation.length == 2 && token_generation[0] == 200) {
+                var parse_response = JSON.parse(token_generation[1]);
+                var token = parse_response['response'];
+            } else {
+                throw "Error while generating the token";
+            }
+            var device_list = [];
+            var iterator;
+            var query_table = new GlideRecordSecure('x_avx_appviewx_aut_device_table');
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				query_table.addQuery('company', company_name);
+			}
+            query_table.query();
+            while (query_table.next()) {
+                var name = query_table.getValue('device_name');
+                var category = query_table.getValue('device_category');
+                name = name + "|" + category;
+                device_list.push(name);
+            }
+            var r = new sn_ws.RESTMessageV2();
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company_name);
+                gr.query();
+				if (!gr.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr.next()) {
+					var url = gr.getValue('instance_url') || '';
+					var mid_server = gr.getValue('mid_server') || '';
+				}
+            } else {
+				url = gs.getProperty("x_avx_appviewx_aut.URL");
+				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+			}
+            var payload = {
+                "payload": {
+                    "hook": {
+                        "name": "snow_fetch_adc_device_inventory"
+                    },
+                    "input": {}
+                }
+            };
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            r.setHttpMethod("post");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var responseBody, message;
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    var res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+            }
+            var responsecontent = JSON.parse(responseBody);
+            var total_records = responsecontent.response.output;
+            var dev_obj = new GlideRecordSecure('x_avx_appviewx_aut_device_table');
+            for (iterator = 0; iterator < total_records.length; iterator++) {
+                dev_obj.initialize();
+                var device_name = total_records[iterator].name;
+                category = total_records[iterator].category;
+                var query_name = device_name + "|" + category;
+                dev_obj.addQuery('device_name', device_name);
+                dev_obj.addQuery('device_category', category);
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					dev_obj.addQuery('company', company_name);
+				}
+                dev_obj.query();
+                if (dev_obj.hasNext()) {
+                    while (dev_obj.next()) {
+                        dev_obj.device_name = total_records[iterator].name;
+                        dev_obj.datacenter = total_records[iterator].dataCenter;
+                        dev_obj.vendor_name = total_records[iterator].vendor;
+                        dev_obj.device_category = total_records[iterator].category;
+                        var device_type = total_records[iterator].deviceType;
+                        dev_obj.device_type = (device_type.join(",") || '');
+						dev_obj.company = company_name;
+                        dev_obj.update();
+                        delete device_list[device_list.indexOf(query_name)];
+                    }
+                } else {
+                    dev_obj.device_name = total_records[iterator].name;
+                    dev_obj.datacenter = total_records[iterator].dataCenter;
+                    dev_obj.vendor_name = total_records[iterator].vendor;
+                    dev_obj.device_category = total_records[iterator].category;
+                    device_type = total_records[iterator].deviceType;
+                    dev_obj.device_type = (device_type.join(",") || '');
+					dev_obj.company = company_name;
+                    dev_obj.insert();
+                }
+            }
+            r = new sn_ws.RESTMessageV2();
+//             url = gs.getProperty("x_avx_appviewx_aut.URL");
+            payload = {
+                "payload": {
+                    "hook": {
+                        "name": "snow_fetch_device_inventory"
+                    },
+                    "input": {}
+                }
+            };
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            r.setHttpMethod("post");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(60000);
+            response = r.executeAsync();
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+            }
+            responsecontent = JSON.parse(responseBody);
+            total_records = responsecontent.response.output;
+            dev_obj = new GlideRecordSecure('x_avx_appviewx_aut_device_table');
+            for (iterator = 0; iterator < total_records.length; iterator++) {
+                dev_obj.initialize();
+                device_name = total_records[iterator].name;
+                category = total_records[iterator].category;
+                query_name = device_name + "|" + category;
+                dev_obj.addQuery('device_name', device_name);
+                dev_obj.addQuery('device_category', category);
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					dev_obj.addQuery('company', company_name);
+				}
+                dev_obj.query();
+                if (dev_obj.hasNext()) {
+                    while (dev_obj.next()) {
+                        dev_obj.device_name = total_records[iterator].name;
+                        dev_obj.datacenter = total_records[iterator].dataCenter;
+                        dev_obj.vendor_name = total_records[iterator].vendor;
+                        dev_obj.device_category = total_records[iterator].category;
+                        dev_obj.device_status = total_records[iterator].status;
+                        dev_obj.device_type = "";
+						dev_obj.company = company_name;
+                        dev_obj.update();
+                        delete device_list[device_list.indexOf(query_name)];
+                    }
+                } else {
+                    dev_obj.device_name = total_records[iterator].name;
+                    dev_obj.datacenter = total_records[iterator].dataCenter;
+                    dev_obj.vendor_name = total_records[iterator].vendor;
+                    dev_obj.device_category = total_records[iterator].category;
+                    dev_obj.device_status = total_records[iterator].status;
+                    dev_obj.device_type = "";
+					dev_obj.company = company_name;
+                    dev_obj.insert();
+                }
+            }
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = "Info";
+            log.script = "update_device_inventory";
+            log.application = "AppViewX";
+            log.message = "AppViewX Device Inventory SYNC were successfully completed.";
+			log.company = company_name;
+            log.insert();
+            for (iterator = 0; iterator < device_list.length; iterator++) {
+                if (device_list[iterator]) {
+                    var array = device_list[iterator].split("|");
+                    device_name = array[0] || '';
+                    category = array[1] || '';
+                    dev_obj = new GlideRecordSecure('x_avx_appviewx_aut_device_table');
+                    dev_obj.addQuery('device_name', device_name);
+                    dev_obj.addQuery('device_category', category);
+					if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+						dev_obj.addQuery('company', company_name);
+					}
+                    dev_obj.query();
+                    while (dev_obj.next()) {
+                        dev_obj.deleteRecord();
+                    }
+                }
+            }
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = "Info";
+            log.script = "update_device_inventory";
+            log.application = "AppViewX";
+            log.message = "AppViewX Device Inventory table updation completed.";
+			log.company = company_name;
+            log.insert();
+			new x_avx_appviewx_aut.update_profile_table().updateProfileTable(company_name);
+        } catch (error) {
+            gs.info("AppViewX REST API failed while fetching the device inventory from AppViewX : " + error);
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'update_device_inventory';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while getting all the devices from appviewx -  ' + error;
+			log.company = company_name;
+            log.insert();
+        }
+    },
+
+    type: 'update_device_inventory'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-01-20 10:04:25</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>21082f7cdb2c6d1016a0285b13961980</sys_id>
+        <sys_mod_count>29</sys_mod_count>
+        <sys_name>update_device_inventory</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_21082f7cdb2c6d1016a0285b13961980</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-03 13:31:48</sys_updated_on>
+    </sys_script_include>
+</record_update>

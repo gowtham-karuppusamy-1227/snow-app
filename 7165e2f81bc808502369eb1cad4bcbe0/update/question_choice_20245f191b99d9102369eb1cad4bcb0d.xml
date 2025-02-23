@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <order>100</order>
+        <published_ref/>
+        <question/>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-13 07:51:56</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>20245f191b99d9102369eb1cad4bcb0d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Attach to Incident Ticket</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>question_choice_20245f191b99d9102369eb1cad4bcb0d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-08-13 07:51:56</sys_updated_on>
+        <text>Attach to Incident Ticket</text>
+        <value>Attach to Incident Ticket</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=20245f191b99d9102369eb1cad4bcb0d"/>
+</record_update>

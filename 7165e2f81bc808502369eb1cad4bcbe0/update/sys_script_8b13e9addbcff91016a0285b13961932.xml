@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_avx_appviewx_aut_connection_settings_table</collection>
+        <condition>gs.getProperty("glide.sys.domain.partitioning") == 'true'</condition>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Domain - Set Domain - Connection Table</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+    // Add your code here
+    checkCompanyExist();
+
+    function checkCompanyExist() {
+        var op = current.operation();
+        var company_name = current.company.name;
+        var previous_company_name = previous.company.name;
+        var company = current.company;
+        var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+        gr.addQuery('company', company);
+        gr.query();
+        var count = 1;
+		if (op == "update") {
+			if (company_name == previous_company_name) {
+				count = 0;
+			}
+		}
+        while (gr.next()) {
+            count = count + 1;
+        }
+        if (count <= 1) {
+            setDefaultDomain();
+        } else {
+            gs.addErrorMessage("Unable to update/insert the provided details for the Company - " + company_name + ". An entry for the selected company already exists.");
+            current.setAbortAction(true);
+        }
+    }
+
+    function setDefaultDomain() {
+
+        if (!current.company.nil())
+            current.sys_domain = current.company.sys_domain;
+
+        if (current.sys_domain == 'global' || current.sys_domain.nil())
+            current.sys_domain = global.getDefaultDomain();
+
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-11 10:31:06</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8b13e9addbcff91016a0285b13961932</sys_id>
+        <sys_mod_count>38</sys_mod_count>
+        <sys_name>Domain - Set Domain - Connection Table</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_8b13e9addbcff91016a0285b13961932</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-02 06:52:35</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=8b13e9addbcff91016a0285b13961932"/>
+</record_update>

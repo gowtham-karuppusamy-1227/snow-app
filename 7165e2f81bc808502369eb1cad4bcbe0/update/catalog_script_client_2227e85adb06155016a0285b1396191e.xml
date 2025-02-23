@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Renew Certificate">9e85ab541b1595102369eb1cad4bcb62</cat_item>
+        <cat_variable>IO:e6ecebdc1b1595102369eb1cad4bcbbb</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>renew_set_csr_prams</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function changeFieldLabel(oldLabel, newLabel) {
+    $j("span").filter(function() {
+        return ($j(this).text() === oldLabel);
+    }).html(newLabel);
+}
+
+function set_meta_data(meta_data_info, mandatory_attributes, csrprams) {
+    try {
+        var edit_certificate_attributes = g_form.getValue('renew_edit_certificate_attributes');
+		
+        var meta_info = JSON.parse(meta_data_info);
+        var obj = [];
+		var field_name = [];
+        for (var value in meta_info) {
+            var key_value = meta_info[value];
+            obj.push(key_value);
+			field_name.push(value);
+        }
+        g_form.setValue('meta_data_info', JSON.stringify(obj), JSON.stringify(obj));
+		g_form.setValue("meta_data_field_name", JSON.stringify(field_name), JSON.stringify(field_name));
+        g_form.setValue('mandatory_attributes', JSON.stringify(mandatory_attributes), JSON.stringify(mandatory_attributes));
+        var meta_length = Object.keys(meta_info).length;
+        g_form.setValue('cert_attribute_length', meta_length, meta_length);
+        if (meta_length > 0) {
+            for (var meta_data = 1; meta_data < meta_length + 1; meta_data++) {
+                g_form.setDisplay('meta_data_' + meta_data, true);
+				try {
+					changeFieldLabel('Meta Data ' + (meta_data).toString(), field_name[meta_data - 1]);
+				} catch (error) {
+					g_form.setLabelOf('meta_data_' + meta_data, field_name[meta_data - 1]);
+				}
+                if (edit_certificate_attributes == 0) {
+                    g_form.setReadOnly('meta_data_' + meta_data, true);
+                } else if (mandatory_attributes.indexOf(obj[meta_data - 1]) !== -1) {
+                    g_form.setMandatory('meta_data_' + meta_data, true);
+                }
+                var attr_key = obj[meta_data - 1];
+                if (csrprams.certAttributes) {
+                    if (csrprams.certAttributes[attr_key]) {
+                        var attr_val = csrprams.certAttributes[attr_key];
+                        g_form.setValue('meta_data_' + meta_data, attr_val, attr_val);
+                    }
+                }
+            }
+        }
+    } catch (ex) {
+        g_form.addErrorMessage("Error In Set Meta Data Function : " + ex);
+    }
+}
+
+
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+    var clm_cert_attributes = g_form.getValue('clm_cert_attributes');
+    var cert = g_form.getValue('certificate');
+    var serial_number = cert.split("|")[1];
+    var cn = cert.split("|")[0];
+    var cert_category = cert.split("|")[2];
+    g_form.setDisplay('common_name', true);
+    g_form.setDisplay('serial_number', true);
+    g_form.clearValue('common_name');
+    g_form.clearValue('serial_number');
+    g_form.setValue('certificate_type', cert_category, cert_category);
+    g_form.setValue('common_name', cn, cn);
+    g_form.setValue('serial_number', serial_number, serial_number);
+    try {
+		var company_name = g_form.getValue("company_name");
+        var ga = new GlideAjax("renew_get_certs_prams");
+        ga.addParam("sysparm_name", "getcsrprams");
+        ga.addParam("sysparm_serial_number", serial_number);
+        ga.addParam("sysparm_Cert_category", cert_category);
+		ga.addParam("sysparm_company", company_name);
+        ga.getXML(getCertData);
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
+        var message = 'Error occured while getting the certificate params - ' + error;
+        ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "renew_set_csr_params");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+
+    function getCertData(response) {
+        try {
+            var cert_response = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                cert_response = JSON.parse(cert_response);
+            } catch (err) {
+                throw cert_response || "Couldn't parse the Cert details.";
+            }
+            var ga = new GlideAjax('get_cert_attributes');
+            ga.addParam("sysparm_name", "getCertificateAttributes");
+			ga.addParam("sysparm_company", company_name);
+            ga.getXML(function(response) {
+                getResponse(response, cert_response);
+            });
+        } catch (error) {
+            g_form.addErrorMessage("Error : " + error + " Please check with the AppviewX admin/CLM Settings.");
+            var message = 'Error occured while fetching the cert attributes from AppViewX - ' + error;
+            ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "renew_set_csr_params");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+
+    function getResponse(response, cert_response) {
+        try {
+			g_form.clearValue('parsed_csr_values');
+			g_form.setDisplay('parsed_csr_values', false);
+            var res = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                res = JSON.parse(res);
+            } catch (err) {
+                throw res || "Couldn't parse the response while trying to get certificate attributes from AppViewX.";
+            }
+            var cert_list = cert_response.response.response.objects;
+            for (var cert = 0; cert < cert_list.length; cert++) {
+                if (cert_list[cert].commonName === cn) {
+                    var csrprams = cert_list[cert];
+                }
+            }
+            res = res.response;
+            var mandatory_attributes = [];
+            for (var attr = 0; attr < res.length; attr++) {
+                if (res[attr]["mandatory"] === true) {
+                    mandatory_attributes.push(res[attr].name);
+                }
+            }
+            for (var iterator = 1; iterator <= 10; iterator++) {
+                g_form.setMandatory('meta_data_' + iterator, false);
+                g_form.setReadOnly('meta_data_' + iterator, false);
+                g_form.clearValue('meta_data_' + iterator);
+                g_form.setDisplay('meta_data_' + iterator, false);
+            }
+            if (clm_cert_attributes) {
+                set_meta_data(clm_cert_attributes, mandatory_attributes, csrprams);
+            } else {
+                g_form.setValue('cert_attribute_length', 0, 0);
+            }
+            g_form.setDisplay('renwal_type', true);
+            g_form.setMandatory('renwal_type', true);
+            g_form.clearValue('renwal_type');
+            if (g_form.getValue('certificate_authority') === 'Amazon' || g_form.getValue('certificate_authority') === 'GlobalSign') {
+                g_form.removeOption('renwal_type', 'Use existing key');
+            }
+			// else {
+            //     g_form.addOption('renwal_type', 'Use existing key', 'Use existing key');
+            // }
+            g_form.clearValue('subject_alternative_name');
+            if (csrprams.subjectAlternativeNames) {
+                if (csrprams.subjectAlternativeNames[0]) {
+					var san = csrprams.subjectAlternativeNames.join(",");
+                    g_form.setValue('subject_alternative_name', san, san);
+                }
+            }
+			g_form.clearValue('private_key_managed_in_appviewx');
+			if (csrprams.privatekeyAvaliable) {
+                g_form.setValue('private_key_managed_in_appviewx', "Yes","Yes");
+            }else {
+				g_form.setValue('private_key_managed_in_appviewx', "No","No");
+			}
+            g_form.clearValue('organisation');
+            g_form.setValue('organisation', csrprams.subjectOrganization,
+                csrprams.subjectOrganization);
+            g_form.clearValue('organisation_unit');
+            g_form.setValue('organisation_unit',
+                csrprams.subjectOrganizationUnit, csrprams.subjectOrganizationUnit);
+            g_form.clearValue('country');
+            g_form.setValue('country', csrprams.subjectCountry,
+                csrprams.subjectCountry);
+            g_form.clearValue('state');
+            g_form.setValue('state', csrprams.subjectState,
+                csrprams.subjectState);
+            g_form.clearValue('city');
+            g_form.setValue('city', csrprams.subjectLocality,
+                csrprams.subjectLocality);
+            g_form.clearValue('email_address');
+            g_form.setValue('email_address', csrprams.mailAddress,
+                csrprams.mailAddress);
+            g_form.clearValue('bit_length_key_type');
+            g_form.setValue('bit_length_key_type', csrprams.keyAlgorithmAndSize,
+                csrprams.keyAlgorithmAndSize);
+            g_form.clearValue('hash_function');
+            g_form.setValue('hash_function', csrprams.signatureHashAlgorithm,
+                csrprams.signatureHashAlgorithm);
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error);
+            var message = 'Error occurred while setting CSR parameters details in the form - ' + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "renew_set_csr_prams");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-22 04:37:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2227e85adb06155016a0285b1396191e</sys_id>
+        <sys_mod_count>51</sys_mod_count>
+        <sys_name>renew_set_csr_prams</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_2227e85adb06155016a0285b1396191e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-19 13:13:12</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>false</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

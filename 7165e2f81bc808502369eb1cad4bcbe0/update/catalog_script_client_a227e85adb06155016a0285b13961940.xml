@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>true</applies_req_item>
+        <applies_sc_task>true</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Renew Certificate">9e85ab541b1595102369eb1cad4bcb62</cat_item>
+        <cat_variable>IO:4968e8601b9995102369eb1cad4bcb41</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>renew_validate_uploaded_csr_file</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+	var certificate_category = g_form.getValue('certificate_category');
+	var certificate_authority = g_form.getValue('certificate_authority');
+	var common_name = g_form.getValue('common_name');
+	var company_name = g_form.getValue('company_name');
+    var ajax = new GlideAjax('validate_csr_attachment');
+    ajax.addParam('sysparm_name', 'checkAttachmentSizeAndType');
+    ajax.addParam('sysparm_existing', newValue);
+	ajax.addParam('certificate_category', certificate_category);
+	ajax.addParam('certificate_authority', certificate_authority);
+	ajax.addParam('common_name', common_name);
+	ajax.addParam('sysparm_company', company_name);
+	ajax.getXML(getRITMdata);
+
+    function getRITMdata(response) {
+		try {
+			g_form.clearValue('parsed_csr_values');
+			g_form.setDisplay('parsed_csr_values', true);
+			g_form.setMandatory('allow_new_common_name',false);
+			g_form.setDisplay('allow_new_common_name', false);
+			var res = response.responseXML.documentElement.getAttribute('answer');
+			try {
+				res = JSON.parse(res);
+				g_form.setValue("parsed_csr_values", res.csr_parameters);
+				if(res.cn_validity){
+					g_form.clearValue('allow_new_common_name');
+					g_form.setMandatory('allow_new_common_name', true);
+			        g_form.setDisplay('allow_new_common_name', true);
+				}
+			} catch (err) {
+				throw res || "Error while parsing the given CSR";
+			}
+			// if (answer) {
+			// 	alert(answer);
+			// 	g_form.clearValue("paste_csr");
+			// }
+		} catch (error) {
+			alert(error);
+			g_form.clearValue("file_upload");
+		}
+    }
+
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-22 04:37:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>a227e85adb06155016a0285b13961940</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>renew_validate_uploaded_csr_file</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_a227e85adb06155016a0285b13961940</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-11 11:10:38</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

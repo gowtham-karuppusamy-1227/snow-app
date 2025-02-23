@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="1d23898f1bd84210b31f21b7624bcbbd" sys_domain="global" table="x_avx_appviewx_aut_connection_settings_table" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-02-16 03:18:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>5923898f1bd84210b31f21b7624bcbbf</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_avx_appviewx_aut_connection_settings_table" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">1d23898f1bd84210b31f21b7624bcbbd</sys_ui_form>
+            <sys_ui_section caption="AppViewX Application Settings" display_value="AppViewX Application Settings" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">cbe9e0021bbef590cda7db91dd4bcb13</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-01-02 10:23:53</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-01-17 04:04:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>5ec327833b03d210b795659aa4e45af5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_avx_appviewx_aut_connection_settings_table" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">1d23898f1bd84210b31f21b7624bcbbd</sys_ui_form>
+            <sys_ui_section caption="Connection Settings" display_value="Connection Settings" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">9ec327833b03d210b795659aa4e45af1</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-01-17 04:04:11</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-01-17 04:04:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>16c327833b03d210b795659aa4e45afa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_avx_appviewx_aut_connection_settings_table" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">1d23898f1bd84210b31f21b7624bcbbd</sys_ui_form>
+            <sys_ui_section caption="Inventory Sync settings" display_value="Inventory Sync settings" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">d6c327833b03d210b795659aa4e45af3</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-01-17 04:04:11</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-01-17 04:04:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>96c367833b03d210b795659aa4e45a23</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_avx_appviewx_aut_connection_settings_table" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">1d23898f1bd84210b31f21b7624bcbbd</sys_ui_form>
+            <sys_ui_section caption="Log Purging Settings" display_value="Log Purging Settings" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">92c327833b03d210b795659aa4e45af4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-01-17 04:04:11</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_avx_appviewx_aut_connection_settings_table</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-02-16 03:18:30</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1d23898f1bd84210b31f21b7624bcbbd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_avx_appviewx_aut_connection_settings_table</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_form_sections_1d23898f1bd84210b31f21b7624bcbbd</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-02-16 03:18:30</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.scheduler_for_ca_settings_sync</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>scheduler_for_ca_settings_sync</name>
+        <script><![CDATA[var scheduler_for_ca_settings_sync = Class.create();
+scheduler_for_ca_settings_sync.prototype = {
+    initialize: function() {},
+    schedulerForCaSettingsSync: function(company_name) {
+        try {
+            var return_value = {};
+            var message;
+			var iterator;
+			var client_id;
+            var script_include_call = new appviewx_oauth_token_generation();
+            var token_generation = script_include_call.TestConnection(client_id, company_name);
+            if (token_generation.length > 1 && token_generation[0] == 200) {
+                var parse_response = JSON.parse(token_generation[1]);
+                var token = parse_response['response'];
+            } else {
+                throw "Error While Generating the token.";
+            }
+            var existing_ca_list = [];
+            var query_table = new GlideRecordSecure('x_avx_appviewx_aut_ca_setting_table');
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				query_table.addQuery('company', company_name);
+			}
+            query_table.query();
+            while (query_table.next()) {
+                var CA = query_table.getValue('certificate_authority');
+                existing_ca_list.push(CA);
+            }
+            var r = new sn_ws.RESTMessageV2();
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company_name);
+                gr.query();
+				if (!gr.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr.next()) {
+					var url = gr.getValue('instance_url') || '';
+					var mid_server = gr.getValue('mid_server') || '';
+				}
+            } else {
+				url = gs.getProperty("x_avx_appviewx_aut.URL");
+				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+			}
+            var payload = {
+                "payload": {
+                    "hook": {
+                        "name": "SNOW - Get Configured Certificate Authority"
+                    },
+                    "input": {}
+                }
+            };
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            r.setHttpMethod("post");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(30000);
+            var response = r.executeAsync();
+            var responseBody, responseMessage;
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    var res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+                try {
+                    responseBody = JSON.parse(responseBody);
+                } catch (error) {
+                    throw responseBody || "Could not parse JSON response";
+                }
+            }
+            var supported_ca = ['AppViewX', 'DigiCert', 'Microsoft Enterprise', 'Entrust', 'Ejbca', 'GoDaddy', 'Amazon', 'Comodo Certificate Manager', 'GlobalSign', 'GlobalSignMSSL', 'AppViewX PKIaaS', 'Trustwave', 'HydrantID', 'SwissSign','Microsoft Standalone'];
+            responseBody = responseBody.response.output;
+            var ca_list = [];
+            for (iterator = 0; iterator < responseBody.length; iterator++) {
+                if (supported_ca.indexOf(responseBody[iterator]['certificateAuthority']) >= 0) {
+					if (ca_list.indexOf(responseBody[iterator]['certificateAuthority']) < 0)
+                    ca_list.push(responseBody[iterator]['certificateAuthority']);
+                }
+            }
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Info';
+            log.script = 'scheduler_for_ca_settings_sync';
+            log.application = 'AppViewX';
+            log.message = 'Certificate Authority names fetched from AppViewX  ' + JSON.stringify(ca_list) + JSON.stringify(responseBody) ;
+			log.company = company_name;
+            log.insert();
+            var ca_setting_obj = new GlideRecordSecure('x_avx_appviewx_aut_ca_setting_table');
+            for (var ca = 0; ca < ca_list.length; ca++) {
+                ca_setting_obj.initialize();
+                ca_setting_obj.addQuery('certificate_authority', ca_list[ca]);
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					ca_setting_obj.addQuery('company', company_name);
+				}
+                ca_setting_obj.query();
+                var certificate_authority = encodeURIComponent(ca_list[ca]);
+                payload = {};
+                r = new sn_ws.RESTMessageV2();
+                if (mid_server != "") {
+                    r.setMIDServer(mid_server);
+                    r.setEccParameter('skip_sensor', 'true');
+                }
+                r.setHttpMethod("get");
+                r.setRequestHeader("token", token);
+                r.setRequestHeader('User-Agent', 'snow');
+                r.setRequestHeader("Content-Type", "application/json");
+                r.setEndpoint(url + "/avxapi/cert-ca-settings-getbycaname?certificateAuthority=" + certificate_authority + "&gwsource=web");
+                r.setRequestBody(JSON.stringify(payload));
+                r.setHttpTimeout(60000);
+                response = r.executeAsync();
+                responseBody, responseMessage;
+                if (response.haveError()) {
+                    responseBody = response.getBody();
+                    try {
+                        res = JSON.parse(responseBody);
+                        message = res.message;
+                    } catch (err) {
+                        message = responseBody;
+                    }
+                    throw message;
+                } else {
+                    responseBody = response.getBody();
+                    responseBody = JSON.parse(responseBody);
+                }
+                if (ca_setting_obj.hasNext()) {
+                    while (ca_setting_obj.next()) {
+                        ca_setting_obj.certificate_authority = ca_list[ca];
+                        ca_setting_obj.ca_setting_details = JSON.stringify(responseBody);
+						ca_setting_obj.company = company_name;
+						ca_setting_obj.update();
+                    }
+                    delete existing_ca_list[existing_ca_list.indexOf(ca_list[ca])];
+                } else {
+                    ca_setting_obj.certificate_authority = ca_list[ca];
+                    ca_setting_obj.ca_setting_details = JSON.stringify(responseBody);
+					ca_setting_obj.company = company_name;
+                    ca_setting_obj.insert();
+                }
+            }
+            for (iterator = 0; iterator < existing_ca_list.length; iterator++) {
+                if (existing_ca_list[iterator]) {
+                    ca_setting_obj = new GlideRecordSecure('x_avx_appviewx_aut_ca_setting_table');
+                    ca_setting_obj.addQuery('certificate_authority', existing_ca_list[iterator]);
+					if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+						ca_setting_obj.addQuery('company', company_name);
+					}
+                    ca_setting_obj.query();
+                    while (ca_setting_obj.next()) {
+                        ca_setting_obj.deleteRecord();
+                    }
+                }
+            }
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Info';
+            log.script = 'scheduler_for_ca_settings_sync';
+            log.application = 'AppViewX';
+            log.message = 'CA settings details sync were successfully completed.';
+			log.company = company_name;
+            log.insert();
+        } catch (error) {
+            gs.info("AppViewX REST API test failed while fetching the ca setting details for scheduler: " + error);
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'scheduler_for_ca_settings_sync';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while getting ca setting details from appviewx  for scheduler - ' + error;
+			log.company = company_name;
+            log.insert();
+        }
+    },
+
+    type: 'scheduler_for_ca_settings_sync'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-01-24 07:23:27</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>753caf0adb6c615016a0285b13961958</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>scheduler_for_ca_settings_sync</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_753caf0adb6c615016a0285b13961958</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-06 12:27:27</sys_updated_on>
+    </sys_script_include>
+</record_update>

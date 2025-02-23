@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_device_names</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>get_device_names</name>
+        <script><![CDATA[var get_device_names = Class.create();
+get_device_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getDeviceNames: function() {
+        try {
+            var return_value = {};
+            var message;
+			var client_id;
+            var vendor_name = this.getParameter("sysparm_vendorName");
+			var company = this.getParameter("sysparm_company");
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company);
+				gr.query();
+				if (!gr.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr.next()) {
+					var url = gr.getValue('instance_url') || '';
+					var mid_server = gr.getValue('mid_server') || '';
+					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+				}
+			} else {
+				url = gs.getProperty("x_avx_appviewx_aut.URL");
+				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+			}
+            if (cmdb_sync == "true") {
+                var table_response_list = [];
+                var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_device_table');
+                response_obj.initialize();
+                response_obj.addQuery('vendor_name', vendor_name);
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					response_obj.addQuery('company', company);
+				}
+                response_obj.query();
+                if (!response_obj.hasNext()) {
+                    throw 'Could not find the device for the given vendor name ' + vendor_name + ' in the device table';
+                }
+                while (response_obj.next()) {
+                    var device_name = response_obj.getValue('device_name');
+                    table_response_list.push(device_name);
+                }
+                return JSON.stringify(table_response_list);
+            } else {
+                var script_include_call = new appviewx_oauth_token_generation();
+                var token_generation = script_include_call.TestConnection(client_id, company);
+                if (token_generation.length == 2 && token_generation[0] == 200) {
+                    var parse_response = JSON.parse(token_generation[1]);
+                    var token = parse_response['response'];
+                } else {
+                    throw "Error while generating the OAuth Token.";
+                }
+                var r = new sn_ws.RESTMessageV2();
+                var payload = {
+                    "payload": {
+                        "hook": {
+                            "name": "snow_fetch_device_name_for_push"
+                        },
+                        "input": {
+                            "vendor_name": vendor_name
+                        }
+                    }
+                };
+                if (mid_server != "") {
+                    r.setMIDServer(mid_server);
+                    r.setEccParameter('skip_sensor', 'true');
+                }
+                r.setHttpMethod("post");
+                r.setRequestHeader("token", token);
+                r.setRequestHeader('User-Agent', 'snow');
+                r.setRequestHeader("Content-Type", "application/json");
+                r.setEndpoint(url + "/avxapi/execute-hook?gwsource=web");
+                r.setRequestBody(JSON.stringify(payload));
+                r.setHttpTimeout(60000);
+                var response = r.executeAsync();
+                var responseBody, responseMessage;
+                if (response.haveError()) {
+                    responseBody = response.getBody();
+                    try {
+                        var res = JSON.parse(responseBody);
+                        message = res.message;
+                    } catch (err) {
+                        message = responseBody;
+                    }
+                    throw message;
+                } else {
+                    responseBody = response.getBody();
+                    responseBody = JSON.parse(responseBody);
+                    return_value['error'] = responseBody;
+                    return JSON.stringify(responseBody);
+                }
+            }
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'get_device_names';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching device name details from appviewx  -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+    type: 'get_device_names'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-02-06 13:23:35</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a94e771adbb4e11016a0285b13961946</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>get_device_names</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_a94e771adbb4e11016a0285b13961946</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:28:54</sys_updated_on>
+    </sys_script_include>
+</record_update>

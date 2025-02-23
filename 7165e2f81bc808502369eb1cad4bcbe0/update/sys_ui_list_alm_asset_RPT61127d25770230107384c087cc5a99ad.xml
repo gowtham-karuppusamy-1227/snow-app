@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="alm_asset" version="2" view="RPT61127d25770230107384c087cc5a99ad">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>asset_tag</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f4de28d0db9a291016a0285b1396199c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>model_category</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f8de28d0db9a291016a0285b1396199c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>model.display_name</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>fcde28d0db9a291016a0285b1396199c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>assigned_to</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f0de28d0db9a291016a0285b1396199d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>company</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f4de28d0db9a291016a0285b1396199d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>install_status</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f8de28d0db9a291016a0285b1396199d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>substatus</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>fcde28d0db9a291016a0285b1396199d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>cost</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f0de28d0db9a291016a0285b1396199e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>ci</element>
+            <list_id display_value="alm_asset" element="NULL" name="alm_asset" parent="NULL" relationship="NULL" sys_domain="global" view="b4de28d0db9a291016a0285b1396199a">f8de28d0db9a291016a0285b1396199b</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_id>f4de28d0db9a291016a0285b1396199e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>alm_asset</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-04-15 06:29:43</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f8de28d0db9a291016a0285b1396199b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>alm_asset</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_list_alm_asset_RPT61127d25770230107384c087cc5a99ad</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-04-15 06:29:43</sys_updated_on>
+            <sys_user/>
+            <view display_value="Rpt61127d25770230107384c087cc5a99ad" name="RPT61127d25770230107384c087cc5a99ad">b4de28d0db9a291016a0285b1396199a</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

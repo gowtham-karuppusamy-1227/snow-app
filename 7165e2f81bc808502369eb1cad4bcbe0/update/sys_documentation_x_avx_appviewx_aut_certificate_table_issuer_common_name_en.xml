@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="issuer_common_name" label="Issuer Common Name" language="en" table="x_avx_appviewx_aut_certificate_table">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>issuer_common_name</element>
+            <help/>
+            <hint/>
+            <label>Issuer Common Name</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_certificate_table</name>
+            <plural>Issuer Common Names</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-06-09 12:01:02</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>961a0d4adb53e51016a0285b139619a6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Issuer Common Name</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_documentation_x_avx_appviewx_aut_certificate_table_issuer_common_name_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-06-09 12:01:02</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="3db93e25dbf6319016a0285b139619a4" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" table="x_avx_appviewx_aut_connection_settings_table" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>instance_url</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>8ab9be65dbf6319016a0285b139619fe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>client_id</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>86b9be65dbf6319016a0285b139619ff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>client_secret</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>0ab9be65dbf6319016a0285b139619ff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>mid_server</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>8ab9be65dbf6319016a0285b139619ff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>0eb9be65dbf6319016a0285b139619ff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>enable_appviewx_inventory_sync</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>8eb9be65dbf6319016a0285b139619ff</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_domain</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>02b9fe65dbf6319016a0285b13961900</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>82b9fe65dbf6319016a0285b13961900</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>06b9fe65dbf6319016a0285b13961900</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_id>86b9fe65dbf6319016a0285b13961900</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="4657cdad1be6b150cda7db91dd4bcb7c" view="Default view">3db93e25dbf6319016a0285b139619a4</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_avx_appviewx_aut_connection_settings_table</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-29 06:31:30</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>4657cdad1be6b150cda7db91dd4bcb7c</sys_domain>
+            <sys_domain_path>!!!/!!#/</sys_domain_path>
+            <sys_id>3db93e25dbf6319016a0285b139619a4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_avx_appviewx_aut_connection_settings_table</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_section_3db93e25dbf6319016a0285b139619a4</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-29 06:31:30</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

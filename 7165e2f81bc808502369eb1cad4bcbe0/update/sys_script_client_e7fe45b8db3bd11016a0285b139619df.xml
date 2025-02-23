@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Sets the value to the fields whenever a new record is inserted or updated in the CLM Settings table.</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_content_for_email</name>
+        <order/>
+        <script><![CDATA[function onSubmit() {
+    var test = g_form.getValue('new');
+    var json = g_form.getValue('json_data');
+    if (json !== '') {
+        json = JSON.parse(json);
+    }
+    var file_formats = {
+        "94ef5624db5a1d5016a0285b139619e1": "CER",
+        "41ff1624db5a1d5016a0285b139619fd": "CRT",
+        "9e00e224db5a1d5016a0285b139619e2": "Download Link",
+        "6fff1ee0db5a1d5016a0285b139619be": "PFX"
+    };
+
+    var csr_inputs = {
+        "795f1ee0db5a1d5016a0285b139619d6": "Manual",
+        "d06fdea0db5a1d5016a0285b139619ac": "Upload CSR"
+    };
+	g_form.setValue('send_update_email','No','No');
+    var payload = {};
+    payload['Ca Tag Name'] = g_form.getValue('ca_tag_name');
+    payload['Certificate Authority'] = g_form.getValue('ca_type');
+    payload['CA Account'] = g_form.getValue('ca_settings_name');
+    payload['Certificate Categories'] = JSON.stringify(g_form.getValue('certificate_category'));
+    payload['CA Policy Name'] = g_form.getValue('ca_policy_name');
+	
+	var csr_options = g_form.getValue('csr_upload_option');
+    csr_options = csr_options.split(",");
+    var input_method = [];
+    for (var csr = 0; csr < csr_options.length; csr++) {
+        input_method.push(csr_inputs[csr_options[csr]]);
+    }
+    input_method = input_method.sort();
+	
+    payload['CSR Upload Options'] = input_method.join(",");
+    payload['Enroll-Approval Required In AppViewX'] = g_form.getValue('is_approval_required_in_appviewx');
+    payload['Enroll-Approval Levels In Appviewx'] = g_form.getValue('approval_levels_in_appviewx');
+    payload['Enroll-Appviewx One Level Approval Mail Id'] = g_form.getValue('appviewx_one_level_approval_mail_id_for_create');
+    payload['Enroll-Appviewx Two Level Approval Mail Id'] = g_form.getValue('appviewx_two_level_approval_mail_id_for_create');
+    payload['Enroll-Workflow Name'] = g_form.getValue('workflow_name_for_create_appviewx');
+    payload['Enroll-Certificate Group Selection'] = g_form.getValue('certificate_group_selection');
+    payload['Enroll-Approval Required In ServiceNow'] = g_form.getValue('is_approval_required_in_servicenow_enroll');
+    payload['Enroll-Approval Levels in ServiceNow'] = g_form.getValue('approval_levels_in_servicenow');
+    payload['Enroll-ServiceNow Approver Selection'] = g_form.getValue('approver_selection');
+    payload['Enroll-Assignment Group'] = g_form.getValue('assignment_group');
+    payload['Renew-Use Approval Settings From Create'] = g_form.getValue('use_approval_settings_from_create');
+    payload['Renew-Approval Required In AppViewX'] = g_form.getValue('is_approval_needed_in_appviewx_renewal');
+    payload['Renew-Approval Levels In AppViewX'] = g_form.getValue('approval_levels_in_appviewx_renewal');
+    payload['Renew-Appviewx One Level Approval Mail Id'] = g_form.getValue('appviewx_one_level_approval_mail_id_for_renew');
+    payload['Renew-Appviewx Two Level Approval Mail Id'] = g_form.getValue('appviewx_two_level_approval_mail_id_for_renew');
+    payload['Renew-Certificates Fetch'] = g_form.getValue('certificates_fetch');
+    payload['Renew-Workflow Name'] = g_form.getValue('workflow_name_for_renew_appviewx');
+    payload['Renew-Approval Required In ServiceNow'] = g_form.getValue('is_approval_needed_in_servicenow_renewal');
+    payload['Renew-Approval Levels in ServiceNow'] = g_form.getValue('approval_levels_in_servicenow_renewal');
+    payload['Renew-ServiceNow Approver Selection'] = g_form.getValue('approver_selection_renew');
+    payload['Renew-Assignment Group'] = g_form.getValue('assignment_group_renew');
+
+    payload['Revoke-Use Approval Settings From Create'] = g_form.getValue('use_approval_settings_from_create_for_revoke');
+    payload['Revoke-Approval Required In AppView'] = g_form.getValue('is_approval_needed_in_appviewx_revoke');
+    payload['Revoke-Approval Levels In AppViewX'] = g_form.getValue('approval_levels_in_appviewx_revoke');
+    payload['Revoke-Appviewx One Level Approval Mail Id'] = g_form.getValue('appviewx_one_level_approval_mail_id_for_revoke');
+    payload['Revoke-Appviewx Two Level Approval Mail Id'] = g_form.getValue('appviewx_two_level_approval_mail_id_for_revoke');
+    payload['Renew-Certificates Fetch'] = g_form.getValue('certificates_fetch_revoke');
+    payload['Revoke-Workflow Name'] = g_form.getValue('workflow_name_for_revoke_appviewx');
+    payload['Revoke-Notification Mode'] = g_form.getValue('revoke_notification_mode');
+    payload['Revoke-Approval Required In ServiceNow'] = g_form.getValue('is_approval_needed_in_servicenow_revoke');
+    payload['Revoke-Approval Levels in ServiceNow'] = g_form.getValue('approval_levels_in_servicenow_revoke');
+    payload['Revoke-ServiceNow Approver Selection'] = g_form.getValue('approver_selection_revoke');
+    payload['Revoke-Assignment Group'] = g_form.getValue('assignment_group_revoke');
+	var meta_info = JSON.parse(g_form.getValue('meta_data_configured_in_appviewx')) || '';
+	var obj = [];
+	for (var data in meta_info) {
+		var key_value = data;
+		obj.push(key_value);
+	}
+	obj = obj.sort();
+	payload['Certificate Attributes'] = obj.join(",");
+    payload['Certificate Retrieval Mode'] = g_form.getValue('certificate_retrieval_mode');
+
+    var cert_formats = g_form.getValue('certificate_retrieval_file_format');
+    var clm_file_formats = cert_formats.split(",");
+    var formats_name = [];
+    for (var format = 0; format < clm_file_formats.length; format++) {
+        formats_name.push(file_formats[clm_file_formats[format]]);
+    }
+    formats_name = formats_name.sort();
+
+    payload['Certificate Retrieval File Formats'] = formats_name.join(",");
+    var updated_data = '';
+    var old_data = '';
+	var iterator;
+
+    if (json === '') {
+        var keys = Object.keys(payload);
+        for (iterator = 0; iterator < keys.length; iterator++) {
+            var key = keys[iterator];
+            var value = payload[key];
+            if (key === 'Enroll-Approval Levels in ServiceNow') {
+                if (payload['Enroll-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (key === 'Renew-Approval Levels in ServiceNow') {
+                if (payload['Renew-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (key === 'Revoke-Approval Levels in ServiceNow') {
+                if (payload['Enroll-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (value === '' || value === null) {
+				payload[key] = 'N/A';
+                value = 'N/A';
+            }
+            updated_data = updated_data + "\n" + key + " -> " + value;
+        }
+        g_form.setValue('json_data', JSON.stringify(payload), JSON.stringify(payload));
+    } else {
+        keys = Object.keys(payload);
+        for (iterator = 0; iterator < keys.length; iterator++) {
+            key = keys[iterator];
+            value = payload[key];
+            if (key === 'Enroll-Approval Levels in ServiceNow') {
+                if (payload['Enroll-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (key === 'Renew-Approval Levels in ServiceNow') {
+                if (payload['Renew-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (key === 'Revoke-Approval Levels in ServiceNow') {
+                if (payload['Enroll-Approval Required In ServiceNow'] === 'false') {
+					payload[key] = 'N/A';
+                    value = 'N/A';
+                }
+            }
+            if (value === '' || value === null) {
+				payload[key] = 'N/A';
+                value = 'N/A';
+            }
+            if (value !== json[key]) {
+				g_form.setValue('send_update_email','Yes','Yes');
+                updated_data = updated_data + "\n" + key + " -> " + value;
+                old_data = old_data + "\n" + key + " -> " + json[key];
+            }
+        }
+        g_form.setValue('json_data', JSON.stringify(payload), JSON.stringify(payload));
+    }
+    g_form.setValue('new', updated_data, updated_data);
+    g_form.setValue('old', old_data, old_data);
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-12-13 15:32:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e7fe45b8db3bd11016a0285b139619df</sys_id>
+        <sys_mod_count>37</sys_mod_count>
+        <sys_name>set_content_for_email</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_client_e7fe45b8db3bd11016a0285b139619df</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-02-28 10:26:21</sys_updated_on>
+        <table>x_avx_appviewx_aut_clm_settings</table>
+        <type>onSubmit</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="use_approval_settings_from_create" label="Use Approval Settings from Enroll" language="en" table="x_avx_appviewx_aut_clm_settings">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>use_approval_settings_from_create</element>
+            <help/>
+            <hint>Enable this option, to use the same approval setting from enroll</hint>
+            <label>Use Approval Settings from Enroll</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <plural>Use Approval Settings from Enrolls</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-07-12 15:49:03</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>cac321431b5d1d10cda7db91dd4bcb2e</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_name>Use Approval Settings from Enroll</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_documentation_x_avx_appviewx_aut_clm_settings_use_approval_settings_from_create_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-29 15:28:50</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

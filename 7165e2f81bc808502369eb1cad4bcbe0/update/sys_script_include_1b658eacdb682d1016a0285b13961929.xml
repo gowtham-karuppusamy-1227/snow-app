@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.update_inventory_certificates</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>update_inventory_certificates</name>
+        <script><![CDATA[var update_inventory_certificates = Class.create();
+update_inventory_certificates.prototype = {
+    initialize: function() {},
+    updateCertificateTable: function(company_name) {
+        try {
+            var sn = [];
+            var iterator;
+            var client_id;
+            var query_table = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				query_table.addQuery('company', company_name);
+			}
+            query_table.query();
+            while (query_table.next()) {
+				var number = query_table.getValue('thumbprint');
+                sn.push(number);
+            }
+            var start = 0;
+            var end = 15000;
+            var diff = 15000;
+            var cert_length = 15000;
+            while (cert_length == diff) {
+                var script_include_call = new appviewx_oauth_token_generation();
+                var token_generation = script_include_call.TestConnection(client_id, company_name);
+                if (token_generation.length == 2 && token_generation[0] == 200) {
+                    var parse_response = JSON.parse(token_generation[1]);
+                    var token = parse_response['response'];
+                } else {
+                    throw "Error while generating the token";
+                }
+                var r = new sn_ws.RESTMessageV2();
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                    gr.addQuery('company', company_name);
+                    gr.query();
+                    if (!gr.hasNext()) {
+                        throw "Could not find AppViewX instance url to fetch the details.";
+                    }
+                    while (gr.next()) {
+                        var url = gr.getValue('instance_url') || '';
+                        var mid_server = gr.getValue('mid_server') || '';
+                    }
+                } else {
+                    url = gs.getProperty("x_avx_appviewx_aut.URL");
+                    mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                }
+                var payload = {
+                    "payload": {
+                        "hook": {
+                            "name": "snow_fetch_certs_for_the_table"
+                        },
+                        "input": {
+                            "start_index": start
+                        }
+                    }
+                };
+                if (mid_server != "") {
+                    r.setMIDServer(mid_server);
+                    r.setEccParameter('skip_sensor', 'true');
+                }
+                r.setHttpMethod("post");
+                r.setRequestHeader("token", token);
+                r.setRequestHeader('User-Agent', 'snow');
+                r.setRequestHeader("Content-Type", "application/json");
+                r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+                r.setRequestBody(JSON.stringify(payload));
+                r.setHttpTimeout(60000);
+                var response = r.executeAsync();
+                var status = response.getStatusCode();
+                var responseBody = response.getBody();
+                var responsecontent = JSON.parse(responseBody);
+                if (status != 200) {
+                    throw JSON.stringify(responseBody);
+                }
+                var hook_status = responsecontent.response.output.status;
+                if (hook_status != 'Success') {
+                    var error_message = responsecontent.response.output.message;
+                    throw error_message;
+                }
+                var total_records = responsecontent.response.output.updated_cert_list;
+                cert_length = total_records.length;
+                var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+                log.initialize();
+                log.level = "Info";
+                log.script = "update_inventory_certificates";
+                log.application = "AppViewX";
+                log.message = JSON.stringify(cert_length) + " were pulled from the AppViewX.";
+                log.company = company_name;
+                log.insert();
+                var data, i, j;
+                var cert_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+                for (iterator = 0; iterator < total_records.length; iterator++) {
+                    var cert_association_names = "";
+                    var cert_associations;
+                    var cert_associate_flag = 0;
+					var cert;
+                    data = total_records[iterator];
+                    cert_obj.initialize();
+                    var common_name = total_records[iterator].commonName;
+                    var serial_number = total_records[iterator].serialNumber;
+					var thumbprint = total_records[iterator].extension.thumbPrint;
+                    cert_obj.addQuery('thumbprint', thumbprint);
+                    if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                        cert_obj.addQuery('company', company_name);
+                    }
+                    cert_obj.query();
+                    if (cert_obj.hasNext()) {
+                        while (cert_obj.next()) {
+                            cert_obj.common_name = total_records[iterator].commonName;
+                            cert_obj.serial_number = total_records[iterator].serialNumber;
+                            cert_obj.certificate_authority = total_records[iterator].issuer.certificateAuthority;
+							cert_obj.certificate_status = total_records[iterator].avxStatus;
+                            cert_obj.expiry_status = total_records[iterator].status;
+                            if (!total_records[iterator].group || !total_records[iterator].group.name) {
+                                cert_obj.certificate_group = '';
+                            } else {
+                                cert_obj.certificate_group = total_records[iterator].group.name;
+                            }
+                            cert_obj.certificate_category = total_records[iterator].category;
+                            if (!total_records[iterator].certAttributes || !total_records[iterator].certAttributes.requestor) {
+                                cert_obj.requestor = "";
+                            } else {
+                                cert_obj.requestor = total_records[iterator].certAttributes.requestor;
+                            }
+                            if (!total_records[iterator].certAttributes || !total_records[iterator].certAttributes.requestor_assignment_group) {
+                                cert_obj.requestor_assignment_group = "";
+                            } else {
+                                cert_obj.requestor_assignment_group = total_records[iterator].certAttributes.requestor_assignment_group;
+                            }
+                            if (!total_records[iterator].extension || !total_records[iterator].extension.thumbPrint) {
+                                cert_obj.thumbprint = "";
+                            } else {
+                                cert_obj.thumbprint = total_records[iterator].extension.thumbPrint;
+                            }
+                            if (!total_records[iterator].issuer || !total_records[iterator].issuer.commonName) {
+                                cert_obj.issuer_common_name = "";
+                            } else {
+                                cert_obj.issuer_common_name = total_records[iterator].issuer.commonName;
+                            }
+                            var san_list = [];
+                            if (!total_records[iterator].enhancedSANTypes) {
+                                cert_obj.subject_alternative_name = "";
+                            } else {
+                                var san_values = total_records[iterator].enhancedSANTypes;
+                                var san_dict = (Object.keys(san_values));
+                                for (i = 0; i < san_dict.length; i++) {
+                                    var value = san_values[san_dict[i]];
+                                    if (value) {
+                                        for (j = 0; j < value.length; j++) {
+                                            if (san_list.indexOf(value[j]) < 0) {
+                                                san_list.push(value[j]);
+                                            }
+                                        }
+                                    }
+                                }
+                                if (san_list) {
+                                    cert_obj.subject_alternative_name = san_list.join(",");
+                                } else {
+                                    cert_obj.subject_alternative_name = "";
+                                }
+                            }
+                            if (!total_records[iterator].certAssociations) {
+                                cert_association_names = "";
+                            } else if (total_records[iterator].certAssociations) {
+                                cert_associations = total_records[iterator].certAssociations;
+                                cert_associate_flag = 0;
+                                for (cert = 0; cert < cert_associations.length; cert++) {
+                                    if (!cert_associations[cert].source) {
+                                        cert_association_names = "";
+                                    } else {
+                                        if (cert_associate_flag == 0) {
+                                            cert_association_names = cert_associations[cert].source;
+                                            cert_associate_flag = 1;
+                                        } else {
+                                            cert_association_names = cert_association_names + "," + cert_associations[cert].source;
+                                        }
+                                    }
+                                }
+                            }
+                            cert_obj.discovery_source = cert_association_names;
+                            var valid_until = Number(total_records[iterator].validUntil);
+                            var valid_from = total_records[iterator].validFrom;
+                            var date = new Date().getTime();
+                            var expiry_date = new Date(valid_until).toISOString();
+                            var cert_expiry_date = new Date(valid_until);
+                            cert_expiry_date = cert_expiry_date.toISOString().split('T');
+                            cert_expiry_date = cert_expiry_date[0] + " " + cert_expiry_date[1].split('.')[0];
+                            var valid_from_date = new Date(valid_from);
+                            valid_from_date = valid_from_date.toISOString().split('T');
+                            valid_from_date = valid_from_date[0] + " " + valid_from_date[1].split('.')[0];
+                            var current_date = new Date(date).toISOString();
+                            cert_obj.valid_to = cert_expiry_date;
+                            cert_obj.valid_from = valid_from_date;
+                            if (Number(date) < Number(valid_until)) {
+                                var date1 = new Date(current_date);
+                                var date2 = new Date(expiry_date);
+                                var difference = date2.getTime() - date1.getTime();
+                                var daysDifference = Math.floor(difference/1000/60/60/24);
+                                difference -= daysDifference*1000*60*60*24;
+                                var hoursDifference = Math.floor(difference/1000/60/60);
+                                difference -= hoursDifference*1000*60*60;
+                                var minutesDifference = Math.floor(difference/1000/60);
+                                difference -= minutesDifference*1000*60;
+                                cert_obj.expiring_in_days = daysDifference + ' day(s) ' + hoursDifference + ' hour(s) ' + minutesDifference + ' minute(s)';
+                            } else {
+                                cert_obj.expiring_in_days = "0 day(s)";
+                            }
+                            if (!total_records[iterator].renewal_status) {
+                                cert_obj.renewal_status = "No";
+                            } else {
+                                cert_obj.renewal_status = total_records[iterator].renewal_status;
+                            }
+							if (!total_records[iterator].privatekeyAvailable) {
+                                cert_obj.private_key_available = "No";
+                            } else {
+                                cert_obj.private_key_available = "Yes"
+                            }
+
+                            cert_obj.company = company_name;
+                            cert_obj.update();
+                            delete sn[sn.indexOf(thumbprint)];
+                        }
+                    } else {
+                        cert_obj.common_name = total_records[iterator].commonName;
+                        cert_obj.serial_number = total_records[iterator].serialNumber;
+						cert_obj.certificate_status = total_records[iterator].avxStatus;
+                        cert_obj.certificate_authority = total_records[iterator].issuer.certificateAuthority;
+                        cert_obj.expiry_status = total_records[iterator].status;
+                        if (!total_records[iterator].group || !total_records[iterator].group.name) {
+                            cert_obj.certificate_group = '';
+                        } else {
+                            cert_obj.certificate_group = total_records[iterator].group.name;
+                        }
+                        cert_obj.certificate_category = total_records[iterator].category;
+                        if (!total_records[iterator].certAttributes || !total_records[iterator].certAttributes.requestor) {
+                            cert_obj.requestor = "";
+                        } else {
+                            cert_obj.requestor = total_records[iterator].certAttributes.requestor;
+                        }
+                        if (!total_records[iterator].certAttributes || !total_records[iterator].certAttributes.requestor_assignment_group) {
+                            cert_obj.requestor_assignment_group = "";
+                        } else {
+                            cert_obj.requestor_assignment_group = total_records[iterator].certAttributes.requestor_assignment_group;
+                        }
+						if (!total_records[iterator].extension || !total_records[iterator].extension.thumbPrint) {
+							cert_obj.thumbprint = "";
+						} else {
+							cert_obj.thumbprint = total_records[iterator].extension.thumbPrint;
+						}
+						if (!total_records[iterator].issuer || !total_records[iterator].issuer.commonName) {
+							cert_obj.issuer_common_name = "";
+						} else {
+							cert_obj.issuer_common_name = total_records[iterator].issuer.commonName;
+						}
+						san_list = [];
+						if (!total_records[iterator].enhancedSANTypes) {
+							cert_obj.subject_alternative_name = "";
+						} else {
+							san_values = total_records[iterator].enhancedSANTypes;
+							san_dict = (Object.keys(san_values));
+							for (i = 0; i < san_dict.length; i++) {
+								value = san_values[san_dict[i]];
+								if (value) {
+									for (j = 0; j < value.length; j++) {
+										if (san_list.indexOf(value[j]) < 0) {
+											san_list.push(value[j]);
+										}
+									}
+								}
+							}
+							if (san_list) {
+								cert_obj.subject_alternative_name = san_list.join(",");
+							} else {
+								cert_obj.subject_alternative_name = "";
+							}
+						}
+                        if (!total_records[iterator].certAssociations) {
+                            cert_association_names = "";
+                        } else if (total_records[iterator].certAssociations) {
+                            cert_associations = total_records[iterator].certAssociations;
+                            cert_associate_flag = 0;
+                            for (cert = 0; cert < cert_associations.length; cert++) {
+                                if (!cert_associations[cert].source) {
+                                    cert_association_names = "";
+                                } else {
+                                    if (cert_associate_flag == 0) {
+                                        cert_association_names = cert_associations[cert].source;
+                                        cert_associate_flag = 1;
+                                    } else {
+                                        cert_association_names = cert_association_names + "," + cert_associations[cert].source;
+                                    }
+                                }
+                            }
+                        }
+                        cert_obj.discovery_source = cert_association_names;
+                        valid_until = Number(total_records[iterator].validUntil);
+                        valid_from = total_records[iterator].validFrom;
+						date = new Date().getTime();
+						expiry_date = new Date(valid_until).toISOString();
+						cert_expiry_date = new Date(valid_until);
+						cert_expiry_date = cert_expiry_date.toISOString().split('T');
+						cert_expiry_date = cert_expiry_date[0] + " " + cert_expiry_date[1].split('.')[0];
+						valid_from_date = new Date(valid_from);
+						valid_from_date = valid_from_date.toISOString().split('T');
+						valid_from_date = valid_from_date[0] + " " + valid_from_date[1].split('.')[0];
+						current_date = new Date(date).toISOString();
+						cert_obj.valid_to = cert_expiry_date;
+						cert_obj.valid_from = valid_from_date;
+                        if (Number(date) < Number(valid_until)) {
+							date1 = new Date(current_date);
+							date2 = new Date(expiry_date);
+							difference = date2.getTime() - date1.getTime();
+							daysDifference = Math.floor(difference/1000/60/60/24);
+							difference -= daysDifference*1000*60*60*24;
+							hoursDifference = Math.floor(difference/1000/60/60);
+							difference -= hoursDifference*1000*60*60;
+							minutesDifference = Math.floor(difference/1000/60);
+							difference -= minutesDifference*1000*60;
+							cert_obj.expiring_in_days = daysDifference + ' day(s) ' + hoursDifference + ' hour(s) ' + minutesDifference + ' minute(s)';
+                        } else {
+                            cert_obj.expiring_in_days = "0 day(s)";
+                        }
+                        if (!total_records[iterator].renewal_status) {
+                            cert_obj.renewal_status = "No";
+                        } else {
+                            cert_obj.renewal_status = total_records[iterator].renewal_status;
+                        }
+						if (!total_records[iterator].privatekeyAvailable) {
+                            cert_obj.private_key_available = "No";
+                        } else {
+                            cert_obj.private_key_available = "Yes"
+                        }
+                        cert_obj.company = company_name;
+                        cert_obj.insert();
+                    }
+                }
+                start = start + end;
+            }
+            for (iterator = 0; iterator < sn.length; iterator++) {
+                if (sn[iterator]) {
+                    cert_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+					cert_obj.addQuery('thumbprint', sn[iterator]);
+                    if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                        cert_obj.addQuery('company', company_name);
+                    }
+                    cert_obj.query();
+                    while (cert_obj.next()) {
+                        cert_obj.deleteRecord();
+                    }
+                }
+            }
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = "Info";
+            log.script = "update_inventory_certificates";
+            log.application = "AppViewX";
+            log.message = "AppViewX Certificate Inventory SYNC were successfully completed.";
+            log.company = company_name;
+            log.insert();
+        } catch (error) {
+            gs.info("AppViewX REST API failed while fetching the certificates from AppViewX : " + error);
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'update_inventory_certificates';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while getting all the certificates from appviewx -  ' + error;
+            log.company = company_name;
+            log.insert();
+        }
+    },
+
+    type: 'update_inventory_certificates'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-01-19 08:19:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>1b658eacdb682d1016a0285b13961929</sys_id>
+        <sys_mod_count>93</sys_mod_count>
+        <sys_name>update_inventory_certificates</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_1b658eacdb682d1016a0285b13961929</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-14 16:22:11</sys_updated_on>
+    </sys_script_include>
+</record_update>

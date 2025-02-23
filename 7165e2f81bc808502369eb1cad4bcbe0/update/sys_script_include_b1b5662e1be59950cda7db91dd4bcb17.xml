@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.check_ca_tag_name_exist</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Validates if the entered CA Tag already exists before creating a new entry in CLM Settings.</description>
+        <name>check_ca_tag_name_exist</name>
+        <script><![CDATA[var check_ca_tag_name_exist = Class.create();
+check_ca_tag_name_exist.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    checkCaTagNameExist: function() {
+        var caTagName = this.getParameter("sysparm_caTagName");
+        gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
+        gr.query();
+        if (!gr.hasNext()) {
+            return JSON.stringify({
+                "info": "The given CA Tag name is a valid one"
+            });
+        }
+        while (gr.next()) {
+            if (caTagName === gr.getValue('ca_tag_name')) {
+                return JSON.stringify({
+                    "error": "The given CA Tag name already exists"
+                });
+            }
+        }
+        return JSON.stringify({
+            "info": "The given CA Tag name is a valid one"
+        });
+
+    },
+    type: 'check_ca_tag_name_exist'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-29 12:03:58</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>b1b5662e1be59950cda7db91dd4bcb17</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>check_ca_tag_name_exist</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_b1b5662e1be59950cda7db91dd4bcb17</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-03 09:09:56</sys_updated_on>
+    </sys_script_include>
+</record_update>

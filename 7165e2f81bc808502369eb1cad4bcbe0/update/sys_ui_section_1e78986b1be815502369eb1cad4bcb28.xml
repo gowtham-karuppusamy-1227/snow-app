@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Revoke Settings" section_id="1e78986b1be815502369eb1cad4bcb28" sys_domain="global" table="x_avx_appviewx_aut_clm_settings" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>use_approval_settings_from_create_for_revoke</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a0fd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>is_approval_needed_in_appviewx_revoke</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>24fd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approval_levels_in_appviewx_revoke</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a4fd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>appviewx_one_level_approval_mail_id_for_revoke</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>28fd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>appviewx_two_level_approval_mail_id_for_revoke</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a8fd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>certificates_fetch_revoke</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>2cfd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>fetch_user_group_revoke</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>acfd3dc41b2b4250cda7db91dd4bcbeb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>workflow_name_for_revoke_appviewx</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>20fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>revoke_notification_mode</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a0fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>24fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>is_approval_needed_in_servicenow_revoke</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a4fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approval_levels_in_servicenow_revoke</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>28fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approver_selection_revoke</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>a8fd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assignment_group_revoke</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>2cfd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>revoke_approver_selection_two</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>acfd3dc41b2b4250cda7db91dd4bcbec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>revoke_user_group_snow_two</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
+            <sys_id>20fd3dc41b2b4250cda7db91dd4bcbed</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Revoke Settings" display_value="Revoke Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">1e78986b1be815502369eb1cad4bcb28</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Revoke Settings</caption>
+            <header>false</header>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-07-13 11:11:16</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1e78986b1be815502369eb1cad4bcb28</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_name>x_avx_appviewx_aut_clm_settings</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_section_1e78986b1be815502369eb1cad4bcb28</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-19 05:09:25</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

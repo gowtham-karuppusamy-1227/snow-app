@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <can_iterate>false</can_iterate>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <max_drift/>
+        <name>AppViewX Logs Purging</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2025-02-10 12:20:00</run_start>
+        <run_time>1970-01-01 00:00:00</run_time>
+        <run_type>on_demand</run_type>
+        <script><![CDATA[executePurge();
+function executePurge() {
+	try{
+        var value = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+        var domain_partition = gs.getProperty("glide.sys.domain.partitioning");
+        var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+        if (domain_partition == 'true') {
+            var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+            gr.query();
+            while (gr.next()) {
+                var sync_status = gr.getDisplayValue('enable_log_purging') || 'false';
+                var company_name = gr.getValue('company') || '';
+                var company_gr = new GlideRecordSecure('core_company');
+                company_gr.addQuery('sys_id', company_name);
+                company_gr.query();
+                while (company_gr.next()) {
+                    var company_display_name = company_gr.getValue('name');
+                }
+                if (sync_status == 'true') {
+					var daysToRetain = gr.getDisplayValue('log_retention_period_days') || 0;
+                    log.initialize();
+                    log.level = 'Info';
+                    log.script = "Log Purging";
+                    log.application = 'AppViewX';
+                    log.message = "Log Purging for the company - "+ company_display_name + " is Initiated ";
+                    log.company = company_name;
+                    log.insert();
+					var purgeDate = new GlideDateTime();
+					purgeDate.addDaysUTC(-daysToRetain);
+					var gr = new GlideRecord('x_avx_appviewx_aut_logs');
+					gr.addQuery('sys_created_on', '<', purgeDate);
+					gr.addQuery('company',company_name)
+					gr.query();
+					var count = 0;
+					while (gr.next()) {
+						gr.deleteRecord();
+						count++;
+					}
+                    log.initialize();
+                    log.level = 'Info';
+                    log.script = 'Log Purge';
+                    log.application = 'AppViewX';
+                    log.message = "Log Purge for the company - " + company_display_name + " is completed. ";
+                    log.company = company_name;
+                    log.insert();
+                }
+            }
+
+        } else if (value == "true") {
+			var daysToRetain = gs.getProperty("x_avx_appviewx_aut.Log Retention") || 90;
+			var purgeDate = new GlideDateTime();
+			purgeDate.addDaysUTC(-daysToRetain);
+			var gr = new GlideRecord('x_avx_appviewx_aut_logs');
+			gr.addQuery('sys_created_on', '<', purgeDate);
+			gr.query();
+			var count = 0;
+			while (gr.next()) {
+				gr.deleteRecord();
+				count++;
+			}
+			var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+			log.initialize();
+			log.level = 'Info';
+			log.script = 'Log Purging';
+			log.application = 'AppViewX';
+			log.message = 'Deleted ' + count + ' records from ' + logTable + ' older than ' + daysToRetain + ' days.';
+			log.insert();
+            
+        } else {
+            log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Info';
+            log.script = 'Log Purge';
+            log.application = 'AppViewX';
+            log.message = "AppViewx Log Purge is disabled.";
+            log.insert();
+        }
+    } catch (error) {
+        log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+        log.initialize();
+        log.level = 'Error';
+        log.script = 'Log Purge Error';
+        log.application = 'AppViewX';
+        log.message = "AppViewx Log Purge is Failed. - " + error;
+        log.company = company_name;
+        log.insert();
+    }
+    
+   
+}
+
+
+
+
+]]></script>
+        <source_filter/>
+        <source_table>cmdb_ci_appl_dot_net</source_table>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-17 18:49:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>89882e973b4fd210b795659aa4e45a0e</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>AppViewX Logs Purging</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sysauto_script_89882e973b4fd210b795659aa4e45a0e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-10 12:21:04</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

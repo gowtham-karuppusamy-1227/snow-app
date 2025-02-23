@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_certificate_authority_name</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches all the CA Tags configured in the CLM Settings.</description>
+        <name>get_certificate_authority_name</name>
+        <script><![CDATA[var get_certificate_authority_name = Class.create();
+get_certificate_authority_name.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getCertificateAuthority: function() {
+        try {
+            var gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
+            var response = [];
+            gr.query();
+            if (!gr.hasNext()) {
+                throw "Could not find the certificate authorities in the CLM settings table";
+            }
+            while (gr.next()) {
+                var values = {};
+                values["ca"] = gr.getValue('ca_type');
+                values["ca_tag_name"] = gr.getValue('ca_tag_name');
+				values["tag_applicable_for"] = gr.getDisplayValue('tag_applicable_for');
+                response.push(values);
+            }
+            return JSON.stringify(response);
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'get_certificate_authority_name';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching Certificate authorities from CLM settings table  -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+    type: 'get_certificate_authority_name'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 09:46:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>d69c25e41b60d1102369eb1cad4bcb3a</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>get_certificate_authority_name</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_d69c25e41b60d1102369eb1cad4bcb3a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:27:56</sys_updated_on>
+    </sys_script_include>
+</record_update>

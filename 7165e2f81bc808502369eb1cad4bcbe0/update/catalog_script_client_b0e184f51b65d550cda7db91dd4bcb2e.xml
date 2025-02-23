@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Enroll Certificate">d830d29c1bc91d1061858480cd4bcbe1</cat_item>
+        <cat_variable>IO:6146eedc1b4d1d1061858480cd4bcb12</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_ecdsa_curve</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[/*
+Function to populate ECDSA curve values dynamically from the AppviewX policy based on the selection..
+	1. ECDSA values
+*/
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    try {
+        var CA = g_form.getValue('certificate_authority');
+        var key_type = g_form.getValue('key_type');
+        var bit_length = g_form.getValue('bit_length');
+        var ca_policy = g_form.getValue('ca_policy_details');
+        var amazon_issuer = g_form.getValue('issuer');
+		var avx_issuer_location = g_form.getValue('avx_issuer_location');
+		var ca_account = g_form.getValue('validate_ca_account');
+        g_form.setDisplay('ecdsa_curve', true);
+        g_form.setMandatory('ecdsa_curve', true);
+        g_form.clearOptions('ecdsa_curve');
+        g_form.addOption('ecdsa_curve', '', 'Select');
+        g_form.setValue('ecdsa_curve', '', 'Select');
+        try {
+            ca_policy = JSON.parse(ca_policy);
+        } catch (err) {
+            throw "Couldn't parse the ca policy details.";
+        }
+        if (key_type === 'EC') {
+            for (var iterator = 0; iterator < ca_policy.length; iterator++) {
+                var result = ca_policy[iterator];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Autority is not configured in AppviewX Policy.';
+                }
+                if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS') {
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+                    var acc_details = result.multipleAccountDetails;
+                    for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+                        if (!acc_details[m_acc].caSettings) {
+                            throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        if (!acc_details[m_acc].caSettings.name) {
+                            throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        var pki_acc_name = acc_details[m_acc].caSettings.name;
+                        if (!acc_details[m_acc].caSettings.issuerLocation) {
+                            throw "Issuer Location is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        var ca_issuer_location = acc_details[m_acc].caSettings.issuerLocation;
+                        if (pki_acc_name === ca_account && avx_issuer_location === ca_issuer_location) {
+                            if (!acc_details[m_acc].certificateEcCurves[bit_length]) {
+                                throw 'Bit-length values missing in the AppviewX Policy.';
+                            }
+                            var certificateEcCurves = acc_details[m_acc].certificateEcCurves[bit_length];
+                            for (var pki_curve = 0; pki_curve < certificateEcCurves.length; pki_curve++) {
+                                g_form.addOption('ecdsa_curve', certificateEcCurves[pki_curve], certificateEcCurves[pki_curve]);
+                            }
+                            if (certificateEcCurves.length > 0) {
+                                g_form.setValue('ecdsa_curve', certificateEcCurves[0], certificateEcCurves[0]);
+                            }
+                            break;
+                        }
+                    }
+                } else if (result.certificateAuthority === CA && result.certificateAuthority !== 'Amazon Private CA') {
+                    if (!result.certificateEcCurves[bit_length]) {
+                        throw 'Bit-length values missing in the AppviewX Policy.';
+                    }
+                    certificateEcCurves = result.certificateEcCurves[bit_length];
+                    for (var curve = 0; curve < certificateEcCurves.length; curve++) {
+                        g_form.addOption('ecdsa_curve', certificateEcCurves[curve], certificateEcCurves[curve]);
+                    }
+                    if (certificateEcCurves.length > 0) {
+                        g_form.setValue('ecdsa_curve', certificateEcCurves[0], certificateEcCurves[0]);
+                    }
+                    break;
+                } else if (result.certificateAuthority === CA && result.certificateAuthority === 'Amazon Private CA') {
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+                    var multiple_accounts = result.multipleAccountDetails;
+                    for (var acc = 0; acc < multiple_accounts.length; acc++) {
+                        if (multiple_accounts[acc].caSettings.issuerName === amazon_issuer) {
+                            if (!multiple_accounts[acc].certificateEcCurves[bit_length]) {
+                                throw 'Bit-length values missing in the AppviewX Policy.';
+                            }
+                            certificateEcCurves = multiple_accounts[acc].certificateEcCurves[bit_length];
+                            for (var ec_curve = 0; ec_curve < certificateEcCurves.length; ec_curve++) {
+                                g_form.addOption('ecdsa_curve', certificateEcCurves[ec_curve], certificateEcCurves[ec_curve]);
+                            }
+                            if (certificateEcCurves.length > 0) {
+                                g_form.setValue('ecdsa_curve', certificateEcCurves[0], certificateEcCurves[0]);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        } else {
+            g_form.clearOptions('ecdsa_curve');
+            g_form.clearValue('ecdsa_curve');
+            g_form.setMandatory('ecdsa_curve', false);
+            g_form.setDisplay('ecdsa_curve', false);
+        }
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
+        var message = 'Error occurred while setting ecdsa curve in the form - ' + error;
+        var ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "set_ecdsa_curve");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-26 16:06:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b0e184f51b65d550cda7db91dd4bcb2e</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>set_ecdsa_curve</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_b0e184f51b65d550cda7db91dd4bcb2e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-25 11:13:36</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

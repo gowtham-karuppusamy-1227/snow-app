@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description/>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.httpclient.protocol.myhttps.class</name>
+        <read_roles>x_avx_appviewx_aut.admin</read_roles>
+        <suffix>glide.httpclient.protocol.myhttps.class</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-28 17:24:49</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>6ccb2a8d1beac55061858480cd4bcbe9</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>glide.httpclient.protocol.myhttps.class</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_properties_6ccb2a8d1beac55061858480cd4bcbe9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-04-15 15:40:20</sys_updated_on>
+        <type>string</type>
+        <value>com.glide.certificates.DBKeyStoreSocketFactory</value>
+        <write_roles>x_avx_appviewx_aut.admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=6ccb2a8d1beac55061858480cd4bcbe9"/>
+</record_update>

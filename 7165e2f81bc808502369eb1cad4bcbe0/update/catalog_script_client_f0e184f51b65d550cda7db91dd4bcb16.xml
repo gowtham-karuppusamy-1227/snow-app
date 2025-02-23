@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Enroll Certificate">d830d29c1bc91d1061858480cd4bcbe1</cat_item>
+        <cat_variable>IO:9ef6ee101b8d1d1061858480cd4bcb3a</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_vendor_specific_fields</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[/*
+Function to populate the below details in the form dynamicaaly by requesting the AppViewX.
+	1. Digicert Division and certificate details
+	2. Validity details
+*/
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+
+    function set_ejbca_profile_name(profile_name) {
+        try {
+            var ejbca_profile_flag = 0;
+            g_form.setDisplay('ejbca_end_entity_profile_name', true);
+            g_form.setMandatory('ejbca_end_entity_profile_name', true);
+			g_form.clearValue('ejbca_end_entity_profile_name');
+            g_form.clearOptions('ejbca_end_entity_profile_name');
+            g_form.setDisplay('ejbca_end_entity_user_name', true);
+            g_form.clearValue('ejbca_end_entity_user_name');
+            g_form.addOption('ejbca_end_entity_profile_name', '', 'Select');
+            for (var ejbca_profile = 0; ejbca_profile < profile_name.length; ejbca_profile++) {
+                if (profile_name[ejbca_profile].selected) {
+                    var name = profile_name[ejbca_profile].profileName;
+                    g_form.addOption('ejbca_end_entity_profile_name', name, name);
+                    ejbca_profile_flag = 1;
+                }
+            }
+            if (ejbca_profile_flag === 1) {
+                g_form.setValue('ejbca_end_entity_profile_name', '', 'Select');
+            } else {
+                throw "There is no End Entity Profile Name associated in the AppViewX under Certificate Authority";
+            }
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error);
+            var message = 'Error occurred while setting EJBCA vendor specific fields - ' + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "set_vendor_specific_fields");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+
+    function getResponse(response) {
+        try {
+            g_form.setDisplay('ejbca_end_entity_profile_name', true);
+            g_form.setMandatory('ejbca_end_entity_profile_name', true);
+			g_form.clearValue('ejbca_end_entity_profile_name');
+            g_form.clearOptions('ejbca_end_entity_profile_name');
+			var ca_account = g_form.getValue('ca_account');
+            var answer = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                answer = JSON.parse(answer);
+            } catch (err) {
+                throw "Couldn't parse ejbca certificate authority details.";
+            }
+			var ca_response = answer.response;
+			var flag = 0;
+			for (var iterator = 0; iterator < ca_response.length; iterator++) {
+				if (ca_response[iterator].name == ca_account) {
+					flag = 1;
+					var ejbca_response = answer.response[iterator].vendorSpecificSettings;
+				}
+			}
+			if (flag == 0) {
+				throw "The selected CA-Account in the CLM Settings is not available in the response";
+			}
+            g_form.setValue('ejbca_ca_details', JSON.stringify(ejbca_response), JSON.stringify(ejbca_response));
+            var profile_name = ejbca_response.endEntityProfiles;
+            set_ejbca_profile_name(profile_name);
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error);
+            var message = 'Error occurred while fetching EJBCA vendor specific fields - ' + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "set_vendor_specific_fields");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+
+    try {
+        var CA = g_form.getValue('certificate_authority');
+        var ca_account = g_form.getValue('ca_account');
+        var cert_category = g_form.getValue('certificate_category');
+        var ca_policy = g_form.getValue('ca_policy_details');
+        var ejbca_ca_details = g_form.getValue('ejbca_ca_details');
+        var amazon_issuer = g_form.getValue('issuer');
+        var ca_flag = 0;
+		
+		var i, k;
+        if (CA !== 'Amazon') {
+            try {
+                ca_policy = JSON.parse(ca_policy);
+            } catch (err) {
+                throw "Couldn't parse the ca policy details";
+            }
+        }
+        if (CA === 'Amazon') {
+            ca_flag = 1;
+        }
+        if (CA === 'DigiCert') {
+            var flag = 0;
+            for (i = 0; i < ca_policy.length; i++) {
+                var result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw "Certificate Authority is not configured in AppviewX Policy.";
+                }
+                if (result.certificateAuthority == CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var digicert_divisions = result.caSettings;
+                    for (var div = 0; div < digicert_divisions.length; div++) {
+                        if (!digicert_divisions[div].name) {
+                            throw 'CA account details are not available.';
+                        }
+                        if (digicert_divisions[div].name == ca_account) {
+                            ca_flag = 1;
+                            if (!digicert_divisions[div].divisions) {
+                                throw 'Digicert divisions are not configured in the AppviewX policy.';
+                            }
+                            var division = digicert_divisions[div].divisions;
+                            g_form.setDisplay('division', true);
+                            g_form.setMandatory('division', true);
+                            g_form.clearOptions('division');
+                            g_form.addOption('division', '', 'Select');
+                            g_form.setValue('division', '', 'Select');
+                            for (var j = 0; j < division.length; j++) {
+                                if ('name' in division[j]) {
+                                    g_form.addOption('division', division[j].name, division[j].name);
+                                    if (flag == 0) {
+                                        g_form.setValue('division', division[j].name, division[j].name);
+                                    }
+                                    flag = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('division');
+            g_form.setMandatory('division', false);
+            g_form.setDisplay('division', false);
+            g_form.clearOptions('certificate_type');
+            g_form.setMandatory('certificate_type', false);
+            g_form.setDisplay('certificate_type', false);
+            g_form.clearOptions('server_type');
+            g_form.setMandatory('server_type', false);
+            g_form.setDisplay('server_type', false);
+        }
+        if (CA === 'AppViewX' || CA === 'AppViewX PKIaaS') {
+            g_form.clearOptions('validity_unit');
+            g_form.addOption('validity_unit', '', 'Select');
+            for (var ca = 0; ca < ca_policy.length; ca++) {
+                result = ca_policy[ca];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing';
+                    }
+                    var caSetting = result.caSettings;
+                    for (var val = 0; val < caSetting.length; val++) {
+                        if (caSetting[val].name === ca_account) {
+                            ca_flag = 1;
+                            if (!caSetting[val].validityPeriods) {
+                                throw 'Validity details are missing in the AppviewX policy.';
+                            }
+                            var validity = caSetting[val].validityPeriods;
+                            var keys = Object.keys(validity);
+                            g_form.setMandatory('validity_unit', true);
+                            g_form.setDisplay('validity_unit', true);
+                            for (var v_unit = 0; v_unit < keys.length; v_unit++) {
+                                if (validity[keys[v_unit]].length > 0) {
+                                    if (keys[v_unit].includes('Years')) {
+                                        g_form.addOption('validity_unit', "Years", "Years");
+                                    } else if (keys[v_unit].includes('Months')) {
+                                        g_form.addOption('validity_unit', "Months", "Months");
+                                    } else if (keys[v_unit].includes('Days')) {
+                                        g_form.addOption('validity_unit', "Days", "Days");
+                                    }
+                                }
+                            }
+                            g_form.setValue("validity_unit", "", "Select");
+                        }
+                    }
+                }
+            }
+        }
+        if (CA === 'Microsoft Enterprise') {
+            g_form.clearOptions('validity_unit');
+            g_form.setMandatory('validity_unit', false);
+            g_form.setDisplay('validity_unit', false);
+            g_form.clearOptions('validity_value');
+            g_form.setMandatory('validity_value', false);
+            g_form.setDisplay('validity_value', false);
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw "Certificate Authority is not configured in AppviewX policy.";
+                }
+                if (result.certificateAuthority == CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing';
+                    }
+                    var microsoft_template = result.caSettings;
+                    for (var template = 0; template < microsoft_template.length; template++) {
+                        if (!microsoft_template[template].name) {
+                            throw 'CA account details are not available';
+                        }
+                        if (microsoft_template[template].name == ca_account) {
+                            ca_flag = 1;
+                            if (!microsoft_template[template].templates) {
+                                throw 'Microsoft Templates are not configured in the AppviewX policy.';
+                            }
+                            var templates = microsoft_template[template].templates;
+                            g_form.setDisplay('microsoft_template', true);
+                            g_form.setMandatory('microsoft_template', true);
+                            g_form.clearOptions('microsoft_template');
+                            g_form.addOption('microsoft_template', '', 'Select');
+                            for (var template_name = 0; template_name < templates.length; template_name++) {
+                                g_form.addOption('microsoft_template', templates[template_name], templates[template_name]);
+                            }
+                            g_form.setValue('microsoft_template', '', 'Select');
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('microsoft_template');
+            g_form.setMandatory('microsoft_template', false);
+            g_form.setDisplay('microsoft_template', false);
+        }
+        if (CA === "Entrust") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var entrust_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < entrust_casettings.length; caSetting++) {
+                        if (!entrust_casettings[caSetting].name || !entrust_casettings[caSetting].certTypes) {
+                            throw 'CA account details or Entrust Certificate Types are not available.';
+                        }
+                        if (entrust_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var entrust_cert_types = entrust_casettings[caSetting].certTypes;
+                            g_form.clearOptions('entrust_certificate_type');
+                            g_form.addOption('entrust_certificate_type', '', 'Select');
+                            g_form.setDisplay('entrust_certificate_type', true);
+                            g_form.setMandatory('entrust_certificate_type', true);
+                            for (var en_cert_type = 0; en_cert_type < entrust_cert_types.length; en_cert_type++) {
+                                if ((entrust_cert_types[en_cert_type].type).toLowerCase() == cert_category.toLowerCase()) {
+                                    g_form.addOption('entrust_certificate_type', entrust_cert_types[en_cert_type].name, entrust_cert_types[en_cert_type].name);
+                                }
+                            }
+                            g_form.setValue('entrust_certificate_type', '', 'Select');
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('entrust_certificate_type');
+            g_form.setMandatory('entrust_certificate_type', false);
+            g_form.setDisplay('entrust_certificate_type', false);
+        }
+        if (CA === "DigiCert MPKI") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var digicert_casettings = result.caSettings;
+                    g_form.clearOptions('digicert_mpki_profiles');
+                    g_form.addOption('digicert_mpki_profiles', '', 'Select');
+                    g_form.setDisplay('digicert_mpki_profiles', true);
+                    g_form.setMandatory('digicert_mpki_profiles', true);
+                    for (caSetting = 0; caSetting < digicert_casettings.length; caSetting++) {
+                        if (!digicert_casettings[caSetting].name) {
+                            throw 'CA account details or DigiCert MPKI profiles are not available.';
+                        }
+                        if (digicert_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var digicert_profiles = digicert_casettings[caSetting].profiles || {};
+                            if (digicert_profiles.name) {
+                                var profile_name = digicert_profiles.name;
+                                g_form.addOption('digicert_mpki_profiles', profile_name, profile_name);
+                            }
+                        }
+                    }
+                    g_form.setValue('digicert_mpki_profiles', '', 'Select');
+                }
+            }
+        } else {
+            g_form.clearOptions('digicert_mpki_profiles');
+            g_form.setMandatory('digicert_mpki_profiles', false);
+            g_form.setDisplay('digicert_mpki_profiles', false);
+        }
+        if (CA === "Ejbca") {
+            ca_flag = 1;
+            if (ejbca_ca_details === "") {
+				var company_name = g_form.getValue('company_name');
+                var ajax = new GlideAjax('get_ejbca_details');
+                ajax.addParam('sysparm_name', 'getEjbcaDetails');
+                ajax.addParam('certificate_authority', CA);
+				ajax.addParam('sysparm_company', company_name);
+                ajax.getXML(getResponse);
+            } else {
+                try {
+                    ejbca_ca_details = JSON.parse(ejbca_ca_details);
+                } catch (err) {
+                    throw "Couldn't parse the ejbca ca details to fetch the specific fields.";
+                }
+                ejbca_ca_details = ejbca_ca_details.endEntityProfiles;
+                set_ejbca_profile_name(ejbca_ca_details);
+            }
+        } else {
+            g_form.clearOptions('ejbca_end_entity_profile_name');
+            g_form.setMandatory('ejbca_end_entity_profile_name', false);
+            g_form.setDisplay('ejbca_end_entity_profile_name', false);
+            g_form.clearValue('ejbca_end_entity_user_name');
+            g_form.setDisplay('ejbca_end_entity_user_name', false);
+            g_form.clearOptions('ejbca_issuer_common_name');
+            g_form.setMandatory('ejbca_issuer_common_name', false);
+            g_form.setDisplay('ejbca_issuer_common_name', false);
+            g_form.clearOptions('ejbca_certificate_profile_name');
+            g_form.setMandatory('ejbca_certificate_profile_name', false);
+            g_form.setDisplay('ejbca_certificate_profile_name', false);
+        }
+        if (CA === 'Comodo Certificate Manager') {
+            g_form.setDisplay('sectigo_certificate_type', true);
+            g_form.setMandatory('sectigo_certificate_type', true);
+            g_form.clearOptions('sectigo_certificate_type');
+            g_form.addOption('sectigo_certificate_type', '', 'Select');
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX Policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA settings are not configured in AppViewX Policy.';
+                    }
+                    var sectigo_settings = result.caSettings;
+                    for (var sec = 0; sec < sectigo_settings.length; sec++) {
+                        if (sectigo_settings[sec].name === ca_account) {
+                            ca_flag = 1;
+                            if (!sectigo_settings[sec].certTypes) {
+                                throw 'Sectigo certificate types are not configured in AppviewX Policy.';
+                            }
+                            var sectigo_cert_types = sectigo_settings[sec].certTypes;
+                            for (k = 0; k < sectigo_cert_types.length; k++) {
+                                if ((sectigo_cert_types[k].type).toLowerCase() === cert_category.toLowerCase()) {
+                                    g_form.addOption('sectigo_certificate_type', sectigo_cert_types[k].name, sectigo_cert_types[k].name);
+                                }
+                            }
+                            g_form.setValue('sectigo_certificate_type', '', 'Select');
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('sectigo_certificate_type');
+            g_form.setMandatory('sectigo_certificate_type', false);
+            g_form.setDisplay('sectigo_certificate_type', false);
+            g_form.clearOptions('sectigo_server_type');
+            g_form.setMandatory('sectigo_server_type', false);
+            g_form.setDisplay('sectigo_server_type', false);
+        }
+        if (CA === "GoDaddy") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var godaddy_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < godaddy_casettings.length; caSetting++) {
+                        if (!godaddy_casettings[caSetting].name || !godaddy_casettings[caSetting].certTypes) {
+                            throw 'CA account details or Certificate Types are not available.';
+                        }
+                        if (godaddy_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var godaddy_cert_types = godaddy_casettings[caSetting].certTypes;
+                            g_form.clearOptions('godaddy_certificate_type');
+                            g_form.addOption('godaddy_certificate_type', '', 'Select');
+                            g_form.setDisplay('godaddy_certificate_type', true);
+                            g_form.setMandatory('godaddy_certificate_type', true);
+                            for (var gd_cert_type = 0; gd_cert_type < godaddy_cert_types.length; gd_cert_type++) {
+                                if ((godaddy_cert_types[gd_cert_type].type).toLowerCase() == cert_category.toLowerCase()) {
+                                    g_form.addOption('godaddy_certificate_type', godaddy_cert_types[gd_cert_type].name, godaddy_cert_types[gd_cert_type].name);
+                                }
+                            }
+                            g_form.setValue('godaddy_certificate_type', '', 'Select');
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('godaddy_certificate_type');
+            g_form.setMandatory('godaddy_certificate_type', false);
+            g_form.setDisplay('godaddy_certificate_type', false);
+        }
+        if (CA === 'Amazon Private CA') {
+            g_form.clearOptions('validity_unit');
+            g_form.addOption('validity_unit', '', 'Select');
+            for (ca = 0; ca < ca_policy.length; ca++) {
+                result = ca_policy[ca];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority == CA) {
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+                    var multiple_accounts = result.multipleAccountDetails;
+                    for (var acc = 0; acc < multiple_accounts.length; acc++) {
+                        if (multiple_accounts[acc].caSettings.issuerName === amazon_issuer) {
+                            ca_flag = 1;
+                            if (!multiple_accounts[acc].caSettings.validityPeriods) {
+                                throw 'Validity details are missing in the AppviewX policy.';
+                            }
+                            var validity_units = multiple_accounts[acc].caSettings.validityPeriods;
+                            var validity_keys = Object.keys(validity_units);
+                            g_form.setMandatory('validity_unit', true);
+                            g_form.setDisplay('validity_unit', true);
+                            for (v_unit = 0; v_unit < validity_keys.length; v_unit++) {
+                                if (validity_units[validity_keys[v_unit]].length > 0) {
+                                    if (validity_keys[v_unit].includes('Years')) {
+                                        g_form.addOption('validity_unit', "Years", "Years");
+                                    } else if (validity_keys[v_unit].includes('Months')) {
+                                        g_form.addOption('validity_unit', "Months", "Months");
+                                    } else if (validity_keys[v_unit].includes('Days')) {
+                                        g_form.addOption('validity_unit', "Days", "Days");
+                                    }
+                                }
+                            }
+                            g_form.setValue("validity_unit", "", "Select");
+                        }
+                    }
+                }
+            }
+        }
+		if (CA === 'GlobalSign') {
+			g_form.clearOptions('globalsign_certificate_type');
+			g_form.addOption('globalsign_certificate_type', '', 'Select');
+			g_form.setDisplay('globalsign_certificate_type', true);
+			g_form.setMandatory('globalsign_certificate_type', true);
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var globalsign_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < globalsign_casettings.length; caSetting++) {
+                        if (!globalsign_casettings[caSetting].name || !globalsign_casettings[caSetting].certTypes) {
+                            throw 'CA account details or GlobalSign Certificate Types are not available.';
+                        }
+                        if (globalsign_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var globalsign_cert_types = globalsign_casettings[caSetting].certTypes;
+                            for (var gs_cert_type = 0; gs_cert_type < globalsign_cert_types.length; gs_cert_type++) {
+                                if (globalsign_cert_types[gs_cert_type].type == cert_category.toLowerCase()) {
+                                    g_form.addOption('globalsign_certificate_type', globalsign_cert_types[gs_cert_type].name, globalsign_cert_types[gs_cert_type].name);
+                                }
+                            }
+                            g_form.setValue('globalsign_certificate_type', '', 'Select');
+                        }
+                    }
+                }
+            }
+		} else {
+            g_form.clearOptions('globalsign_certificate_type');
+            g_form.setMandatory('globalsign_certificate_type', false);
+            g_form.setDisplay('globalsign_certificate_type', false);
+            g_form.clearOptions('domain_admin_email');
+            g_form.setMandatory('domain_admin_email', false);
+            g_form.setDisplay('domain_admin_email', false);
+            g_form.clearOptions('business_category');
+            g_form.setMandatory('business_category', false);
+            g_form.setDisplay('business_category', false);
+            g_form.clearValue('designation');
+            g_form.setMandatory('designation', false);
+            g_form.setDisplay('designation', false);
+            g_form.clearValue('incorporating_agency_reg_no');
+            g_form.setMandatory('incorporating_agency_reg_no', false);
+            g_form.setDisplay('incorporating_agency_reg_no', false);
+		}
+		if (CA === 'GlobalSignMSSL') {
+			g_form.clearOptions('globalsign_mssl_certificate_type');
+			g_form.addOption('globalsign_mssl_certificate_type', '', 'Select');
+			g_form.setDisplay('globalsign_mssl_certificate_type', true);
+			g_form.setMandatory('globalsign_mssl_certificate_type', true);
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var gs_mssl_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < gs_mssl_casettings.length; caSetting++) {
+                        if (!gs_mssl_casettings[caSetting].name || !gs_mssl_casettings[caSetting].certTypes) {
+                            throw 'CA account details or GlobalSign Certificate Types are not available.';
+                        }
+                        if (gs_mssl_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var gs_mssl_cert_types = gs_mssl_casettings[caSetting].certTypes;
+                            for (var gsmssl_cert_type = 0; gsmssl_cert_type < gs_mssl_cert_types.length; gsmssl_cert_type++) {
+                                if (gs_mssl_cert_types[gsmssl_cert_type].type == cert_category.toLowerCase()) {
+                                    g_form.addOption('globalsign_mssl_certificate_type', gs_mssl_cert_types[gsmssl_cert_type].name, gs_mssl_cert_types[gsmssl_cert_type].name);
+                                }
+                            }
+                            g_form.setValue('globalsign_mssl_certificate_type', '', 'Select');
+                        }
+                    }
+                }
+            }
+		} else {
+            g_form.clearOptions('globalsign_mssl_certificate_type');
+            g_form.setMandatory('globalsign_mssl_certificate_type', false);
+            g_form.setDisplay('globalsign_mssl_certificate_type', false);
+            g_form.clearOptions('globalsign_mssl_profile_name');
+            g_form.setMandatory('globalsign_mssl_profile_name', false);
+            g_form.setDisplay('globalsign_mssl_profile_name', false);
+		}
+        if (CA === "Trustwave") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var trustwave_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < trustwave_casettings.length; caSetting++) {
+                        if (!trustwave_casettings[caSetting].name || !trustwave_casettings[caSetting].certTypes) {
+                            throw 'CA account details or Trustwave Certificate Types are not available.';
+                        }
+                        if (trustwave_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var trustwave_cert_types = trustwave_casettings[caSetting].certTypes;
+                            g_form.clearOptions('trustwave_certificate_type');
+                            g_form.addOption('trustwave_certificate_type', '', 'Select');
+                            g_form.setDisplay('trustwave_certificate_type', true);
+                            g_form.setMandatory('trustwave_certificate_type', true);
+                            for (var cert_type = 0; cert_type < trustwave_cert_types.length; cert_type++) {
+                                if ((trustwave_cert_types[cert_type].type).toLowerCase() == cert_category.toLowerCase()) {
+                                    g_form.addOption('trustwave_certificate_type', trustwave_cert_types[cert_type].name, trustwave_cert_types[cert_type].name);
+                                }
+                            }
+                            g_form.setValue('trustwave_certificate_type', '', 'Select');
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('trustwave_certificate_type');
+            g_form.setMandatory('trustwave_certificate_type', false);
+            g_form.setDisplay('trustwave_certificate_type', false);
+        }
+        if (CA === "HydrantID") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var hydrant_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < hydrant_casettings.length; caSetting++) {
+                        if (!hydrant_casettings[caSetting].name || !hydrant_casettings[caSetting].certTypes) {
+                            throw 'CA account details or Certificate Types are not available.';
+                        }
+                        if (hydrant_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var hydrant_cert_types = hydrant_casettings[caSetting].certTypes;
+                            g_form.clearOptions('hydrantid_policy_name');
+                            g_form.addOption('hydrantid_policy_name', '', 'Select');
+                            g_form.setDisplay('hydrantid_policy_name', true);
+                            g_form.setMandatory('hydrantid_policy_name', true);
+                            for (var hd_cert_type = 0; hd_cert_type < hydrant_cert_types.length; hd_cert_type++) {
+                                if ((hydrant_cert_types[hd_cert_type].type).toLowerCase() == cert_category.toLowerCase()) {
+                                    g_form.addOption('hydrantid_policy_name', hydrant_cert_types[hd_cert_type].name, hydrant_cert_types[hd_cert_type].name);
+                                }
+                            }
+                            g_form.setValue('hydrantid_policy_name', '', 'Select');
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('hydrantid_policy_name');
+            g_form.setMandatory('hydrantid_policy_name', false);
+            g_form.setDisplay('hydrantid_policy_name', false);
+        }
+        if (CA === "SwissSign") {
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Authority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing.';
+                    }
+                    var swisssign_casettings = result.caSettings;
+                    for (caSetting = 0; caSetting < swisssign_casettings.length; caSetting++) {
+                        if (!swisssign_casettings[caSetting].name) {
+                            throw 'CA account details are not available.';
+                        }
+                        if (swisssign_casettings[caSetting].name === ca_account) {
+                            ca_flag = 1;
+                            var swisssign_clients = swisssign_casettings[caSetting].clients;
+                            g_form.clearOptions('swisssign_client_name');
+                            g_form.addOption('swisssign_client_name', '', 'Select');
+                            g_form.setDisplay('swisssign_client_name', true);
+                            g_form.setMandatory('swisssign_client_name', true);
+                            for (var client = 0; client < swisssign_clients.length; client++) {
+                                g_form.addOption('swisssign_client_name', swisssign_clients[client].name, swisssign_clients[client].name);
+                            }
+                            g_form.setValue('swisssign_client_name', '', 'Select');
+                            g_form.setValue('swisssign_client_name', swisssign_clients[0].name, swisssign_clients[0].name);
+                        }
+                    }
+                }
+            }
+        } else {
+            g_form.clearOptions('swisssign_client_name');
+            g_form.setMandatory('swisssign_client_name', false);
+            g_form.setDisplay('swisssign_client_name', false);
+        }
+		if (CA === 'Microsoft Standalone') {
+			ca_flag = 1;
+            g_form.clearOptions('validity_unit');
+            g_form.setMandatory('validity_unit', false);
+            g_form.setDisplay('validity_unit', false);
+            g_form.clearOptions('validity_value');
+            g_form.setMandatory('validity_value', false);
+            g_form.setDisplay('validity_value', false);
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw "Certificate Authority is not configured in AppviewX policy.";
+                }
+                if (result.certificateAuthority == CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing';
+                    }
+                    
+                }
+            }
+        }
+        
+        if (ca_flag === 0) {
+            throw "The selected CA " + ca_account + " account is not configured in AppViewX.";
+        }
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
+        var message = 'Error occurred while setting vendor specific fields in the form - ' + error;
+        var ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "set_vendor_specific_fields");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-26 16:06:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>f0e184f51b65d550cda7db91dd4bcb16</sys_id>
+        <sys_mod_count>90</sys_mod_count>
+        <sys_name>set_vendor_specific_fields</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_f0e184f51b65d550cda7db91dd4bcb16</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-13 10:28:56</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

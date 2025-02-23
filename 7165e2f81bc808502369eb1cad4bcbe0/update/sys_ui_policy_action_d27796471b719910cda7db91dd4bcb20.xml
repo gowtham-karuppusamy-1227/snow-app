@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>is_approval_needed_in_appviewx_revoke</field>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-12 10:27:48</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>d27796471b719910cda7db91dd4bcb20</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>is_approval_needed_in_appviewx_revoke</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ui_policy_action_d27796471b719910cda7db91dd4bcb20</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-12 10:27:48</sys_updated_on>
+        <table>x_avx_appviewx_aut_clm_settings</table>
+        <ui_policy display_value="Fetch approval functionalities from enroll - Revoke">813792471b719910cda7db91dd4bcb17</ui_policy>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

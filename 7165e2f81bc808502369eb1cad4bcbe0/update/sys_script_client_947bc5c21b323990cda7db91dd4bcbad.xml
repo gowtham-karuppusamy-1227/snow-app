@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>tenant_name</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>populate_connection_setting_details</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+    try {
+        var reference_field = g_form.getValue('tenant_name');
+        if (reference_field) {
+            g_form.getReference('tenant_name', function(gr) {
+                if (gr) {
+                    var instance_url = gr.getValue('instance_url');
+                    var client_id = gr.getValue('client_id');
+                    var client_secret = gr.getValue('client_secret');
+					var mid_server = gr.getValue('mid_server');
+                    g_form.setValue('appviewx_instance_url', instance_url, instance_url);
+                    g_form.setValue('client_id', client_id, client_id);
+                    g_form.setValue('client_secret', client_secret, client_secret);
+                    g_form.setValue('enter_mid_server_name_for_appviewx_communication', mid_server, mid_server);
+
+                } else {
+                    throw "Couldn't find the reference field value in the connection setting table";
+                }
+            });
+        }
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error);
+        var message = 'Error occured while fetching Connection setting details - ' + error;
+        var ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "populate_connection_setting_details");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+   
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 11:57:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>947bc5c21b323990cda7db91dd4bcbad</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>populate_connection_setting_details</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_client_947bc5c21b323990cda7db91dd4bcbad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-30 12:06:29</sys_updated_on>
+        <table>x_avx_appviewx_aut_appviewx_test_connection</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

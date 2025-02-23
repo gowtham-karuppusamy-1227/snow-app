@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>a93192fcdbabd95016a0285b139619ca</enforce_acl>
+        <http_method>PATCH</http_method>
+        <name>Update Ritm Ticket</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	var requestBody = request.body;
+	var requestData = requestBody.data;	
+	var requestObj;
+	if(requestData instanceof Array){
+		for(requestObj in requestData){
+			new update_ritm_comments().updateRitmTicket(requestData[requestObj]);
+		}
+	}else{
+		var flag = new update_ritm_comments().updateRitmTicket(requestData);
+		if(flag === 1){
+			var responseObject = {};
+			responseObject["response"] = "The RITM ticket were updated successfully.";
+			responseObject["status"] = "Success";
+			response.setBody(responseObject);
+		}
+		else{
+			var responseFailureObject = {};
+			response.setStatus(400);
+			responseFailureObject["response"] = "Error occured while updating the ritm ticket. Please check if the RITM ticet is created on the targeted instance.";
+			responseFailureObject["status"] = "Failure";
+			response.setBody(responseFailureObject);
+		}
+	}
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_avx_appviewx_aut/appviewx_scripted_rest_api/updateRitmTicket</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/updateRitmTicket</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-02-27 06:45:16</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>afcd22851b596990cda7db91dd4bcb8e</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Update Ritm Ticket</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ws_operation_afcd22851b596990cda7db91dd4bcb8e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-28 05:58:37</sys_updated_on>
+        <web_service_definition display_value="AppViewX Scripted Rest Api">7b8425fcb3a75d50cda7cf626f07628e</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

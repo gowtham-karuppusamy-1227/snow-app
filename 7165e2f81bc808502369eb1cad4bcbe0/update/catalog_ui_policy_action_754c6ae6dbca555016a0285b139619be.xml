@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="catalog_ui_policy_action">
+    <catalog_ui_policy_action action="INSERT_OR_UPDATE">
+        <catalog_item display_value="Renew Certificate">9e85ab541b1595102369eb1cad4bcb62</catalog_item>
+        <catalog_variable>IO:4968e8601b9995102369eb1cad4bcb41</catalog_variable>
+        <cleared>true</cleared>
+        <disabled>ignore</disabled>
+        <field/>
+        <mandatory>false</mandatory>
+        <order>600</order>
+        <sys_class_name>catalog_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-23 08:57:43</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>754c6ae6dbca555016a0285b139619be</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>file_upload</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_ui_policy_action_754c6ae6dbca555016a0285b139619be</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-23 08:57:43</sys_updated_on>
+        <table/>
+        <ui_policy display_value="renew_set_paste_csr">d0bbaea6dbca555016a0285b139619a4</ui_policy>
+        <variable>file_upload</variable>
+        <variable_set/>
+        <visible>false</visible>
+    </catalog_ui_policy_action>
+</record_update>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Enroll Certificate">d830d29c1bc91d1061858480cd4bcbe1</cat_item>
+        <cat_variable>IO:d94cd8a71b9ee150cda7db91dd4bcbdd</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_avx_pki_bit_length</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[/*
+Function to populate the below details by dynamically fetching it from the AppviewX policy.
+	1. Bit lengths
+*/
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    try {
+        var CA = g_form.getValue('certificate_authority');
+        var ca_policy = g_form.getValue('ca_policy_details');
+        var amazon_issuer = g_form.getValue('issuer');
+        var avx_issuer_location = g_form.getValue('avx_issuer_location');
+        var ca_account = g_form.getValue('validate_ca_account');
+        var csr_input_method = g_form.getValue('csr_input_method');
+        var iterator, key;
+		var j, flag = 0;
+        try {
+            ca_policy = JSON.parse(ca_policy);
+        } catch (err) {
+            throw "Couldn't parse the ca policy to fetch the associated key type.";
+        }
+        if (CA === 'AppViewX PKIaaS') {
+            for (iterator = 0; iterator < ca_policy.length; iterator++) {
+                var result = ca_policy[iterator];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Autority is not configured in AppviewX policy.';
+                }
+                if (result.certificateAuthority === CA) {
+                    var pki_casettings = result.caSettings;
+                    for (var pki = 0; pki < pki_casettings.length; pki++) {
+                        if (!pki_casettings[pki].issuerLocation) {
+                            throw "Issuer Location is not found for the AppViewX PKIaaS. Check with AppViewX CA Policy";
+                        }
+                        g_form.clearOptions('avx_issuer_name');
+                        g_form.clearValue('avx_issuer_name');
+                        g_form.setDisplay('avx_issuer_name', true);
+                        g_form.setMandatory('avx_issuer_name', true);
+                        g_form.addOption('avx_issuer_name', '', 'Select');
+                        var policy_issuer_location = pki_casettings[pki].issuerLocation;
+                        if (avx_issuer_location === policy_issuer_location) {
+                            if (!pki_casettings[pki].issuerName) {
+                                throw "Issuer Name is not found for the AppViewX PKIaaS. Check with AppViewX CA Policy";
+                            }
+                            var avx_issuer_names = pki_casettings[pki].issuerName;
+                            for (var name = 0; name < avx_issuer_names.length; name++) {
+                                g_form.addOption('avx_issuer_name', avx_issuer_names[name], avx_issuer_names[name]);
+                            }
+							break;
+                        }
+                    }
+                    if (csr_input_method === 'Manual') {
+						g_form.clearOptions('bit_length');
+						g_form.clearValue('bit_length');
+						g_form.addOption('bit_length', '', "Select");
+						g_form.setValue('bit_length', '', 'Select');
+						g_form.clearOptions('key_type');
+						g_form.clearValue('key_type');
+						g_form.addOption('key_type', '', "Select");
+						g_form.setValue('key_type', '', 'Select');
+						g_form.clearOptions('hash_function');
+						g_form.clearValue('hash_function');
+						g_form.addOption('hash_function', '', "Select");
+						g_form.setValue('hash_function', '', 'Select');
+						g_form.clearValue('organization');
+						g_form.clearValue('organization_unit');
+						g_form.clearValue('locality');
+						g_form.clearValue('state');
+						g_form.clearValue('country');
+						g_form.clearValue('email_address');
+                        if (!result.multipleAccountDetails) {
+                            throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                        }
+                        var acc_details = result.multipleAccountDetails;
+                        for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+                            if (!acc_details[m_acc].caSettings) {
+                                throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+                            }
+                            if (!acc_details[m_acc].caSettings.name) {
+                                throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+                            }
+                            var pki_acc_name = acc_details[m_acc].caSettings.name;
+                            if (!acc_details[m_acc].caSettings.issuerLocation) {
+                                throw "Issuer Location is not configured in the ca policy under multipleAccountDetails";
+                            }
+                            var ca_issuer_location = acc_details[m_acc].caSettings.issuerLocation;
+                            if (pki_acc_name === ca_account && avx_issuer_location === ca_issuer_location) {
+                                if(!acc_details[m_acc].shaType) {
+                                    throw "ShaType is not configured in AppViewX Policy.";
+                                }
+                                var hash_type = acc_details[m_acc].shaType;
+                                for (j = 0; j < hash_type.length; j++) {
+                                    g_form.addOption('hash_function', hash_type[j], hash_type[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('hash_function', hash_type[j], hash_type[j]);
+                                    }
+                                    flag = 1;
+                                }
+                                flag = 0;
+                                if(!acc_details[m_acc].certificateKeyParams) {
+                                    throw 'KeyParameters are not configured in AppviewX Policy.';
+                                }
+                                var pki_certparams = acc_details[m_acc].certificateKeyParams;
+                                var pki_certparam_keys = Object.keys(pki_certparams);
+                                for (j = 0; j < pki_certparam_keys.length; j++) {
+                                    if (pki_certparams[pki_certparam_keys[j]].length > 0) {
+                                        g_form.addOption('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                        if (flag == 0) {
+                                            g_form.setValue('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                        }
+                                        flag = 1;
+                                    }
+                                }
+                                if(!acc_details[m_acc].certPolicyCsrParameter) {
+                                    throw "CSR parameters are not configured in appviewx policy.";
+                                }
+                                g_form.setValue('organization', acc_details[m_acc].certPolicyCsrParameter.organization, acc_details[m_acc].certPolicyCsrParameter.organization);
+                                g_form.setValue('organization_unit', acc_details[m_acc].certPolicyCsrParameter.organizationUnit, acc_details[m_acc].certPolicyCsrParameter.organizationUnit);
+                                g_form.setValue('locality', acc_details[m_acc].certPolicyCsrParameter.locality, acc_details[m_acc].certPolicyCsrParameter.locality);
+                                g_form.setValue('state', acc_details[m_acc].certPolicyCsrParameter.state, acc_details[m_acc].certPolicyCsrParameter.state);
+                                g_form.setValue('country', acc_details[m_acc].certPolicyCsrParameter.country, acc_details[m_acc].certPolicyCsrParameter.country);
+                                g_form.setValue('email_address', (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","), (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","));
+								var key_type = g_form.getValue('key_type');
+                                if (!acc_details[m_acc].certificateKeyParams[key_type]) {
+                                    throw 'KeyParameters are not configured in AppviewX policy.';
+                                }
+                                var certificateKeyParams = acc_details[m_acc].certificateKeyParams[key_type];
+                                for (key = 0; key < certificateKeyParams.length; key++) {
+                                    g_form.addOption('bit_length', certificateKeyParams[key], certificateKeyParams[key]);
+                                }
+                                if (certificateKeyParams.length > 0) {
+                                    g_form.setValue('bit_length', certificateKeyParams[0], certificateKeyParams[0]);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        g_form.addErrorMessage("Error: " + error);
+        var message = 'Error occured while fetching key type from policy details - ' + error;
+        var ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "set_avx_pki_bit_length");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-25 10:54:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>24ba81231b522550cda7db91dd4bcb9f</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>set_avx_pki_bit_length</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_24ba81231b522550cda7db91dd4bcb9f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-05-23 13:38:32</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>false</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

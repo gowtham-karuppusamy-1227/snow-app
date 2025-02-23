@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_server_types</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches the Server types for the selected CA from AppViewX.</description>
+        <name>get_server_types</name>
+        <script><![CDATA[var get_server_types = Class.create();
+get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getServerTypes: function() {
+        try {
+            var return_value = {};
+			var message;
+			var client_id;
+            var script_include_call = new appviewx_oauth_token_generation();
+			var company = this.getParameter("sysparm_company");
+            var token_generation = script_include_call.TestConnection(client_id, company);
+            if (token_generation.length == 2 && token_generation[0] == 200) {
+                var parse_response = JSON.parse(token_generation[1]);
+                var token = parse_response['response'];
+            } else {
+                throw "Error while generating the token";
+            }
+            var certificate_authority = this.getParameter("certificate_authority");
+            var ca_settings_name = this.getParameter("ca_settings_name");
+            var certificate_type = this.getParameter("certificate_type");
+            var cert_policy = this.getParameter("cert_policy");
+            var certificate_category = this.getParameter("certificate_category");
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company);
+				gr.query();
+				if (!gr.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr.next()) {
+					var url = gr.getValue('instance_url') || '';
+					var mid_server = gr.getValue('mid_server') || '';
+					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+				}
+			} else {
+				url = gs.getProperty("x_avx_appviewx_aut.URL");
+				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+			}
+            var r = new sn_ws.RESTMessageV2();
+            var payload = {
+                "payload": {
+                    "hook": {
+                        "name": "snow_get_server_types"
+                    },
+                    "input": {
+                        "certificate_authority": certificate_authority,
+                        "ca_settings_name": ca_settings_name,
+                        "certificate_type": certificate_type,
+                        "cert_policy": cert_policy,
+                        "certificate_category": certificate_category
+                    }
+                }
+            };
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+            }
+            r.setHttpMethod("post");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+            r.setRequestBody(JSON.stringify(payload));
+            r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var responseBody, responseMessage;
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    var res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+                responseBody = JSON.parse(responseBody);
+                return JSON.stringify(responseBody);
+            }
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'Getting CA Server Types';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while getting server types from AppViewX -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+    type: 'get_server_types'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-22 16:36:33</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>eeab479adb8e155016a0285b13961945</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>get_server_types</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_eeab479adb8e155016a0285b13961945</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:30:10</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Sets the field values on the test connection page.</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>load_instance_details_from_property</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    if (g_form.isNewRecord()) {
+        var ga = new GlideAjax('get_appviewx_instance_details'); //this is the script include
+        ga.addParam("sysparm_name", "getAVXDetails");
+        ga.getXML(getResponse);
+    }
+
+    function getResponse(response) {
+        try {
+            var res = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                res = JSON.parse(res);
+            } catch (err) {
+                throw res || "Could not parse the property response";
+            }
+            g_form.setValue("enter_appviewx_instance_url_with_gateway_port", res["url"]);
+            g_form.setValue("enter_mid_server_name_for_appviewx_communication", res["mid_server"]);
+            g_form.setValue("appviewx_instance_url", res["oauth_url"]);
+            g_form.setValue("client_id", res['client_id']);
+            g_form.setValue("client_secret", res['client_secret']);
+        } catch (error) {
+            g_form.addErrorMessage("Error occured while setting the instance details - " + error);
+            var message = "Error occured while setting the instance details - " + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "load_instance_details_from_property");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+
+    }
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 09:43:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>f93da1681b60d1102369eb1cad4bcb8d</sys_id>
+        <sys_mod_count>60</sys_mod_count>
+        <sys_name>load_instance_details_from_property</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_client_f93da1681b60d1102369eb1cad4bcb8d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-11 09:51:04</sys_updated_on>
+        <table>x_avx_appviewx_aut_appviewx_test_connection</table>
+        <type>onLoad</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

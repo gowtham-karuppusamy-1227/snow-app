@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>Test Connection</action_name>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>Click here to test AppViewX Connectivity</comments>
+        <condition/>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style>primary</form_style>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint>Click here to test AppViewX Connectivity</hint>
+        <isolate_script>false</isolate_script>
+        <list_action>true</list_action>
+        <list_banner_button>true</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages>Click here to test AppViewX Connectivity</messages>
+        <name>Test Connection</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+	setDefaultDomain();
+}
+
+function setDefaultDomain() {
+	current.company = current.tenant_name.company;
+	current.update();
+	if (!current.company.nil()) {
+		current.sys_domain = current.company.sys_domain;
+	}
+	if (current.sys_domain == 'global' || current.sys_domain.nil())
+		current.sys_domain = global.getDefaultDomain();
+
+}
+
+checkAppViewXConnection();
+
+function checkAppViewXConnection() {
+    try {
+		var client_id = current.client_id;
+		var company;
+        var test = new appviewx_oauth_token_generation;
+        var res = test.TestConnection(client_id, company);
+        var responseBody, data, status;
+        if (res.length != 2) {
+            throw "Unexpected response received from OAuth token generation";
+        }
+        responseBody = res[1];
+        status = res[0];
+        var logger = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+        logger.initialize();
+        logger.level = 'Info';
+        logger.script = 'appviewx_test_instance_connectivity';
+        logger.application = 'AppViewX';
+        logger.message = 'Triggering test connection between Servicenow and AppViewX ' + status;
+        logger.insert();
+        var output = "";
+        if (status == 0) {
+            throw responseBody;
+        } else if (status == 200) {
+            data = JSON.parse(responseBody);
+            logger.message = 'Connection test result - Success ';
+            logger.insert();
+            output += "Response status code " + status;
+            output += "\nConnection test result:  SUCCESS";
+            current.status = output;
+            current.update();
+        } else {
+            try {
+                data = JSON.parse(responseBody);
+                message = JSON.stringify(data['message']) || 'No message received from AppViewX';
+            } catch (err) {
+                message = responseBody || 'No message received from AppViewX';
+            }
+			if(message.startsWith('"')){
+				message = message.slice(1,-1);
+			}
+            output += "Response status code: " + status;
+			output += "\n"+message;
+            output += "\nConnection test result:  FAILED";
+            output += "\nPossible Error : AppViewX Server is not reachable or Connections is blocked through a Firewall";
+			current.status = output;
+            current.update();
+            logger.insert();
+        }
+    } catch (exe) {
+        logger.initialize();
+        logger.level = 'Error';
+        logger.script = 'appviewx_test_connection';
+        logger.application = 'AppViewX';
+        logger.message = 'Connection test result - Failed \n' + 'Response - ' + exe;
+        current.status = current.status + "AppViewX REST API test failed: " + exe;
+        current.update();
+        logger.insert();
+    } finally {
+        action.setRedirectURL(current.getLink());
+    }
+}]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 11:54:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4a7b42241b64d1102369eb1cad4bcbeb</sys_id>
+        <sys_mod_count>62</sys_mod_count>
+        <sys_name>Test Connection</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ui_action_4a7b42241b64d1102369eb1cad4bcbeb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-28 18:55:49</sys_updated_on>
+        <table>x_avx_appviewx_aut_appviewx_test_connection</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>true</inactive>
+        <order>101</order>
+        <published_ref/>
+        <question display_value="CSR Type">8744282c1b5995102369eb1cad4bcb0c</question>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-02-07 09:50:28</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>056764201b9995102369eb1cad4bcb12</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Upload New CSR</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>question_choice_056764201b9995102369eb1cad4bcb12</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-28 06:43:06</sys_updated_on>
+        <text>Upload New CSR</text>
+        <value>Upload New CSR</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=056764201b9995102369eb1cad4bcb12"/>
+</record_update>

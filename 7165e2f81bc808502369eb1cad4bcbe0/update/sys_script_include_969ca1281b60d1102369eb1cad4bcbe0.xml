@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_appviewx_instance_details</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches the Instance details configured in "AppViewX Settings" Page. </description>
+        <name>get_appviewx_instance_details</name>
+        <script><![CDATA[var get_appviewx_instance_details = Class.create();
+get_appviewx_instance_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getAVXDetails: function() {
+        try {
+			var response = {};
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				var company_name = new x_avx_appviewx_aut.get_logged_in_user_company().getCompanyName();
+				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr.addQuery('company', company_name);
+				gr.query();
+				var get_company = new GlideRecordSecure('core_company');
+				get_company.addQuery('sys_id', company_name);
+				get_company.query();
+				if (company_name) {
+					while(get_company.next()) {
+						company_name = get_company.getValue('name');
+					}
+				}
+				if (!gr.hasNext()) {
+					throw "Could not find connection settings details for the logged-in user company - " + company_name;
+				}
+				while (gr.next()) {
+					response["mid_server"] = gr.getValue('mid_server');
+					response["oauth_url"] = gr.getValue('instance_url');
+					response["client_id"] = gr.getValue('client_id');
+					response["client_secret"] = gr.getValue('client_secret');
+				}				
+			} else {
+				var mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+				var oauth_url = gs.getProperty("x_avx_appviewx_aut.URL");
+				var client_id = gs.getProperty("x_avx_appviewx_aut.Client ID");
+				response["mid_server"] = mid_server;
+				response["oauth_url"] = oauth_url;
+				response["client_id"] = client_id;
+				response["client_secret"] = gs.getProperty("x_avx_appviewx_aut.Client Secret");
+			}
+			return JSON.stringify(response);
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'get_appviewx_instance_details';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching the properties in servicenow -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+    type: 'get_appviewx_instance_details'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 09:39:15</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>969ca1281b60d1102369eb1cad4bcbe0</sys_id>
+        <sys_mod_count>61</sys_mod_count>
+        <sys_name>get_appviewx_instance_details</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_969ca1281b60d1102369eb1cad4bcbe0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-07 06:37:52</sys_updated_on>
+    </sys_script_include>
+</record_update>

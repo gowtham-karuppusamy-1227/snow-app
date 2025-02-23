@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_ca_details</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches the details of the selected CA Tag in the Enroll Form from CLM Settings.</description>
+        <name>get_ca_details</name>
+        <script><![CDATA[var get_ca_details = Class.create();
+get_ca_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getCaDetails: function() {
+        try {
+            var caTagName = this.getParameter("sysparm_caTagName");
+			var company = this.getParameter("sysparm_company");
+            var gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
+			if(company) {
+				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+					gr.addQuery('company', company);
+				}
+			}
+            gr.addQuery('ca_tag_name', caTagName);
+            gr.query();
+            var values = {};
+            if (!gr.hasNext()) {
+                throw "Could not find CA Tag with the name - " + caTagName;
+            }
+            while (gr.next()) {
+                values['certificate_authority'] = gr.getValue('ca_type');
+                values['cert_category'] = gr.getValue('certificate_category');
+                values['csr_type'] = gr.getDisplayValue('csr_upload_option');
+                values['ca_account'] = gr.getValue('ca_settings_name');
+                values['ca_policy'] = gr.getValue('ca_policy_name');
+                values['certificate_attributes'] = gr.getValue('meta_data_configured_in_appviewx');
+                values['is_approval_needed_in_appviewx'] = gr.getValue('is_approval_needed_in_appviewx');
+                values['approval_levels_in_appviewx'] = gr.getValue('approval_levels_in_appviewx');
+                values['is_approval_needed_in_servicenow'] = gr.getValue('is_approval_needed_in_servicenow');
+                values['approval_levels_in_servicenow'] = gr.getValue('approval_levels_in_servicenow');
+                values['certificate_retrieval_file_format'] = gr.getValue('certificate_retrieval_file_format');
+                values['certificate_retrieval_mode'] = gr.getValue('certificate_retrieval_mode');
+				values['certificate_retrieval_file_format'] = gr.getDisplayValue('certificate_retrieval_file_format');
+				values['push_to_end_device'] = gr.getValue('push_to_end_device');
+				values['vendor_name'] = gr.getValue('vendor_name') || '';
+				values['assignment_group_selection'] = gr.getValue('assignment_group_selection') || '';
+				values['send_certificate'] = gr.getValue('send_certificate_to_end_user') || '';
+				values['ticket_assignment_group'] = gr.getValue('ticket_assignment_group') || '';
+				values['enable_san_fields'] = gr.getValue('enable_san_fields') || '';
+				values['subject_alternative_names'] = gr.getValue('subject_alternative_names') || '';
+				values['csr_parameters'] = gr.getDisplayValue('csr_parameters') || '';
+            }
+            values["logged_in_user_email"] = gs.getUser().getEmail();
+			values["company_name"] = gr.getValue('company') || '';
+			var company_name = gr.getValue('company') || '';
+			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+				var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+				gr_connection.addQuery('company', company_name);
+				gr_connection.query();
+				if (!gr_connection.hasNext()) {
+					throw "Could not find AppViewX instance url to fetch the details.";
+				}
+				while (gr_connection.next()) {
+					var cmdb_sync = gr_connection.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+				}
+				values["cmdb_sync"] = cmdb_sync;
+			} else {
+				values["cmdb_sync"] = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+			}
+            return JSON.stringify(values);
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'get_ca_details';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching CA details from CLM settings table -  ' + error;
+            log.insert();
+            return error;
+        }
+    },
+    type: 'get_ca_details'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 11:31:23</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>e5660ae41b24d1102369eb1cad4bcbd8</sys_id>
+        <sys_mod_count>107</sys_mod_count>
+        <sys_name>get_ca_details</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_e5660ae41b24d1102369eb1cad4bcbd8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:27:42</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.renew_get_cert</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Fetches the certificates based on the settings configured in "CLM Settings" Page. &#13;
+&#13;
+There are three options:&#13;
+1) Based on Roles of the loggedin user&#13;
+2) Based on Usergroup in AppViewX&#13;
+3) Based on Usergroup in ServiceNow</description>
+        <name>renew_get_cert</name>
+        <script><![CDATA[var renew_get_cert = Class.create();
+renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getGroupName: function() {
+        var myGroups = gs.getUser().getMyGroups().toString().split(",");
+        var attribute_name = "";
+        for (var iterator = 0; iterator < myGroups.length; iterator++) {
+            if (myGroups[iterator]) {
+                var group = new GlideRecordSecure('sys_user_group');
+                group.addQuery('sys_id', myGroups[iterator]);
+                group.query();
+                if (!group.hasNext()) {
+                    throw "Could not find the given user group in the user table";
+                }
+                while (group.next()) {
+                    if (group.getValue('name')) {
+                        if (attribute_name) {
+                            attribute_name = attribute_name + "," + group.getValue('name');
+                        } else {
+                            attribute_name = group.getValue('name');
+                        }
+                    }
+                }
+            }
+        }
+        return attribute_name;
+    },
+    customSort: function(cert1, cert2) {
+        var date_1 = new Date(cert1["valid_from"]);
+        date_1 = date_1.getTime();
+        var date_2 = new Date(cert2["valid_from"]);
+        date_2 = date_2.getTime();
+        var diff = date_1 - date_2;
+        if (diff == 0) {
+            return -1;
+        }
+        return diff;
+    },
+    getCert: function() {
+        try {
+            var return_value = {};
+            var res;
+            var message;
+            var client_id;
+            var company = this.getParameter("sysparm_company");
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
+            // var r = new sn_ws.RESTMessageV2();
+            // var script_include_call = new appviewx_oauth_token_generation();
+            // var token_generation = script_include_call.TestConnection();
+            // if (token_generation.length > 1 && token_generation[0] == 200) {
+            //     var parse_response = JSON.parse(token_generation[1]);
+            //     var token = parse_response['response'];
+            // } else {
+            //     throw "Error while generating the token";
+            // }
+            var iterator;
+            var cert_authority = this.getParameter("sysparm_cert_authority");
+            var cert_category = this.getParameter("sysparm_cert_type");
+            var cert_type = cert_category.split(",");
+            var certs_fetch = this.getParameter("sysparm_certs_fetch");
+            var clm_action = this.getParameter("sysparm_clm_action");
+            var loggedin_user_roles = gs.getUser().getRoles();
+            for (iterator = 0; iterator < loggedin_user_roles.length; iterator++) {
+                if (loggedin_user_roles[iterator] === "x_avx_appviewx_aut.app_admin" || loggedin_user_roles[iterator] === "admin" || loggedin_user_roles[iterator] === "x_avx_appviewx_aut.super_admin" || certs_fetch === 'Get All Certificates') {
+                    var loggedin_user = "exist";
+                    break;
+                }
+            }
+            if (cmdb_sync == 'true') {
+                cert_category = cert_category + ",Others";
+                var requestor;
+                var table_response_list = [];
+                var encoded_query;
+                if (loggedin_user === "exist") {
+                    var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+                    response_obj.initialize();
+                    response_obj.orderByDesc('valid_from');
+                    response_obj.addQuery('certificate_authority', cert_authority);
+                    response_obj.addQuery('certificate_category', 'IN', cert_category);
+                    response_obj.addQuery('certificate_status', 'Managed');
+                    if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                        response_obj.addQuery('company', company);
+                    }
+                    if (clm_action == 'Renew') {
+                        response_obj.addQuery('renewal_status', 'No');
+                    }
+                    response_obj.addQuery('expiry_status', 'IN', 'Expiry in 10 Days,Expiry in 30 Days,Expiry in 90 Days,Valid');
+                    response_obj.query();
+                    encoded_query = response_obj.getEncodedQuery();
+                    if (!response_obj.hasNext()) {
+                        throw 'Could not find the certificates for the given certificate authority ' + cert_authority + 'in the certificate table';
+                    }
+                    return JSON.stringify({
+                        "encoded_query": encoded_query
+                    });
+                } else if (certs_fetch === "Based on User Group In ServiceNow") {
+                    var cert_list = [];
+                    var renew_cert_obj = new renew_get_cert();
+                    var group_name = renew_cert_obj.getGroupName();
+                    var dynamic_filter = gs.getProperty("x_avx_appviewx_aut.Dynamic Filter Sys ID");
+                    response_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+                    response_obj.initialize();
+                    response_obj.orderByDesc('valid_from');
+                    response_obj.addQuery('certificate_authority', cert_authority);
+                    response_obj.addQuery('certificate_category', 'IN', cert_category);
+                    response_obj.addQuery('certificate_status', 'Managed');
+                    response_obj.addQuery('expiry_status', 'IN', 'Expiry in 10 Days,Expiry in 30 Days,Expiry in 90 Days,Valid');
+                    if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                        response_obj.addQuery('company', company);
+                    }
+                    if (clm_action == 'Renew') {
+                        response_obj.addQuery('renewal_status', 'No');
+                    }
+                    response_obj.addQuery('requestor_assignment_group', 'DYNAMIC', dynamic_filter);
+                    response_obj.query();
+                    encoded_query = response_obj.getEncodedQuery();
+                    if (!response_obj.hasNext()) {
+                        throw 'Could not find the certificates for the given certificate authority ' + cert_authority + 'in the certificate table';
+                    }
+                    return JSON.stringify({
+                        "encoded_query": encoded_query
+                    });
+                } else {
+                    response_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
+                    response_obj.initialize();
+                    response_obj.orderByDesc('valid_from');
+                    response_obj.addQuery('certificate_authority', cert_authority);
+                    response_obj.addQuery('certificate_category', 'IN', cert_category);
+                    response_obj.addQuery('certificate_status', 'Managed');
+                    response_obj.addQuery('expiry_status', 'IN', 'Expiry in 10 Days,Expiry in 30 Days,Expiry in 90 Days,Valid');
+                    if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                        response_obj.addQuery('company', company);
+                    }
+                    if (clm_action == 'Renew') {
+                        response_obj.addQuery('renewal_status', 'No');
+                    }
+                    response_obj.addQuery('requestor', gs.getUser().getEmail());
+                    response_obj.query();
+                    encoded_query = response_obj.getEncodedQuery();
+                    if (!response_obj.hasNext()) {
+                        throw 'Could not find the certificates for the given certificate authority ' + cert_authority + 'in the certificate table';
+                    }
+                    return JSON.stringify({
+                        "encoded_query": encoded_query
+                    });
+                }
+            } else {
+                var r = new sn_ws.RESTMessageV2();
+                var script_include_call = new appviewx_oauth_token_generation();
+                var token_generation = script_include_call.TestConnection(client_id, company);
+                if (token_generation.length > 1 && token_generation[0] == 200) {
+                    var parse_response = JSON.parse(token_generation[1]);
+                    var token = parse_response['response'];
+                } else {
+                    throw "Error while generating the token";
+                }
+                var payload = {};
+                if (loggedin_user === "exist") {
+                    payload = {
+                        "payload": {
+                            "hook": {
+                                "name": "snow_fetch_certs_for_admin_users"
+                            },
+                            "input": {
+                                "certificate_authority": cert_authority,
+                                "cert_category": cert_type,
+                                "clm_action": clm_action
+                            }
+                        }
+                    };
+                } else if (certs_fetch === "Based on User Group In ServiceNow") {
+                    var attribute_name = new renew_get_cert().getGroupName();
+                    if (attribute_name) {
+                        payload = {
+                            "payload": {
+                                "hook": {
+                                    "name": "snow_fetch_cert_based_on_snow_group"
+                                },
+                                "input": {
+                                    "certificate_authority": cert_authority,
+                                    "cert_category": cert_type,
+                                    "attribute_name": attribute_name,
+                                    "clm_action": clm_action
+                                }
+                            }
+                        };
+                    } else {
+                        throw "To fetch certificates the user has to be part of any one of the group in ServiceNow";
+                    }
+                } else {
+                    if (gs.getUser().getEmail()) {
+                        payload = {
+                            "payload": {
+                                "hook": {
+                                    "name": "snow_fetch_cert_based_on_snow_user"
+                                },
+                                "input": {
+                                    "certificate_authority": cert_authority,
+                                    "cert_category": cert_type,
+                                    "cert_requestor": gs.getUser().getEmail(),
+                                    "clm_action": clm_action
+                                }
+                            }
+                        };
+                    } else {
+                        gs.addInfoMessage("To fetch certificates from AppViewX kindly configure Requestor Email");
+                    }
+                }
+                if (mid_server != "") {
+                    r.setMIDServer(mid_server);
+                    r.setEccParameter('skip_sensor', 'true');
+                }
+                var retry_count = 0;
+                while (retry_count < 5) {
+                    r.setHttpMethod("post");
+                    r.setRequestHeader("token", token);
+                    r.setRequestHeader('User-Agent', 'snow');
+                    r.setRequestHeader("Content-Type", "application/json");
+                    r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
+                    r.setRequestBody(JSON.stringify(payload));
+                    r.setHttpTimeout(180000);
+                    var response = r.executeAsync();
+                    if (response.haveError()) {
+                        var responseBody = response.getBody();
+                        try {
+                            res = JSON.parse(responseBody);
+                            message = res.message;
+                        } catch (err) {
+                            message = responseBody;
+                        }
+                    } else {
+                        responseBody = response.getBody();
+                        responseBody = JSON.parse(responseBody);
+                        return_value['error'] = responseBody;
+						if (responseBody !== null) {
+							return JSON.stringify(responseBody);
+						}
+                    }
+					if (retry_count == 4) {
+						throw message || "Couldn't retrieve the certificates from AppViewX.";
+					}
+					retry_count = retry_count + 1;
+                }
+            }
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            log.initialize();
+            log.level = 'Error';
+            log.script = 'renew_get_cert';
+            log.application = 'AppViewX';
+            log.message = 'Error occured while fetching certificates from appviewx  -  ' + error;
+            log.insert();
+            return error;
+        }
+
+    },
+    type: 'renew_get_cert'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-13 05:56:32</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>cf7e8b9f1be015502369eb1cad4bcb81</sys_id>
+        <sys_mod_count>260</sys_mod_count>
+        <sys_name>renew_get_cert</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_cf7e8b9f1be015502369eb1cad4bcb81</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-07-30 10:22:42</sys_updated_on>
+    </sys_script_include>
+</record_update>

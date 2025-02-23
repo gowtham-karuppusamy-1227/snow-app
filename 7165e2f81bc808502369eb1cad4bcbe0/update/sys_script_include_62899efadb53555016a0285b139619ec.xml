@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.update_ritm_comments</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Updates the RITM ticket with comments from AppViewX.</description>
+        <name>update_ritm_comments</name>
+        <script><![CDATA[var update_ritm_comments = Class.create();
+update_ritm_comments.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    updateRitm: function(requestData) {
+        try {
+			var req_obj = new GlideRecordSecure('sc_req_item');
+			req_obj.addQuery('number', requestData['number']);
+			req_obj.query();
+			if (req_obj.hasNext()) {
+				var stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_ritm_comments');
+				stgRec.initialize();
+				stgRec.u_comments = requestData['comments'];
+				stgRec.u_number = requestData['number'];
+				stgRec.insert();
+				return 1;
+			}
+			return 0;
+        } catch (error) {
+            return 0;
+        }
+    },
+
+    updateTaskState: function(requestData) {
+        try {
+            var stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_task_state');
+            stgRec.initialize();
+            stgRec.u_task_state = requestData['state'];
+            stgRec.u_number = requestData['number'];
+            stgRec.insert();
+            return 1;
+        } catch (error) {
+            return 0;
+        }
+    },
+
+    updateRitmTicket: function(requestData) {
+        if (requestData['status'] == 'Success') {
+            try {
+                var gr = new GlideRecordSecure("sc_req_item");
+                gr.addQuery("number", requestData['number']);
+                gr.query();
+                if (gr.next()) {
+                    gr.stage = 'Completed';
+                    gr.update();
+                } else {
+					return 0;
+				}
+                var stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_ritm_comments');
+                stgRec.u_ritm_state = 3;
+                stgRec.u_number = requestData['number'];
+                stgRec.insert();
+                stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_request_ticket');
+                stgRec.u_req_state = 3;
+                stgRec.u_req_request_state = "closed_complete";
+                stgRec.u_req_number = requestData['req_number'];
+                stgRec.insert();
+                return 1;
+            } catch (error) {
+                return 0;
+            }
+        } else {
+            try {
+                gr = new GlideRecordSecure("sc_req_item");
+                gr.addQuery("number", requestData['number']);
+                gr.query();
+                if (gr.next()) {
+                    gr.stage = 'closed_incomplete';
+                    gr.update();
+                } else {
+					return 0;
+				}
+                stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_ritm_comments');
+                stgRec.u_ritm_state = 4;
+                stgRec.u_number = requestData['number'];
+                stgRec.insert();
+                stgRec = new GlideRecordSecure('x_avx_appviewx_aut_update_request_ticket');
+                stgRec.u_req_state = 4;
+                stgRec.u_req_request_state = "closed_incomplete";
+                stgRec.u_req_number = requestData['req_number'];
+                stgRec.insert();
+                return 1;
+            } catch (error) {
+                return 0;
+            }
+        }
+    },
+
+    type: 'update_ritm_comments'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-11-25 05:41:55</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>62899efadb53555016a0285b139619ec</sys_id>
+        <sys_mod_count>38</sys_mod_count>
+        <sys_name>update_ritm_comments</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_62899efadb53555016a0285b139619ec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-21 14:15:01</sys_updated_on>
+    </sys_script_include>
+</record_update>

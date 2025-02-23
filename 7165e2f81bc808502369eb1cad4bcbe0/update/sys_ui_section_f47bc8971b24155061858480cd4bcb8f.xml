@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Renew Settings" section_id="f47bc8971b24155061858480cd4bcb8f" sys_domain="global" table="x_avx_appviewx_aut_clm_settings" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>use_approval_settings_from_create</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>9ff4f14c1be74250cda7db91dd4bcb23</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>is_approval_needed_in_appviewx_renewal</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>13f4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approval_levels_in_appviewx_renewal</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>93f4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>appviewx_one_level_approval_mail_id_for_renew</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>17f4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>appviewx_two_level_approval_mail_id_for_renew</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>97f4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>renewal_method</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>1bf4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>renewal_csr_type</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>9bf4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>certificates_fetch</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>1ff4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>fetch_user_group_renew</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>9ff4f14c1be74250cda7db91dd4bcb24</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>workflow_name_for_renew_appviewx</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>13f4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>edit_certificate_attributes</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>93f4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>17f4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>is_approval_needed_in_servicenow_renewal</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>97f4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approval_levels_in_servicenow_renewal</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>1bf4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approver_selection_renew</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>9bf4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assignment_group_renew</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>1ff4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>renew_approver_selection_snow_two</element>
+            <position>16</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>9ff4f14c1be74250cda7db91dd4bcb25</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>renew_user_group_snow_two</element>
+            <position>17</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-07-17 12:38:34</sys_created_on>
+            <sys_id>13f4f14c1be74250cda7db91dd4bcb26</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Renew Settings" display_value="Renew Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f47bc8971b24155061858480cd4bcb8f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-07-17 12:38:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Renew Settings</caption>
+            <header>false</header>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-07-12 15:35:54</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f47bc8971b24155061858480cd4bcb8f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_name>x_avx_appviewx_aut_clm_settings</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_ui_section_f47bc8971b24155061858480cd4bcb8f</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-09-19 05:09:25</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

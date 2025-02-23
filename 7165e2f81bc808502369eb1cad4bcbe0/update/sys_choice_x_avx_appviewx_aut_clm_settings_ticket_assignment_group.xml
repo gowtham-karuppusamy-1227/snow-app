@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="ticket_assignment_group" table="x_avx_appviewx_aut_clm_settings" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>ticket_assignment_group</element>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-02-21 05:35:44</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>15362f8f1bc5ed50cda7db91dd4bcbe3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>ticket_assignment_group</sys_name>
+            <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+            <sys_update_name>sys_choice_x_avx_appviewx_aut_clm_settings_ticket_assignment_group</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-02-21 05:35:44</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>ticket_assignment_group</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Allow user to select assignment group</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-02-21 05:35:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>dd0663831b09ed50cda7db91dd4bcb98</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-02-21 05:35:44</sys_updated_on>
+            <value>Allow user to select assignment group</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>ticket_assignment_group</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Use assignment group from clm settings</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-02-21 05:36:29</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3636ef431b09ed50cda7db91dd4bcbab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-02-21 05:36:29</sys_updated_on>
+            <value>Use assignment group from clm settings</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>ticket_assignment_group</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Use logged-in user assignment group</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-02-21 05:37:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>bd66e38f1bc5ed50cda7db91dd4bcb35</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-02-21 05:37:12</sys_updated_on>
+            <value>Use logged-in user assignment group</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>ticket_assignment_group</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>None of the group</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-02-21 05:37:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>649663c31b09ed50cda7db91dd4bcb42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-02-21 05:37:33</sys_updated_on>
+            <value>None of the group</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

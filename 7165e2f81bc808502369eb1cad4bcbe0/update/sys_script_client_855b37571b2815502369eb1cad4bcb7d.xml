@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Sets Certificate Categories in the CLM Settings which are configured in AppViewX.</description>
+        <field>ca_settings_name</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>clm_settings_set_certificate_category</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    try {
+        var ga = new GlideAjax('clm_settings_get_policy_search');
+        var loadingDialog = new GlideDialogWindow("dialog_loading", true);
+        loadingDialog.setPreference('table', 'loading');
+        loadingDialog.setTitle('Loading...');
+        loadingDialog.render();
+        g_form.clearValue('certificate_category');
+        var certificate_authority = g_form.getValue('ca_type');
+        var ca_settings_name = newValue;
+        var ca_response = g_form.getValue('ca_response');
+        var res = JSON.parse(ca_response);
+        res = res.response.output;
+        if (certificate_authority === 'Amazon') {
+            g_form.setValue('certificate_category', 'Server');
+        } else {
+            for (var iterator = 0; iterator < res.length; iterator++) {
+                if (certificate_authority == res[iterator]['certificateAuthority']) {
+                    if (ca_settings_name == res[iterator]['name']) {
+                        var cert_category = res[iterator]['certificateCategories'];
+                        cert_category = cert_category.toString().split(',');
+                        g_form.setValue('certificate_category', res[iterator]['certificateCategories']);
+                    }
+                }
+            }
+        }
+		var company_name = g_form.getValue("company");
+        ga.addParam("sysparm_name", "getPolicySearch");
+        ga.addParam("sysparm_certificate_authority", certificate_authority);
+        ga.addParam("sysparm_ca_settings_name", newValue);
+		ga.addParam("sysparm_company", company_name);
+        ga.getXML(getResponse);
+    } catch (error) {
+        loadingDialog.destroy();
+        g_form.addErrorMessage("Error: " + error + "Please check with the AppviewX Policy.");
+        var message = "Error: " + error + "Please check with the AppviewX Policy.";
+        ga = new GlideAjax('avx_logger');
+        ga.addParam("sysparm_name", "avxLogger");
+        ga.addParam("sysparm_level", "Error");
+        ga.addParam("sysparm_script", "clm_settings_set_certificate_category");
+        ga.addParam("sysparm_application", "AppViewX");
+        ga.addParam("sysparm_message", message);
+        ga.getXML(function() {});
+    }
+
+
+    function getResponse(response) {
+        try {
+            g_form.clearOptions('ca_policy_name');
+            var res = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                res = JSON.parse(res);
+            } catch (err) {
+                throw res || "Could not parse JSON response";
+            }
+            var policy_list = [];
+
+            if (res.response.output.Status == 'Success') {
+                var policy_name = res.response.output.policy_response;
+                for (var policy = 0; policy < policy_name.length; policy++) {
+                    policy_list.push(policy_name[policy]);
+                    g_form.addOption('ca_policy_name', policy_name[policy], policy_name[policy]);
+                }
+            } else if (res.response.output.Status == 'Failed') {
+                g_form.addErrorMessage(JSON.stringify(res.response.output.message));
+
+            }
+            if (policy_list.length === 0) {
+                g_form.addErrorMessage("Selected CA is not configured under any policy. Please check!");
+            }
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error + "Please check with the AppviewX Policy.");
+            var message = "Error: " + error + "Please check with the AppviewX Policy.";
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "clm_settings_set_certificate_category");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        } finally {
+            loadingDialog.destroy();
+        }
+    }
+
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-13 09:13:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>855b37571b2815502369eb1cad4bcb7d</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>clm_settings_set_certificate_category</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_client_855b37571b2815502369eb1cad4bcb7d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-02 11:22:34</sys_updated_on>
+        <table>x_avx_appviewx_aut_clm_settings</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

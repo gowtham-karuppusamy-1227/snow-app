@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>company</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_cert_attributes_on_change</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   if (isLoading || newValue === '') {
+      return;
+   }
+	if (newValue != oldValue) {
+		var company_name = g_form.getValue("company");
+		var ga = new GlideAjax('get_cert_attributes');
+		ga.addParam("sysparm_name", "getCertificateAttributes");
+		ga.addParam("sysparm_company", company_name);
+		ga.getXML(getResponse);
+	}
+
+    function getResponse(response) {
+        try {
+            var res = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                res = JSON.parse(res);
+            } catch (err) {
+                throw res || "Could not parse JSON response";
+            }
+            res = res.response;
+            var obj = {};
+            if (res.length > 0) {
+                for (var iterator = 0; iterator < res.length; iterator++) {
+                    if (res[iterator].searchKey != 'requestor' && res[iterator].searchKey != 'requestor_assignment_group' && res[iterator].searchKey != 'ritm_number') {
+                        obj[res[iterator].label] = res[iterator].searchKey;
+                    }
+                }
+                g_form.setDisplay('meta_data_configured_in_appviewx', true);
+                g_form.setValue('meta_data_configured_in_appviewx', JSON.stringify(obj));
+            }
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error);
+            var message = "Error: " + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "set_cert_attributes_on_change");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+
+   //Type appropriate comment here, and begin script below
+   
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-02 10:03:41</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>a9ff22601b6b3950cda7db91dd4bcbfc</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>set_cert_attributes_on_change</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_client_a9ff22601b6b3950cda7db91dd4bcbfc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-16 09:28:24</sys_updated_on>
+        <table>x_avx_appviewx_aut_clm_settings</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

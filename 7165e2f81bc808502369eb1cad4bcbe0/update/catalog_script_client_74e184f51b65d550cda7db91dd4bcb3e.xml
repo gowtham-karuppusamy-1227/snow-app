@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="Enroll Certificate">d830d29c1bc91d1061858480cd4bcbe1</cat_item>
+        <cat_variable>IO:2608d2581b0d1d1061858480cd4bcb72</cat_variable>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>set_hash_types</name>
+        <order/>
+        <published_ref/>
+        <script><![CDATA[/*
+Function to populate the below details by dynamically fetching it from the AppviewX policy..
+	1. Hash values
+	2. Key values
+	3. Bit lengths
+*/
+
+function set_file_formats() {
+    var certificate_formats = g_form.getValue('certificate_issuance_file_formats');
+    var csr_input_method = g_form.getValue('csr_input_method');
+    var CA = g_form.getValue('certificate_authority');
+    var formats = certificate_formats.split(",");
+    var send_certificate_to_end_user = g_form.getValue('send_certificate_to_end_user');
+    var passwordProtectedFormats = ['PFX', 'P12', 'JKS'];
+
+    g_form.clearValue('certificate_issuance_format');
+    g_form.clearOptions('certificate_issuance_format');
+
+    if (send_certificate_to_end_user == "1") {
+        g_form.setDisplay('certificate_issuance_format', true);
+        g_form.setMandatory('certificate_issuance_format', true);
+
+        var formatToDisplay = formats.filter(function(cert_format) {
+            cert_format = cert_format.trim().toUpperCase();
+            var isPasswordProtected = passwordProtectedFormats.indexOf(cert_format) !== -1;
+            return !isPasswordProtected || (csr_input_method !== 'Upload CSR' && CA !== 'Amazon');
+        });
+
+        formatToDisplay.forEach(function(format) {
+            g_form.addOption('certificate_issuance_format', format, format);
+        });
+
+        if (formatToDisplay.length > 1) {
+            g_form.addOption('certificate_issuance_format', '', 'Select', 0);
+        }
+    }
+}
+
+function set_form_fields() {
+    var csr_input = g_form.getValue('csr_input_method');
+    var CA = g_form.getValue('certificate_authority');
+    var msca_category = g_form.getValue('msca_category');
+    var enable_san_value = g_form.getValue("enable_san_fields");
+    var san_names = g_form.getValue('san_names');
+    if (enable_san_value == '1') {
+        san_names = JSON.parse(san_names);
+    }
+	var csr_parameter_values = g_form.getValue('csr_parameter_values');
+	csr_parameter_values = csr_parameter_values.split(',');
+    if (csr_input === "Upload CSR") {
+		g_form.clearValue('parsed_csr_values');
+		g_form.setDisplay('parsed_csr_values', false);
+        g_form.clearValue('csr_upload_option');
+        g_form.setMandatory('csr_upload_option', true);
+        g_form.setDisplay('csr_upload_option', true);
+        g_form.clearValue('paste_csr');
+        g_form.setMandatory('paste_csr', false);
+        g_form.setDisplay('paste_csr', false);
+        g_form.clearValue('upload_csr');
+        g_form.setMandatory('upload_csr', false);
+        g_form.setDisplay('upload_csr', false);
+        g_form.clearValue('common_name');
+        g_form.setMandatory('common_name', false);
+        g_form.setDisplay('common_name', false);
+        g_form.clearValue('san_email');
+        g_form.setDisplay('san_email', false);
+        g_form.clearValue('organization');
+        g_form.setMandatory('organization', false);
+        g_form.setDisplay('organization', false);
+        g_form.clearValue('organization_unit');
+        g_form.setDisplay('organization_unit', false);
+        g_form.clearValue('locality');
+        g_form.setDisplay('locality', false);
+        g_form.setDisplay('challenge_password', false);
+        g_form.clearValue('state');
+        g_form.setDisplay('state', false);
+        g_form.setMandatory('country', false);
+        g_form.clearValue('country');
+        g_form.setDisplay('country', false);
+        g_form.clearValue('email_address');
+        g_form.setMandatory('email_address', false);
+        g_form.setDisplay('email_address', false);
+        g_form.clearValue('hash_function');
+        g_form.setMandatory('hash_function', false);
+        g_form.setDisplay('hash_function', false);
+        g_form.clearValue('key_type');
+        g_form.setMandatory('key_type', false);
+        g_form.setDisplay('key_type', false);
+        g_form.clearValue('bit_length');
+        g_form.setMandatory('bit_length', false);
+        g_form.setDisplay('bit_length', false);
+        g_form.clearValue('ecdsa_curve');
+        g_form.setMandatory('ecdsa_curve', false);
+        g_form.setDisplay('ecdsa_curve', false);
+        g_form.clearValue('ca_signing_algorithm');
+        g_form.setMandatory('ca_signing_algorithm', false);
+        g_form.setDisplay('ca_signing_algorithm', false);
+        g_form.setDisplay('san_fields', false);
+        g_form.clearValue('add_dns_values');
+        g_form.setDisplay('add_dns_values', false);
+        g_form.clearValue('add_ip_address');
+        g_form.setDisplay('add_ip_address', false);
+        g_form.clearValue('add_email_address');
+        g_form.setDisplay('add_email_address', false);
+        g_form.clearValue('dns');
+        g_form.setDisplay('dns', false);
+        g_form.clearValue('ip_address');
+        g_form.setDisplay('ip_address', false);
+        g_form.clearValue('subject_alternative_name');
+        g_form.setDisplay('subject_alternative_name', false);
+		g_form.clearValue('organization_address');
+		g_form.setDisplay('organization_address', false);
+		g_form.clearValue('csr_zip_code');
+		g_form.setDisplay('csr_zip_code', false);
+        g_form.setValue('certificate_category', '', 'Select');
+        if (CA === 'Microsoft Enterprise' || CA === 'SwissSign') {
+            g_form.setValue('certificate_category', msca_category, msca_category);
+            g_form.setMandatory('certificate_category', false);
+            g_form.setDisplay('certificate_category', false);
+        } else {
+            g_form.setDisplay('certificate_category', true);
+            g_form.setMandatory('certificate_category', true);
+        }
+    } else {
+		g_form.clearValue('parsed_csr_values');
+		g_form.setDisplay('parsed_csr_values', false);
+        g_form.setDisplay('san_fields', false);
+        g_form.clearValue('add_dns_values');
+        g_form.setDisplay('add_dns_values', false);
+        g_form.clearValue('add_ip_address');
+        g_form.setDisplay('add_ip_address', false);
+        g_form.clearValue('add_email_address');
+        g_form.setDisplay('add_email_address', false);
+        g_form.clearValue('dns');
+        g_form.setDisplay('dns', false);
+        g_form.clearValue('ip_address');
+        g_form.setDisplay('ip_address', false);
+        g_form.clearValue('subject_alternative_name');
+        g_form.setDisplay('subject_alternative_name', false);
+        g_form.clearValue('csr_upload_option');
+        g_form.setMandatory('csr_upload_option', false);
+        g_form.setDisplay('csr_upload_option', false);
+        g_form.clearValue('paste_csr');
+        g_form.setMandatory('paste_csr', false);
+        g_form.setDisplay('paste_csr', false);
+        g_form.clearValue('upload_csr');
+        g_form.setMandatory('upload_csr', false);
+        g_form.setDisplay('upload_csr', false);
+        g_form.clearValue('common_name');
+        g_form.setMandatory('common_name', true);
+        g_form.setDisplay('common_name', true);
+		var certificate_authority = g_form.getValue('certificate_authority');
+        if (certificate_authority == 'DigiCert' || certificate_authority == 'GlobalSign' || certificate_authority == 'GlobalSignMSSL') {
+            g_form.setMandatory('organization', true);
+            g_form.setDisplay('organization', true);
+        }
+		if (certificate_authority == 'GlobalSign' || certificate_authority == 'GlobalSignMSSL') {
+			g_form.clearValue('organization_address');
+			g_form.setDisplay('organization_address', true);
+			g_form.clearValue('csr_zip_code');
+			g_form.setDisplay('csr_zip_code', true);
+		} else {
+			g_form.clearValue('organization_address');
+			g_form.setDisplay('organization_address', false);
+			g_form.clearValue('csr_zip_code');
+			g_form.setDisplay('csr_zip_code', false);
+		}
+        if (g_form.getValue('certificate_authority') == 'Entrust') {
+            g_form.setMandatory('organization', true);
+            g_form.setDisplay('organization', true);
+            g_form.setDisplay('country', true);
+            g_form.setMandatory('country', true);
+        } else {
+            g_form.setMandatory('country', false);
+            g_form.setDisplay('country', false);
+        }
+        if (g_form.getValue('certificate_category') == 'Client' || g_form.getValue('certificate_authority') == 'GlobalSign' || g_form.getValue('certificate_authority') == 'DigiCert MPKI') {
+            g_form.setMandatory('email_address', true);
+            g_form.setDisplay('email_address', true);
+        }
+        g_form.clearValue('subject_alternative_name');
+        g_form.setDisplay('subject_alternative_name', true);
+        g_form.setReadOnly('subject_alternative_name', true);
+        g_form.setMandatory('hash_function', true);
+        g_form.setDisplay('hash_function', true);
+        g_form.setMandatory('key_type', true);
+        g_form.setDisplay('key_type', true);
+        g_form.setMandatory('bit_length', true);
+        g_form.setDisplay('bit_length', true);
+        if (g_form.getValue('certificate_authority') === 'Amazon Private CA') {
+            g_form.setDisplay('ca_signing_algorithm', true);
+            g_form.setMandatory('ca_signing_algorithm', true);
+        }
+		if (enable_san_value == '1'){
+			g_form.setDisplay('san_fields', true);
+            if (san_names.includes('DNS')) {
+                g_form.setDisplay('add_dns_values', true);
+            }
+			if (g_form.getValue('certificate_authority') !== 'GoDaddy' || g_form.getValue('certificate_authority') !== 'Trustwave') {
+                if (san_names.includes('IP Address')) {
+                    g_form.setDisplay('add_ip_address', true);
+                }
+			}
+		}
+        g_form.setValue('certificate_category', '', 'Select');
+        if (CA === 'Microsoft Enterprise' || CA === 'SwissSign') {
+            g_form.setValue('certificate_category', msca_category, msca_category);
+            g_form.setMandatory('certificate_category', false);
+            g_form.setDisplay('certificate_category', false);
+			if (enable_san_value == '1') {
+                if (san_names.includes('Email Address')) {
+                    g_form.setDisplay('add_email_address', true);
+                }
+			}
+        } else {
+            g_form.setDisplay('certificate_category', true);
+            g_form.setMandatory('certificate_category', true);
+            g_form.setDisplay('add_email_address', false);
+        }
+		if (csr_parameter_values.indexOf("Organization") >= 0) {
+			g_form.setDisplay('organization', true);
+		}
+		if (csr_parameter_values.indexOf("Organization Unit") >= 0) {
+			g_form.setDisplay('organization_unit', true);
+		}
+		if (csr_parameter_values.indexOf("Locality") >= 0) {
+			g_form.setDisplay('locality', true);
+		}
+		if (csr_parameter_values.indexOf("State") >= 0) {
+			g_form.setDisplay('state', true);
+		}
+		if (csr_parameter_values.indexOf("Country") >= 0) {
+			g_form.setDisplay('country', true);
+		}
+		if (csr_parameter_values.indexOf("Email Address") >= 0) {
+			g_form.setDisplay('email_address', true);
+		}
+    }
+}
+
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+    try {
+        g_form.clearOptions('hash_function');
+        g_form.clearOptions('key_type');
+        g_form.clearOptions('bit_length');
+        var CA = g_form.getValue('certificate_authority');
+        var itr_res = g_form.getValue('ca_policy_details');
+        var csr_input = g_form.getValue('csr_input_method');
+        var amazon_issuer = g_form.getValue('issuer');
+        var ca_account = g_form.getValue('validate_ca_account');
+        if (CA === 'Amazon') {
+            g_form.setDisplay('certificate_category', true);
+            g_form.setMandatory('certificate_category', true);
+            g_form.setDisplay('common_name', true);
+            g_form.setMandatory('common_name', true);
+            g_form.setDisplay('san_fields', true);
+            g_form.setDisplay('add_dns_values', true);
+            g_form.setDisplay('add_ip_address', true);
+            g_form.clearValue('subject_alternative_name');
+            set_file_formats();
+        } else {
+            if (!itr_res) {
+                try {
+                    var ga = new GlideAjax('get_hash_details');
+                    var policy = g_form.getValue('certificate_policy');
+					var company_name = g_form.getValue('company_name');
+                    ga.addParam("sysparm_name", "getHashDetails");
+                    ga.addParam("sysparm_certPolicy", policy);
+					ga.addParam("sysparm_company", company_name);
+                    ga.getXML(getResponse);
+                } catch (error) {
+                    throw "Error occurred while setting hash details in the form - " + error;
+                }
+            } else {
+                try {
+                    itr_res = JSON.parse(itr_res);
+                } catch (err) {
+                    throw "Couldn't parse ca policy details.";
+                }
+                g_form.addOption('key_type', '', 'Select');
+                g_form.setValue('key_type', '', 'Select');
+                g_form.addOption('hash_function', '', 'Select');
+                g_form.setValue('hash_function', '', 'Select');
+                var flag = 0;
+                var ca_flag = 0;
+                var i, j;
+                for (i = 0; i < itr_res.length; i++) {
+                    var result = itr_res[i];
+                    if (!result.certificateAuthority) {
+                        throw 'Certificate Autority is not configured in AppviewX Policy.';
+                    }
+                    if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS') {
+						g_form.clearOptions('avx_issuer_location');
+						g_form.clearValue('avx_issuer_location');
+						g_form.setDisplay('avx_issuer_location', true);
+						g_form.setMandatory('avx_issuer_location', true);
+						g_form.addOption('avx_issuer_location', '', 'Select');
+                        var pki_casettings = result.caSettings;
+                        for (var pki = 0; pki < pki_casettings.length; pki++) {
+                            if (pki_casettings[pki].name === ca_account) {
+                                ca_flag = 1;
+                            }
+                            if (!pki_casettings[pki].issuerLocation) {
+                                throw "Issuer Location is not found for the AppViewX PKIaaS. Check with AppViewX CA Policy";
+                            }
+                            g_form.addOption('avx_issuer_location', pki_casettings[pki].issuerLocation, pki_casettings[pki].issuerLocation);
+                        }
+                        if (ca_flag === 0) {
+                            throw "Selected ca " + ca_account + " is not configured in the AppViewX.";
+                        }
+                        if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                            break;
+                        }
+                        var acc_details = result.multipleAccountDetails;
+                        for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+                            if(!acc_details[m_acc].caSettings) {
+                                throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+                            }
+                            if(!acc_details[m_acc].caSettings.name) {
+                                throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+                            }
+                            var pki_acc_name = acc_details[m_acc].caSettings.name;
+                            if (pki_acc_name === ca_account) {
+                                if(!acc_details[m_acc].shaType) {
+                                    throw "ShaType is not configured in AppViewX Policy.";
+                                }
+                                var hash_type = acc_details[m_acc].shaType;
+                                for (j = 0; j < hash_type.length; j++) {
+                                    g_form.addOption('hash_function', hash_type[j], hash_type[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('hash_function', hash_type[j], hash_type[j]);
+                                    }
+                                    flag = 1;
+                                }
+                                flag = 0;
+                                if(!acc_details[m_acc].certificateKeyParams) {
+                                    throw 'KeyParameters are not configured in AppviewX Policy.';
+                                }
+                                var pki_certparams = acc_details[m_acc].certificateKeyParams;
+                                var pki_certparam_keys = Object.keys(pki_certparams);
+                                for (j = 0; j < pki_certparam_keys.length; j++) {
+                                    if (pki_certparams[pki_certparam_keys[j]].length > 0) {
+                                        g_form.addOption('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                        if (flag == 0) {
+                                            g_form.setValue('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                        }
+                                        flag = 1;
+                                    }
+                                }
+                                if(!acc_details[m_acc].certPolicyCsrParameter) {
+                                    throw "CSR parameters are not configured in appviewx policy.";
+                                }
+                                g_form.setValue('organization', acc_details[m_acc].certPolicyCsrParameter.organization, acc_details[m_acc].certPolicyCsrParameter.organization);
+                                g_form.setValue('organization_unit', acc_details[m_acc].certPolicyCsrParameter.organizationUnit, acc_details[m_acc].certPolicyCsrParameter.organizationUnit);
+                                g_form.setValue('locality', acc_details[m_acc].certPolicyCsrParameter.locality, acc_details[m_acc].certPolicyCsrParameter.locality);
+                                g_form.setValue('state', acc_details[m_acc].certPolicyCsrParameter.state, acc_details[m_acc].certPolicyCsrParameter.state);
+                                g_form.setValue('country', acc_details[m_acc].certPolicyCsrParameter.country, acc_details[m_acc].certPolicyCsrParameter.country);
+                                g_form.setValue('email_address', (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","), (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","));
+								break;
+                            }
+                        }
+                    }
+                    else if (result.certificateAuthority === CA && result.certificateAuthority !== 'Amazon Private CA') {
+                        var ca_settings = result.caSettings;
+                        for (var ca = 0; ca < ca_settings.length; ca++) {
+                            if (ca_settings[ca].name === ca_account) {
+                                ca_flag = 1;
+                            }
+                        }
+                        if (ca_flag === 0) {
+                            throw "Selected ca " + ca_account + " is not configured in the AppViewX.";
+                        }
+                        if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                            break;
+                        }
+                        if (CA !== "SwissSign") {
+                            if (!result.shaType) {
+                                throw 'shaType is not configured in AppviewX Policy.';
+                            }
+                            var h_type = result.shaType;
+                            for (j = 0; j < h_type.length; j++) {
+                                g_form.addOption('hash_function', h_type[j], h_type[j]);
+                                if (flag == 0) {
+                                    g_form.setValue('hash_function', h_type[j], h_type[j]);
+                                }
+                                flag = 1;
+                            }
+                            flag = 0;
+                            if (!result.certificateKeyParams) {
+                                throw 'KeyParameters are not configured in AppviewX Policy.';
+                            }
+                            var certificateKeyParams = result.certificateKeyParams;
+                            var keys = Object.keys(certificateKeyParams);
+                            for (j = 0; j < keys.length; j++) {
+                                if (certificateKeyParams[keys[j]].length > 0) {
+                                    g_form.addOption('key_type', keys[j], keys[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('key_type', keys[j], keys[j]);
+                                    }
+                                    flag = 1;
+                                }
+                            }
+                        }
+                        if (!result.certPolicyCsrParameter) {
+                            throw "CSR parameters are not configured in appviewx policy.";
+                        }
+                        g_form.setValue('organization', result.certPolicyCsrParameter.organization, result.certPolicyCsrParameter.organization);
+                        g_form.setValue('organization_unit', result.certPolicyCsrParameter.organizationUnit, result.certPolicyCsrParameter.organizationUnit);
+                        g_form.setValue('locality', result.certPolicyCsrParameter.locality, result.certPolicyCsrParameter.locality);
+                        g_form.setValue('state', result.certPolicyCsrParameter.state, result.certPolicyCsrParameter.state);
+                        g_form.setValue('country', result.certPolicyCsrParameter.country, result.certPolicyCsrParameter.country);
+                        g_form.setValue('email_address', (result.certPolicyCsrParameter.mailAddress).join(","), (result.certPolicyCsrParameter.mailAddress).join(","));
+                    } else if (result.certificateAuthority === CA && result.certificateAuthority === 'Amazon Private CA') {
+                        ca_settings = result.caSettings;
+                        for (ca = 0; ca < ca_settings.length; ca++) {
+                            if (ca_settings[ca].name === ca_account) {
+                                ca_flag = 1;
+                            }
+                        }
+                        if (ca_flag === 0) {
+                            throw "Selected ca account " + ca_account + " is not configured in the AppViewX.";
+                        }
+                        if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                            break;
+                        }
+                        if (!result.multipleAccountDetails) {
+                            throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                        }
+                        var multiple_accounts = result.multipleAccountDetails;
+                        for (var acc = 0; acc < multiple_accounts.length; acc++) {
+                            if (multiple_accounts[acc].caSettings.issuerName === amazon_issuer) {
+                                if (!multiple_accounts[acc].shaType) {
+                                    throw 'shaType is not configured in AppviewX Policy.';
+                                }
+                                h_type = multiple_accounts[acc].shaType;
+                                for (j = 0; j < h_type.length; j++) {
+                                    g_form.addOption('hash_function', h_type[j], h_type[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('hash_function', h_type[j], h_type[j]);
+                                    }
+                                    flag = 1;
+                                }
+                                flag = 0;
+                                if (!multiple_accounts[acc].certificateKeyParams) {
+                                    throw 'KeyParameters are not configured in AppviewX policy.';
+                                }
+                                certificateKeyParams = multiple_accounts[acc].certificateKeyParams;
+                                keys = Object.keys(certificateKeyParams);
+                                for (j = 0; j < keys.length; j++) {
+                                    if (certificateKeyParams[keys[j]].length > 0) {
+                                        g_form.addOption('key_type', keys[j], keys[j]);
+                                        if (flag == 0) {
+                                            g_form.setValue('key_type', keys[j], keys[j]);
+                                        }
+                                        flag = 1;
+                                    }
+                                }
+                                flag = 0;
+                                g_form.setValue('key_type', keys[0], keys[0]);
+                                if (!multiple_accounts[acc].caSigningSignatureAlgorthim) {
+                                    throw 'caSigningSignatureAlgorthim are not configured in AppviewX policy.';
+                                }
+                                g_form.clearOptions('ca_signing_algorithm');
+                                g_form.addOption('ca_signing_algorithm', '', 'Select');
+                                g_form.setValue('ca_signing_algorithm', '', 'Select');
+                                var sign_algorithm = multiple_accounts[acc].caSigningSignatureAlgorthim;
+                                for (var sign = 0; sign < sign_algorithm.length; sign++) {
+                                    g_form.addOption('ca_signing_algorithm', sign_algorithm[sign], sign_algorithm[sign]);
+                                    if (flag === 0) {
+                                        g_form.setValue('ca_signing_algorithm', sign_algorithm[sign], sign_algorithm[sign]);
+                                    }
+                                    flag = 1;
+                                }
+                                if (!multiple_accounts[acc].certPolicyCsrParameter) {
+                                    throw "CSR parameters are not configured in appviewx Policy.";
+                                }
+                                g_form.setValue('organization', multiple_accounts[acc].certPolicyCsrParameter.organization, multiple_accounts[acc].certPolicyCsrParameter.organization);
+                                g_form.setValue('organization_unit', multiple_accounts[acc].certPolicyCsrParameter.organizationUnit, multiple_accounts[acc].certPolicyCsrParameter.organizationUnit);
+                                g_form.setValue('locality', multiple_accounts[acc].certPolicyCsrParameter.locality, multiple_accounts[acc].certPolicyCsrParameter.locality);
+                                g_form.setValue('state', multiple_accounts[acc].certPolicyCsrParameter.state, multiple_accounts[acc].certPolicyCsrParameter.state);
+                                g_form.setValue('country', multiple_accounts[acc].certPolicyCsrParameter.country, multiple_accounts[acc].certPolicyCsrParameter.country);
+                                g_form.setValue('email_address', (multiple_accounts[acc].certPolicyCsrParameter.mailAddress).join(","), (multiple_accounts[acc].certPolicyCsrParameter.mailAddress).join(","));
+                                break;
+                            }
+                        }
+                    }
+                }
+                set_form_fields();
+                set_file_formats();
+
+            }
+        }
+    } catch (error) {
+        g_form.addErrorMessage(error + " Please check with the AppviewX admin/CLM Settings.");
+        var error_message = 'Error occurred while setting hash details in the form - ' + error;
+        var gr = new GlideAjax('avx_logger');
+        gr.addParam("sysparm_name", "avxLogger");
+        gr.addParam("sysparm_level", "Error");
+        gr.addParam("sysparm_script", "set_hash_types");
+        gr.addParam("sysparm_application", "AppViewX");
+        gr.addParam("sysparm_message", error_message);
+        gr.getXML(function() {});
+    }
+
+    function getResponse(response) {
+        try {
+            g_form.addOption('key_type', '', 'Select');
+            g_form.setValue('key_type', '', 'Select');
+            g_form.addOption('hash_function', '', 'Select');
+            g_form.setValue('hash_function', '', 'Select');
+            var res = response.responseXML.documentElement.getAttribute('answer');
+            try {
+                res = JSON.parse(res);
+            } catch (err) {
+                throw res || "Couldn't parse ca policy details.";
+            }
+            if ('error' in res) {
+                throw JSON.stringify(res);
+            }
+            var flag = 0;
+            var ca_flag = 0;
+            if (!res.response.certificatePolicyCaAccountDetails) {
+                throw 'CA Account Details is not configured in AppviewX Policy.';
+            }
+            var itr_res = res.response.certificatePolicyCaAccountDetails;
+            g_form.setValue('ca_policy_details', JSON.stringify(itr_res), JSON.stringify(itr_res));
+            var i, j;
+            for (i = 0; i < itr_res.length; i++) {
+                var result = itr_res[i];
+                if (!result.certificateAuthority) {
+                    throw 'Certificate Autority is not configured in AppviewX Policy.';
+                }
+                if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS') {
+					g_form.clearOptions('avx_issuer_location');
+					g_form.clearValue('avx_issuer_location');
+					g_form.setDisplay('avx_issuer_location', true);
+					g_form.setMandatory('avx_issuer_location', true);
+					g_form.addOption('avx_issuer_location', '', 'Select');
+// 					g_form.clearOptions('avx_issuer_name');
+// 					g_form.clearValue('avx_issuer_name');
+// 					g_form.setDisplay('avx_issuer_name', true);
+// 					g_form.setMandatory('avx_issuer_name', true);
+// 					g_form.addOption('avx_issuer_name', '', 'Select');
+                    var pki_casettings = result.caSettings;
+                    for (var pki = 0; pki < pki_casettings.length; pki++) {
+                        if (pki_casettings[pki].name === ca_account) {
+                            ca_flag = 1;
+                        }
+                        if (!pki_casettings[pki].issuerLocation) {
+                            throw "Issuer Location is not found for the AppViewX PKIaaS. Check with AppViewX CA Policy";
+                        }
+                        g_form.addOption('avx_issuer_location', pki_casettings[pki].issuerLocation, pki_casettings[pki].issuerLocation);
+//                         if (!pki_casettings[pki].issuerName) {
+//                             throw "Issuer Name is not found for the AppViewX PKIaaS. Check with AppViewX CA Policy";
+//                         }
+//                         var avx_issuer_names = pki_casettings[pki].issuerName;
+//                         for (var name = 0; name < avx_issuer_names.length; name++) {
+//                             g_form.addOption('avx_issuer_name', avx_issuer_names[name], avx_issuer_names[name]);
+//                         }
+                    }
+                    if (ca_flag === 0) {
+                        throw "Selected ca " + ca_account + " is not configured in the AppViewX.";
+                    }
+                    if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                        break;
+                    }
+                    var acc_details = result.multipleAccountDetails;
+                    for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+                        if(!acc_details[m_acc].caSettings) {
+                            throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        if(!acc_details[m_acc].caSettings.name) {
+                            throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        var pki_acc_name = acc_details[m_acc].caSettings.name;
+                        if (pki_acc_name === ca_account) {
+                            if(!acc_details[m_acc].shaType) {
+                                throw "ShaType is not configured in AppViewX Policy.";
+                            }
+                            var hash_type = acc_details[m_acc].shaType;
+                            for (j = 0; j < hash_type.length; j++) {
+                                g_form.addOption('hash_function', hash_type[j], hash_type[j]);
+                                if (flag == 0) {
+                                    g_form.setValue('hash_function', hash_type[j], hash_type[j]);
+                                }
+                                flag = 1;
+                            }
+                            flag = 0;
+                            if(!acc_details[m_acc].certificateKeyParams) {
+                                throw 'KeyParameters are not configured in AppviewX Policy.';
+                            }
+                            var pki_certparams = acc_details[m_acc].certificateKeyParams;
+                            var pki_certparam_keys = Object.keys(pki_certparams);
+                            for (j = 0; j < pki_certparam_keys.length; j++) {
+                                if (pki_certparams[pki_certparam_keys[j]].length > 0) {
+                                    g_form.addOption('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('key_type', pki_certparam_keys[j], pki_certparam_keys[j]);
+                                    }
+                                    flag = 1;
+                                }
+                            }
+                            if(!acc_details[m_acc].certPolicyCsrParameter) {
+                                throw "CSR parameters are not configured in appviewx policy.";
+                            }
+                            g_form.setValue('organization', acc_details[m_acc].certPolicyCsrParameter.organization, acc_details[m_acc].certPolicyCsrParameter.organization);
+                            g_form.setValue('organization_unit', acc_details[m_acc].certPolicyCsrParameter.organizationUnit, acc_details[m_acc].certPolicyCsrParameter.organizationUnit);
+                            g_form.setValue('locality', acc_details[m_acc].certPolicyCsrParameter.locality, acc_details[m_acc].certPolicyCsrParameter.locality);
+                            g_form.setValue('state', acc_details[m_acc].certPolicyCsrParameter.state, acc_details[m_acc].certPolicyCsrParameter.state);
+                            g_form.setValue('country', acc_details[m_acc].certPolicyCsrParameter.country, acc_details[m_acc].certPolicyCsrParameter.country);
+                            g_form.setValue('email_address', (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","), (acc_details[m_acc].certPolicyCsrParameter.mailAddress).join(","));
+                        }
+                    }
+                }
+                else if (result.certificateAuthority === CA && result.certificateAuthority !== 'Amazon Private CA') {
+                    var ca_settings = result.caSettings;
+                    for (var ca = 0; ca < ca_settings.length; ca++) {
+                        if (ca_settings[ca].name === ca_account) {
+                            ca_flag = 1;
+                        }
+                    }
+                    if (ca_flag === 0) {
+                        throw "Selected ca " + ca_account + " is not configured in the AppViewX.";
+                    }
+
+                    if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                        break;
+                    }
+                    if (CA !== "SwissSign") {
+                        if (!result.shaType) {
+                            throw 'shaType is not configured in AppviewX Policy.';
+                        }
+                        var h_type = result.shaType;
+                        for (j = 0; j < h_type.length; j++) {
+                            g_form.addOption('hash_function', h_type[j], h_type[j]);
+                            if (flag == 0) {
+                                g_form.setValue('hash_function', h_type[j], h_type[j]);
+                            }
+                            flag = 1;
+                        }
+                        flag = 0;
+                        if (!result.certificateKeyParams) {
+                            throw 'KeyParameters are not configured in AppviewX policy.';
+                        }
+                        var certificateKeyParams = result.certificateKeyParams;
+                        var keys = Object.keys(certificateKeyParams);
+                        for (j = 0; j < keys.length; j++) {
+                            if (certificateKeyParams[keys[j]].length > 0) {
+                                g_form.addOption('key_type', keys[j], keys[j]);
+                                if (flag == 0) {
+                                    g_form.setValue('key_type', keys[j], keys[j]);
+                                }
+                                flag = 1;
+                            }
+
+                        }
+                        g_form.setValue('key_type', keys[0], keys[0]);
+                    }
+                    if (!result.certPolicyCsrParameter) {
+                        throw "CSR parameters are not configured in appviewx Policy.";
+                    }
+                    g_form.setValue('organization', result.certPolicyCsrParameter.organization, result.certPolicyCsrParameter.organization);
+                    g_form.setValue('organization_unit', result.certPolicyCsrParameter.organizationUnit, result.certPolicyCsrParameter.organizationUnit);
+                    g_form.setValue('locality', result.certPolicyCsrParameter.locality, result.certPolicyCsrParameter.locality);
+                    g_form.setValue('state', result.certPolicyCsrParameter.state, result.certPolicyCsrParameter.state);
+                    g_form.setValue('country', result.certPolicyCsrParameter.country, result.certPolicyCsrParameter.country);
+                    g_form.setValue('email_address', (result.certPolicyCsrParameter.mailAddress).join(","), (result.certPolicyCsrParameter.mailAddress).join(","));
+                } else if (result.certificateAuthority === CA && result.certificateAuthority === 'Amazon Private CA') {
+                    ca_settings = result.caSettings;
+                    for (ca = 0; ca < ca_settings.length; ca++) {
+                        if (ca_settings[ca].name === ca_account) {
+                            ca_flag = 1;
+                        }
+                    }
+                    if (ca_flag === 0) {
+                        throw "Selected ca " + ca_account + " is not configured in the AppViewX.";
+                    }
+                    if (g_form.getValue('csr_input_method') === 'Upload CSR') {
+                        break;
+                    }
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+                    var multiple_accounts = result.multipleAccountDetails;
+                    for (var acc = 0; acc < multiple_accounts.length; acc++) {
+                        if (multiple_accounts[acc].caSettings.issuerName === amazon_issuer) {
+                            if (!multiple_accounts[acc].shaType) {
+                                throw 'shaType is not configured in AppviewX Policy.';
+                            }
+                            h_type = multiple_accounts[acc].shaType;
+                            for (j = 0; j < h_type.length; j++) {
+                                g_form.addOption('hash_function', h_type[j], h_type[j]);
+                                if (flag == 0) {
+                                    g_form.setValue('hash_function', h_type[j], h_type[j]);
+                                }
+                                flag = 1;
+                            }
+                            flag = 0;
+                            if (!multiple_accounts[acc].certificateKeyParams) {
+                                throw 'KeyParameters are not configured in AppviewX policy.';
+                            }
+                            certificateKeyParams = multiple_accounts[acc].certificateKeyParams;
+                            keys = Object.keys(certificateKeyParams);
+                            for (j = 0; j < keys.length; j++) {
+                                if (certificateKeyParams[keys[j]].length > 0) {
+                                    g_form.addOption('key_type', keys[j], keys[j]);
+                                    if (flag == 0) {
+                                        g_form.setValue('key_type', keys[j], keys[j]);
+                                    }
+                                    flag = 1;
+                                }
+                            }
+                            flag = 0;
+                            g_form.setValue('key_type', keys[0], keys[0]);
+                            if (!multiple_accounts[acc].caSigningSignatureAlgorthim) {
+                                throw 'caSigningSignatureAlgorthim are not configured in AppviewX policy.';
+                            }
+                            g_form.clearOptions('ca_signing_algorithm');
+                            g_form.addOption('ca_signing_algorithm', '', 'Select');
+                            g_form.setValue('ca_signing_algorithm', '', 'Select');
+                            var sign_algorithm = multiple_accounts[acc].caSigningSignatureAlgorthim;
+                            for (var sign = 0; sign < sign_algorithm.length; sign++) {
+                                g_form.addOption('ca_signing_algorithm', sign_algorithm[sign], sign_algorithm[sign]);
+                                if (flag === 0) {
+                                    g_form.setValue('ca_signing_algorithm', sign_algorithm[sign], sign_algorithm[sign]);
+                                }
+                                flag = 1;
+                            }
+                            if (!multiple_accounts[acc].certPolicyCsrParameter) {
+                                throw "CSR parameters are not configured in appviewx Policy.";
+                            }
+                            g_form.setValue('organization', multiple_accounts[acc].certPolicyCsrParameter.organization, multiple_accounts[acc].certPolicyCsrParameter.organization);
+                            g_form.setValue('organization_unit', multiple_accounts[acc].certPolicyCsrParameter.organizationUnit, multiple_accounts[acc].certPolicyCsrParameter.organizationUnit);
+                            g_form.setValue('locality', multiple_accounts[acc].certPolicyCsrParameter.locality, multiple_accounts[acc].certPolicyCsrParameter.locality);
+                            g_form.setValue('state', multiple_accounts[acc].certPolicyCsrParameter.state, multiple_accounts[acc].certPolicyCsrParameter.state);
+                            g_form.setValue('country', multiple_accounts[acc].certPolicyCsrParameter.country, multiple_accounts[acc].certPolicyCsrParameter.country);
+                            g_form.setValue('email_address', (multiple_accounts[acc].certPolicyCsrParameter.mailAddress).join(","), (multiple_accounts[acc].certPolicyCsrParameter.mailAddress).join(","));
+                            break;
+                        }
+                    }
+                }
+            }
+            set_form_fields();
+            set_file_formats();
+        } catch (error) {
+            g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
+            var message = 'Error occurred while setting hash details in the form - ' + error;
+            var ga = new GlideAjax('avx_logger');
+            ga.addParam("sysparm_name", "avxLogger");
+            ga.addParam("sysparm_level", "Error");
+            ga.addParam("sysparm_script", "set_hash_types");
+            ga.addParam("sysparm_application", "AppViewX");
+            ga.addParam("sysparm_message", message);
+            ga.getXML(function() {});
+        }
+    }
+}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-08-26 16:06:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>74e184f51b65d550cda7db91dd4bcb3e</sys_id>
+        <sys_mod_count>201</sys_mod_count>
+        <sys_name>set_hash_types</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>catalog_script_client_74e184f51b65d550cda7db91dd4bcb3e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-04 18:04:46</sys_updated_on>
+        <table/>
+        <type>onChange</type>
+        <ui_type>10</ui_type>
+        <va_supported>true</va_supported>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

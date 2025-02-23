@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update node_type="sys_portal_page" unload_date="2025-02-23 14:09:48">
+    <sys_portal_page action="INSERT_OR_UPDATE">
+        <layout display_value="layout_2_across">f6defafa0a0a0b12000d5016bd12ff06</layout>
+        <order>3010</order>
+        <read_roles>x_avx_appviewx_aut.admin,admin,x_avx_appviewx_aut.certificate_request_user,x_avx_appviewx_aut.certificate_approver,x_avx_appviewx_aut.app_admin</read_roles>
+        <roles>x_avx_appviewx_aut.admin,admin,x_avx_appviewx_aut.app_admin</roles>
+        <selectable>true</selectable>
+        <sys_class_name>sys_portal_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-01-09 09:01:19</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>af6ae66c1bdec85461858480cd4bcb5a</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>AppViewX Catalog</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_portal_page_af6ae66c1bdec85461858480cd4bcb5a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-04 10:10:24</sys_updated_on>
+        <title>AppViewX Catalog</title>
+        <user/>
+        <view>AppViewX Catalog</view>
+        <related_items_node>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone>dropzone0</dropzone>
+                <offset>0</offset>
+                <page display_value="AppViewX Catalog">af6ae66c1bdec85461858480cd4bcb5a</page>
+                <summary/>
+                <sys_created_by>admin</sys_created_by>
+                <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                <sys_id>dab515e8db33429016a0285b13961999</sys_id>
+                <sys_mod_count>0</sys_mod_count>
+                <sys_updated_by>admin</sys_updated_by>
+                <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>52b515e8db33429016a0285b1396199a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>2eb4c0301be1885061858480cd4bcb52</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>current_page</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>56b515e8db33429016a0285b1396199c</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>af6ae66c1bdec85461858480cd4bcb5a</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>macro</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>5eb515e8db33429016a0285b13961999</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>29a84828d7011100f20024837e6103af</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title_link_class</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>d2b515e8db33429016a0285b1396199b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>category_title_link</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>d6b515e8db33429016a0285b1396199a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>com.glideapp.servicecatalog.RenderCatalog</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title_link</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>d6b515e8db33429016a0285b1396199b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>catalog_home.do?v=1&amp;amp;amp;amp;sysparm_catalog=2eb4c0301be1885061858480cd4bcb52&amp;amp;amp;amp;sysparm_catalog_view=catalog_AppViewX_Catalog</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>render_title</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>dab515e8db33429016a0285b1396199a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>type</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>dab515e8db33429016a0285b1396199b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>catalog</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>fromHome</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>deb515e8db33429016a0285b1396199a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2024-07-31 09:54:38">dab515e8db33429016a0285b13961999</portal_section>
+                        <sys_created_by>admin</sys_created_by>
+                        <sys_created_on>2024-07-31 09:54:38</sys_created_on>
+                        <sys_id>deb515e8db33429016a0285b1396199b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>admin</sys_updated_by>
+                        <sys_updated_on>2024-07-31 09:54:38</sys_updated_on>
+                        <value>&amp;lt;a onmousedown='Event.stop(event); return false;' class='category_title_link' href='catalog_home.do?v=1&amp;amp;sysparm_catalog=2eb4c0301be1885061858480cd4bcb52&amp;amp;sysparm_catalog_view=catalog_AppViewX_Catalog&amp;amp;sysparm_view=AppViewX Catalog'&amp;gt;AppViewX Catalog&amp;lt;/a&amp;gt;</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+        </related_items_node>
+    </sys_portal_page>
+</record_update>

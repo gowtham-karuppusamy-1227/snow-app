@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices>false</choices>
+        <description/>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.communications.httpclient.verify_hostname</name>
+        <read_roles>x_avx_appviewx_aut.admin</read_roles>
+        <suffix>com.glide.communications.httpclient.verify_hostname</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-06-09 03:47:00</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>80149c611b9914502369eb1cad4bcb30</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>glide.communications.httpclient.verify_hostname</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_properties_80149c611b9914502369eb1cad4bcb30</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-28 17:57:31</sys_updated_on>
+        <type>boolean</type>
+        <value>false</value>
+        <write_roles>x_avx_appviewx_aut.admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=80149c611b9914502369eb1cad4bcb30"/>
+</record_update>
