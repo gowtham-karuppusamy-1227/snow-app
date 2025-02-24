@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="fdc3ed031b5d1d10cda7db91dd4bcbbe" label="CLM Settings" max_length="40" name="x_avx_appviewx_aut_clm_settings" type="collection">
+        <element choice="1" hint="Select the approval levels in appviewx for create certificate" label="Number of Levels in AppViewX" max_length="40" name="approval_levels_in_appviewx" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the approval levels in appviewx for certificate renew" label="Number of Levels in AppViewX" max_length="40" name="approval_levels_in_appviewx_renewal" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the approval levels in appviewx for certificate revoke" label="Number of Levels in AppViewX" max_length="40" name="approval_levels_in_appviewx_revoke" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="3" default="1" hint="Select the approval levels in ServiceNow for certificate create" label="Number of Levels in ServiceNow" max_length="40" name="approval_levels_in_servicenow" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="3" default="1" hint="Select the approval levels in ServiceNow for certificate renew" label="Number of Levels in ServiceNow" max_length="40" name="approval_levels_in_servicenow_renewal" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive="true" inactive_on_update="true" label="One Level" sequence="0" value="One Level"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="3" default="1" hint="Select the approval levels in ServiceNow for certificate revoke" label="Number of Levels in ServiceNow" max_length="40" name="approval_levels_in_servicenow_revoke" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1" sequence="0" value="1"/>
+                <element inactive="true" inactive_on_update="true" label="One Level" sequence="0" value="One Level"/>
+                <element inactive_on_update="false" label="2" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the approver for certificate create" label="Level 1 Approver" mandatory="true" max_length="40" name="approver_selection" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive="true" inactive_on_update="true" label="Manager Email" sequence="0" value="Manager Email"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the approver for certificate renew" label="Level 1 Approver" mandatory="true" max_length="40" name="approver_selection_renew" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive="true" inactive_on_update="true" label="Manager Email" sequence="0" value="Manager Email"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the approver for certificate revoke" label="Level 1 Approver" mandatory="true" max_length="40" name="approver_selection_revoke" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive="true" inactive_on_update="true" label="Manager Email" sequence="0" value="Manager Email"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element hint="Enter the approver email ID for Level 1 approval " label="Level 1 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_one_level_approval_mail_id_for_create" type="string"/>
+        <element hint="Enter the approver email ID for Level 1 approval " label="Level 1 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_one_level_approval_mail_id_for_renew" type="string"/>
+        <element hint="Enter the approver email ID for Level 1 approval " label="Level 1 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_one_level_approval_mail_id_for_revoke" type="string"/>
+        <element hint="Enter the approver email ID for Level 2 approval " label="Level 2 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_two_level_approval_mail_id_for_create" type="string"/>
+        <element hint="Enter the approver email ID for Level 2 approval " label="Level 2 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_two_level_approval_mail_id_for_renew" type="string"/>
+        <element hint="Enter the approver email ID for Level 2 approval " label="Level 2 Approver Email ID" mandatory="true" max_length="1000" name="appviewx_two_level_approval_mail_id_for_revoke" type="string"/>
+        <element choice="1" hint="Select the assignment group for ServiceNow approval for cert create" label="User Group" mandatory="true" max_length="4000" name="assignment_group" reference="sys_user_group" type="reference">
+            <choice/>
+        </element>
+        <element choice="1" dependent="approval_levels_in_servicenow_renewal" dependent_on_field="approval_levels_in_servicenow_renewal" hint="Select the assignment group for ServiceNow approval for cert renew" label="User Group" mandatory="true" max_length="4000" name="assignment_group_renew" reference="sys_user_group" type="reference" use_dependent_field="true">
+            <choice/>
+        </element>
+        <element choice="1" hint="Select the assignment group for ServiceNow approval for cert revoke" label="User Group" mandatory="true" max_length="4000" name="assignment_group_revoke" reference="sys_user_group" type="reference">
+            <choice/>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Assignment Group Selection" max_length="100" name="assignment_group_selection" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Use logged-in user assignment group" sequence="0" value="Use logged-in user assignment group"/>
+                <element inactive_on_update="false" label="Allow user to select assignment group" sequence="1" value="Allow user to enter assignment group"/>
+                <element inactive_on_update="false" label="Use assignment group from clm settings" sequence="2" value="Use assignment group from clm settings"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to attach trust certificates?" max_length="40" name="attach_trust_cert" type="boolean"/>
+        <element choice="1" hint="Select the CA policy applicable for CLM actions " label="CA Policy" mandatory="true" max_length="50" name="ca_policy_name" type="choice">
+            <choice/>
+        </element>
+        <element hint="Field which contains the CA response" label="CA Response" max_length="10000" name="ca_response" type="string"/>
+        <element choice="1" hint="Select the corresponding CA Account configured in AppViewX" label="CA Account" mandatory="true" max_length="100" name="ca_settings_name" type="choice">
+            <choice/>
+        </element>
+        <element hint="Enter custom label name for the selected Certificate Authority " label="CA Tag" mandatory="true" max_length="40" name="ca_tag_name" type="string"/>
+        <element choice="1" default="Select" hint="Select the Certificate Authority for performing CLM actions" label="Certificate Authority" mandatory="true" max_length="40" name="ca_type" type="choice">
+            <choice/>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Fetch Certificates" mandatory="true" max_length="100" name="certificates_fetch" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Based on User" value="Based on ServiceNow"/>
+                <element inactive_on_update="false" label="Based on User Group In AppViewX" value="Based on AppViewX"/>
+                <element inactive_on_update="false" label="Based on User Group In ServiceNow" sequence="2" value="Based on User Group In ServiceNow"/>
+                <element inactive_on_update="false" label="Get All Certificates" sequence="3" value="Get All Certificates"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Fetch Certificates" mandatory="true" max_length="40" name="certificates_fetch_revoke" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Based on User" value="Based on ServiceNow"/>
+                <element inactive_on_update="false" label="Based on User Group In AppViewX" value="Based on AppViewX"/>
+                <element inactive_on_update="false" label="Based on User Group In ServiceNow" sequence="2" value="Based on User Group In ServiceNow"/>
+                <element inactive_on_update="false" label="Get All Certificates" sequence="3" value="Get All Certificates"/>
+            </choice>
+        </element>
+        <element choice="1" hint="Select the Certificate Categories under which users can perform CLM actions" label="Certificate Category" mandatory="true" max_length="4000" name="certificate_category" type="glide_list">
+            <choice>
+                <element inactive_on_update="false" label="Client" value="Client"/>
+                <element inactive_on_update="false" label="CodeSigning" value="CodeSigning"/>
+                <element inactive_on_update="false" label="Server" value="Server"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Certificate Group Selection" mandatory="true" max_length="40" name="certificate_group_selection" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Based on policy" sequence="0" value="Based on policy"/>
+                <element inactive_on_update="false" label="Based on user" sequence="1" value="Based on user"/>
+            </choice>
+        </element>
+        <element hint="Select the certificate file format to be sent to the end-user " label="Certificate Issuance Format" max_length="1024" name="certificate_retrieval_file_format" reference="x_avx_appviewx_aut_certificate_issuance_modes" type="glide_list"/>
+        <element choice="1" hint="Configure the method in which the user will be receiving the issued certificate " label="Certificate Issuance Mode" mandatory="true" max_length="40" name="certificate_retrieval_mode" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Attach to RITM and Send to Requestor" sequence="1" value="Attach to RITM and Send to Requestor"/>
+                <element inactive_on_update="false" label="Attach to RITM and Email to User Input" sequence="2" value="Attach to RITM and Email to User Input"/>
+                <element inactive_on_update="false" label="Send to Certificate Requestor Email" sequence="3" value="Send to Certificate Requestor Email"/>
+                <element inactive_on_update="false" label="Attach to RITM Ticket" sequence="4" value="Attach to RITM Ticket"/>
+                <element inactive_on_update="false" label="Send to User Input Email" sequence="5" value="Send to User Input Email"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="javascript:new x_avx_appviewx_aut.get_logged_in_user_company().getCompanyName()" label="Company" max_length="32" name="company" reference="core_company" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to create catalog task ticket?" max_length="40" name="create_catalog_task_ticket" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="CSR Parameters" max_length="4000" name="csr_parameters" reference="x_avx_appviewx_aut_csr_parameter" type="glide_list"/>
+        <element choice="1" hint="Select the options through which user can provide the CSR" label="CSR Options" mandatory="true" max_length="4000" name="csr_upload_option" reference="x_avx_appviewx_aut_csr_options" type="glide_list">
+            <choice/>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Allow User to Edit Certificate Attributes" max_length="40" name="edit_certificate_attributes" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable CSR Parameters" max_length="40" name="enable_csr_parameters" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable San Fields" max_length="40" name="enable_san_fields" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="enroll_approver_selection_two" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" max_length="32" name="enroll_user_group_approval_two" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Fetch User Group" max_length="100" name="fetch_user_group_renew" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Based on Username" sequence="0" value="Based on Username"/>
+                <element inactive_on_update="false" label="Based on Email" sequence="1" value="Based on Email"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Fetch User Group" max_length="100" name="fetch_user_group_revoke" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Based on Username" sequence="0" value="Based on Username"/>
+                <element inactive_on_update="false" label="Based on Email" sequence="1" value="Based on Email"/>
+            </choice>
+        </element>
+        <element active="false" hint="Select the check box for AppViewX approval for cert create" label="Is Approval required In AppViewX?" max_length="40" name="is_approval_needed_in_appviewx" type="boolean"/>
+        <element hint="Select the check box for AppViewX approval for cert renew" label="Is Approval required In AppViewX?" max_length="40" name="is_approval_needed_in_appviewx_renewal" type="boolean"/>
+        <element hint="Select the check box for AppViewX approval for cert revoke" label="Is Approval required In AppViewX?" max_length="40" name="is_approval_needed_in_appviewx_revoke" type="boolean"/>
+        <element hint="Select the check box for ServiceNow approval for cert create" label="Is Approval required In ServiceNow?" max_length="40" name="is_approval_needed_in_servicenow" type="boolean"/>
+        <element hint="Select the check box for ServiceNow approval for cert renew" label="Is Approval required In ServiceNow?" max_length="40" name="is_approval_needed_in_servicenow_renewal" type="boolean"/>
+        <element hint="Select the check box for ServiceNow approval for cert revoke" label="Is Approval required In ServiceNow?" max_length="40" name="is_approval_needed_in_servicenow_revoke" type="boolean"/>
+        <element label="Is Approval required in AppViewX?" max_length="40" name="is_approval_required_in_appviewx" type="boolean"/>
+        <element label="Is Approval required in ServiceNow?" max_length="40" name="is_approval_required_in_servicenow_enroll" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Json Data" max_length="5000" name="json_data" type="string_full_utf8"/>
+        <element hint="Configure the metadata values to be captured from the end user. The same metadata fields should also be defined in AppViewX " label="Metadata Configured In AppViewX" max_length="4000" name="meta_data_configured_in_appviewx" type="simple_name_values"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="New" max_length="5000" name="new" type="string_full_utf8"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Old" max_length="5000" name="old" type="string_full_utf8"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Push to end device" max_length="40" name="push_to_end_device" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" mandatory="true" max_length="32" name="push_user_group" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Renewal CSR Type" max_length="4000" name="renewal_csr_type" reference="x_avx_appviewx_aut_renewal_csr_type" type="glide_list"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Renewal Method" mandatory="true" max_length="4000" name="renewal_method" reference="x_avx_appviewx_aut_renewal_method" type="glide_list"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="renew_approver_selection_snow_two" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" max_length="32" name="renew_user_group_snow_two" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="revoke_approver_selection_two" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
+                <element inactive_on_update="false" label="Assignment Group" sequence="1" value="Assignment Group"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Revoke Notification Mode" mandatory="true" max_length="40" name="revoke_notification_mode" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Send To User Input Email" sequence="100" value="Send To User Input Email"/>
+                <element inactive_on_update="false" label="Send To Requestor Email" sequence="101" value="Send To Requestor Email"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" max_length="32" name="revoke_user_group_snow_two" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to send certificate to the end user?" max_length="40" name="send_certificate_to_end_user" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Send Update Email" max_length="100" name="send_update_email" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Yes" sequence="0" value="Yes"/>
+                <element inactive_on_update="false" label="No" sequence="1" value="No"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Subject Alternative Names" max_length="4000" name="subject_alternative_names" type="glide_list">
+            <choice>
+                <element inactive_on_update="false" label="DNS" sequence="0" value="DNS"/>
+                <element inactive_on_update="false" label="IP Address" sequence="1" value="IP Address"/>
+                <element inactive_on_update="false" label="Email Address" sequence="2" value="Email Address"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Domain" max_length="32" name="sys_domain" type="domain_id"/>
+        <element label="Domain Path" max_length="255" name="sys_domain_path" type="domain_path"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Applicable For" mandatory="true" max_length="4000" name="tag_applicable_for" reference="x_avx_appviewx_aut_ca_tag_actions" type="glide_list"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Task Assigned To" max_length="32" name="task_assigned_to" reference="sys_user" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Task Assignment Group" max_length="32" name="task_assignment_group" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Task Priority" max_length="100" name="task_priority" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="1 - Critical" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="2 - High" sequence="1" value="2"/>
+                <element inactive_on_update="false" label="3 - Moderate" sequence="2" value="3"/>
+                <element inactive_on_update="false" label="4 - Low" sequence="3" value="4"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Assignment Group Selection" mandatory="true" max_length="200" name="ticket_assignment_group" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Allow user to select assignment group" sequence="0" value="Allow user to select assignment group"/>
+                <element inactive_on_update="false" label="Use assignment group from clm settings" sequence="1" value="Use assignment group from clm settings"/>
+                <element inactive_on_update="false" label="Use logged-in user assignment group" sequence="2" value="Use logged-in user assignment group"/>
+                <element inactive_on_update="false" label="None of the group" sequence="3" value="None of the group"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Assignment Group" max_length="32" name="ticket_assignment_group_name" reference="sys_user_group" type="reference"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Time Zone" max_length="200" name="time_zone" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Africa/Abidjan" sequence="0" value="Africa/Abidjan"/>
+                <element inactive_on_update="false" label="Africa/Accra" sequence="1" value="Africa/Accra"/>
+                <element inactive_on_update="false" label="Africa/Addis_Ababa" sequence="2" value="Africa/Addis_Ababa"/>
+                <element inactive_on_update="false" label="Africa/Algiers" sequence="3" value="Africa/Algiers"/>
+                <element inactive_on_update="false" label="Africa/Asmara" sequence="4" value="Africa/Asmara"/>
+                <element inactive_on_update="false" label="Africa/Bamako" sequence="5" value="Africa/Bamako"/>
+                <element inactive_on_update="false" label="Africa/Bangui" sequence="6" value="Africa/Bangui"/>
+                <element inactive_on_update="false" label="Africa/Banjul" sequence="7" value="Africa/Banjul"/>
+                <element inactive_on_update="false" label="Africa/Bissau" sequence="8" value="Africa/Bissau"/>
+                <element inactive_on_update="false" label="Africa/Blantyre" sequence="9" value="Africa/Blantyre"/>
+                <element inactive_on_update="false" label="Africa/Brazzaville" sequence="10" value="Africa/Brazzaville"/>
+                <element inactive_on_update="false" label="Africa/Bujumbura" sequence="11" value="Africa/Bujumbura"/>
+                <element inactive_on_update="false" label="Africa/Cairo" sequence="12" value="Africa/Cairo"/>
+                <element inactive_on_update="false" label="Africa/Casablanca" sequence="13" value="Africa/Casablanca"/>
+                <element inactive_on_update="false" label="Africa/Ceuta" sequence="14" value="Africa/Ceuta"/>
+                <element inactive_on_update="false" label="Africa/Conakry" sequence="15" value="Africa/Conakry"/>
+                <element inactive_on_update="false" label="Africa/Dakar" sequence="16" value="Africa/Dakar"/>
+                <element inactive_on_update="false" label="Africa/Dar_es_Salaam" sequence="17" value="Africa/Dar_es_Salaam"/>
+                <element inactive_on_update="false" label="Africa/Djibouti" sequence="18" value="Africa/Djibouti"/>
+                <element inactive_on_update="false" label="Africa/Douala" sequence="19" value="Africa/Douala"/>
+                <element inactive_on_update="false" label="Africa/El_Aaiun" sequence="20" value="Africa/El_Aaiun"/>
+                <element inactive_on_update="false" label="Africa/Freetown" sequence="21" value="Africa/Freetown"/>
+                <element inactive_on_update="false" label="Africa/Gaborone" sequence="22" value="Africa/Gaborone"/>
+                <element inactive_on_update="false" label="Africa/Harare" sequence="23" value="Africa/Harare"/>
+                <element inactive_on_update="false" label="Africa/Johannesburg" sequence="24" value="Africa/Johannesburg"/>
+                <element inactive_on_update="false" label="Africa/Juba" sequence="25" value="Africa/Juba"/>
+                <element inactive_on_update="false" label="Africa/Kampala" sequence="26" value="Africa/Kampala"/>
+                <element inactive_on_update="false" label="Africa/Khartoum" sequence="27" value="Africa/Khartoum"/>
+                <element inactive_on_update="false" label="Africa/Kigali" sequence="28" value="Africa/Kigali"/>
+                <element inactive_on_update="false" label="Africa/Kinshasa" sequence="29" value="Africa/Kinshasa"/>
+                <element inactive_on_update="false" label="Africa/Lagos" sequence="30" value="Africa/Lagos"/>
+                <element inactive_on_update="false" label="Africa/Libreville" sequence="31" value="Africa/Libreville"/>
+                <element inactive_on_update="false" label="Africa/Lome" sequence="32" value="Africa/Lome"/>
+                <element inactive_on_update="false" label="Africa/Luanda" sequence="33" value="Africa/Luanda"/>
+                <element inactive_on_update="false" label="Africa/Lubumbashi" sequence="34" value="Africa/Lubumbashi"/>
+                <element inactive_on_update="false" label="Africa/Lusaka" sequence="35" value="Africa/Lusaka"/>
+                <element inactive_on_update="false" label="Africa/Malabo" sequence="36" value="Africa/Malabo"/>
+                <element inactive_on_update="false" label="Africa/Maputo" sequence="37" value="Africa/Maputo"/>
+                <element inactive_on_update="false" label="Africa/Maseru" sequence="38" value="Africa/Maseru"/>
+                <element inactive_on_update="false" label="Africa/Mbabane" sequence="39" value="Africa/Mbabane"/>
+                <element inactive_on_update="false" label="Africa/Monrovia" sequence="40" value="Africa/Monrovia"/>
+                <element inactive_on_update="false" label="Africa/Nairobi" sequence="41" value="Africa/Nairobi"/>
+                <element inactive_on_update="false" label="Africa/Ndjamena" sequence="42" value="Africa/Ndjamena"/>
+                <element inactive_on_update="false" label="Africa/Niamey" sequence="43" value="Africa/Niamey"/>
+                <element inactive_on_update="false" label="Africa/Nouakchott" sequence="44" value="Africa/Nouakchott"/>
+                <element inactive_on_update="false" label="Africa/Ouagadougou" sequence="45" value="Africa/Ouagadougou"/>
+                <element inactive_on_update="false" label="Africa/Porto-Novo" sequence="46" value="Africa/Porto-Novo"/>
+                <element inactive_on_update="false" label="Africa/Sao_Tome" sequence="47" value="Africa/Sao_Tome"/>
+                <element inactive_on_update="false" label="Africa/Tripoli" sequence="48" value="Africa/Tripoli"/>
+                <element inactive_on_update="false" label="Africa/Tunis" sequence="49" value="Africa/Tunis"/>
+                <element inactive_on_update="false" label="Africa/Windhoek" sequence="50" value="Africa/Windhoek"/>
+                <element inactive_on_update="false" label="America/Adak" sequence="51" value="America/Adak"/>
+                <element inactive_on_update="false" label="America/Anchorage" sequence="52" value="America/Anchorage"/>
+                <element inactive_on_update="false" label="America/Anguilla" sequence="53" value="America/Anguilla"/>
+                <element inactive_on_update="false" label="America/Antigua" sequence="54" value="America/Antigua"/>
+                <element inactive_on_update="false" label="America/Araguaina" sequence="55" value="America/Araguaina"/>
+                <element inactive_on_update="false" label="America/Argentina/Buenos_Aires" sequence="56" value="America/Argentina/Buenos_Aires"/>
+                <element inactive_on_update="false" label="America/Argentina/Catamarca" sequence="57" value="America/Argentina/Catamarca"/>
+                <element inactive_on_update="false" label="America/Argentina/Cordoba" sequence="58" value="America/Argentina/Cordoba"/>
+                <element inactive_on_update="false" label="America/Argentina/Jujuy" sequence="59" value="America/Argentina/Jujuy"/>
+                <element inactive_on_update="false" label="America/Argentina/La_Rioja" sequence="60" value="America/Argentina/La_Rioja"/>
+                <element inactive_on_update="false" label="America/Argentina/Mendoza" sequence="61" value="America/Argentina/Mendoza"/>
+                <element inactive_on_update="false" label="America/Argentina/Rio_Gallegos" sequence="62" value="America/Argentina/Rio_Gallegos"/>
+                <element inactive_on_update="false" label="America/Argentina/Salta" sequence="63" value="America/Argentina/Salta"/>
+                <element inactive_on_update="false" label="America/Argentina/San_Juan" sequence="64" value="America/Argentina/San_Juan"/>
+                <element inactive_on_update="false" label="America/Argentina/San_Luis" sequence="65" value="America/Argentina/San_Luis"/>
+                <element inactive_on_update="false" label="America/Argentina/Tucuman" sequence="66" value="America/Argentina/Tucuman"/>
+                <element inactive_on_update="false" label="America/Argentina/Ushuaia" sequence="67" value="America/Argentina/Ushuaia"/>
+                <element inactive_on_update="false" label="America/Aruba" sequence="68" value="America/Aruba"/>
+                <element inactive_on_update="false" label="America/Asuncion" sequence="69" value="America/Asuncion"/>
+                <element inactive_on_update="false" label="America/Atikokan" sequence="70" value="America/Atikokan"/>
+                <element inactive_on_update="false" label="America/Bahia" sequence="71" value="America/Bahia"/>
+                <element inactive_on_update="false" label="America/Bahia_Banderas" sequence="72" value="America/Bahia_Banderas"/>
+                <element inactive_on_update="false" label="America/Barbados" sequence="73" value="America/Barbados"/>
+                <element inactive_on_update="false" label="America/Belem" sequence="74" value="America/Belem"/>
+                <element inactive_on_update="false" label="America/Belize" sequence="75" value="America/Belize"/>
+                <element inactive_on_update="false" label="America/Blanc-Sablon" sequence="76" value="America/Blanc-Sablon"/>
+                <element inactive_on_update="false" label="America/Boa_Vista" sequence="77" value="America/Boa_Vista"/>
+                <element inactive_on_update="false" label="America/Bogota" sequence="78" value="America/Bogota"/>
+                <element inactive_on_update="false" label="America/Boise" sequence="79" value="America/Boise"/>
+                <element inactive_on_update="false" label="America/Cambridge_Bay" sequence="80" value="America/Cambridge_Bay"/>
+                <element inactive_on_update="false" label="America/Campo_Grande" sequence="81" value="America/Campo_Grande"/>
+                <element inactive_on_update="false" label="America/Cancun" sequence="82" value="America/Cancun"/>
+                <element inactive_on_update="false" label="America/Caracas" sequence="83" value="America/Caracas"/>
+                <element inactive_on_update="false" label="America/Cayenne" sequence="84" value="America/Cayenne"/>
+                <element inactive_on_update="false" label="America/Cayman" sequence="85" value="America/Cayman"/>
+                <element inactive_on_update="false" label="America/Chicago" sequence="86" value="America/Chicago"/>
+                <element inactive_on_update="false" label="America/Chihuahua" sequence="87" value="America/Chihuahua"/>
+                <element inactive_on_update="false" label="America/Ciudad_Juarez" sequence="88" value="America/Ciudad_Juarez"/>
+                <element inactive_on_update="false" label="America/Costa_Rica" sequence="89" value="America/Costa_Rica"/>
+                <element inactive_on_update="false" label="America/Creston" sequence="90" value="America/Creston"/>
+                <element inactive_on_update="false" label="America/Cuiaba" sequence="91" value="America/Cuiaba"/>
+                <element inactive_on_update="false" label="America/Curacao" sequence="92" value="America/Curacao"/>
+                <element inactive_on_update="false" label="America/Danmarkshavn" sequence="93" value="America/Danmarkshavn"/>
+                <element inactive_on_update="false" label="America/Dawson" sequence="94" value="America/Dawson"/>
+                <element inactive_on_update="false" label="America/Dawson_Creek" sequence="95" value="America/Dawson_Creek"/>
+                <element inactive_on_update="false" label="America/Denver" sequence="96" value="America/Denver"/>
+                <element inactive_on_update="false" label="America/Detroit" sequence="97" value="America/Detroit"/>
+                <element inactive_on_update="false" label="America/Dominica" sequence="98" value="America/Dominica"/>
+                <element inactive_on_update="false" label="America/Edmonton" sequence="99" value="America/Edmonton"/>
+                <element inactive_on_update="false" label="America/Eirunepe" sequence="100" value="America/Eirunepe"/>
+                <element inactive_on_update="false" label="America/El_Salvador" sequence="101" value="America/El_Salvador"/>
+                <element inactive_on_update="false" label="America/Fort_Nelson" sequence="102" value="America/Fort_Nelson"/>
+                <element inactive_on_update="false" label="America/Fortaleza" sequence="103" value="America/Fortaleza"/>
+                <element inactive_on_update="false" label="America/Glace_Bay" sequence="104" value="America/Glace_Bay"/>
+                <element inactive_on_update="false" label="America/Goose_Bay" sequence="105" value="America/Goose_Bay"/>
+                <element inactive_on_update="false" label="America/Grand_Turk" sequence="106" value="America/Grand_Turk"/>
+                <element inactive_on_update="false" label="America/Grenada" sequence="107" value="America/Grenada"/>
+                <element inactive_on_update="false" label="America/Guadeloupe" sequence="108" value="America/Guadeloupe"/>
+                <element inactive_on_update="false" label="America/Guatemala" sequence="109" value="America/Guatemala"/>
+                <element inactive_on_update="false" label="America/Guayaquil" sequence="110" value="America/Guayaquil"/>
+                <element inactive_on_update="false" label="America/Guyana" sequence="111" value="America/Guyana"/>
+                <element inactive_on_update="false" label="America/Halifax" sequence="112" value="America/Halifax"/>
+                <element inactive_on_update="false" label="America/Havana" sequence="113" value="America/Havana"/>
+                <element inactive_on_update="false" label="America/Hermosillo" sequence="114" value="America/Hermosillo"/>
+                <element inactive_on_update="false" label="America/Indiana/Indianapolis" sequence="115" value="America/Indiana/Indianapolis"/>
+                <element inactive_on_update="false" label="America/Indiana/Knox" sequence="116" value="America/Indiana/Knox"/>
+                <element inactive_on_update="false" label="America/Indiana/Marengo" sequence="117" value="America/Indiana/Marengo"/>
+                <element inactive_on_update="false" label="America/Indiana/Petersburg" sequence="118" value="America/Indiana/Petersburg"/>
+                <element inactive_on_update="false" label="America/Indiana/Tell_City" sequence="119" value="America/Indiana/Tell_City"/>
+                <element inactive_on_update="false" label="America/Indiana/Vevay" sequence="120" value="America/Indiana/Vevay"/>
+                <element inactive_on_update="false" label="America/Indiana/Vincennes" sequence="121" value="America/Indiana/Vincennes"/>
+                <element inactive_on_update="false" label="America/Indiana/Winamac" sequence="122" value="America/Indiana/Winamac"/>
+                <element inactive_on_update="false" label="America/Inuvik" sequence="123" value="America/Inuvik"/>
+                <element inactive_on_update="false" label="America/Iqaluit" sequence="124" value="America/Iqaluit"/>
+                <element inactive_on_update="false" label="America/Jamaica" sequence="125" value="America/Jamaica"/>
+                <element inactive_on_update="false" label="America/Juneau" sequence="126" value="America/Juneau"/>
+                <element inactive_on_update="false" label="America/Kentucky/Louisville" sequence="127" value="America/Kentucky/Louisville"/>
+                <element inactive_on_update="false" label="America/Kentucky/Monticello" sequence="128" value="America/Kentucky/Monticello"/>
+                <element inactive_on_update="false" label="America/Kralendijk" sequence="129" value="America/Kralendijk"/>
+                <element inactive_on_update="false" label="America/La_Paz" sequence="130" value="America/La_Paz"/>
+                <element inactive_on_update="false" label="America/Lima" sequence="131" value="America/Lima"/>
+                <element inactive_on_update="false" label="America/Los_Angeles" sequence="132" value="America/Los_Angeles"/>
+                <element inactive_on_update="false" label="America/Lower_Princes" sequence="133" value="America/Lower_Princes"/>
+                <element inactive_on_update="false" label="America/Maceio" sequence="134" value="America/Maceio"/>
+                <element inactive_on_update="false" label="America/Managua" sequence="135" value="America/Managua"/>
+                <element inactive_on_update="false" label="America/Manaus" sequence="136" value="America/Manaus"/>
+                <element inactive_on_update="false" label="America/Marigot" sequence="137" value="America/Marigot"/>
+                <element inactive_on_update="false" label="America/Martinique" sequence="138" value="America/Martinique"/>
+                <element inactive_on_update="false" label="America/Matamoros" sequence="139" value="America/Matamoros"/>
+                <element inactive_on_update="false" label="America/Mazatlan" sequence="140" value="America/Mazatlan"/>
+                <element inactive_on_update="false" label="America/Menominee" sequence="141" value="America/Menominee"/>
+                <element inactive_on_update="false" label="America/Merida" sequence="142" value="America/Merida"/>
+                <element inactive_on_update="false" label="America/Metlakatla" sequence="143" value="America/Metlakatla"/>
+                <element inactive_on_update="false" label="America/Mexico_City" sequence="144" value="America/Mexico_City"/>
+                <element inactive_on_update="false" label="America/Miquelon" sequence="145" value="America/Miquelon"/>
+                <element inactive_on_update="false" label="America/Moncton" sequence="146" value="America/Moncton"/>
+                <element inactive_on_update="false" label="America/Monterrey" sequence="147" value="America/Monterrey"/>
+                <element inactive_on_update="false" label="America/Montevideo" sequence="148" value="America/Montevideo"/>
+                <element inactive_on_update="false" label="America/Montserrat" sequence="149" value="America/Montserrat"/>
+                <element inactive_on_update="false" label="America/Nassau" sequence="150" value="America/Nassau"/>
+                <element inactive_on_update="false" label="America/New_York" sequence="151" value="America/New_York"/>
+                <element inactive_on_update="false" label="America/Nome" sequence="152" value="America/Nome"/>
+                <element inactive_on_update="false" label="America/Noronha" sequence="153" value="America/Noronha"/>
+                <element inactive_on_update="false" label="America/North_Dakota/Beulah" sequence="154" value="America/North_Dakota/Beulah"/>
+                <element inactive_on_update="false" label="America/North_Dakota/Center" sequence="155" value="America/North_Dakota/Center"/>
+                <element inactive_on_update="false" label="America/North_Dakota/New_Salem" sequence="156" value="America/North_Dakota/New_Salem"/>
+                <element inactive_on_update="false" label="America/Nuuk" sequence="157" value="America/Nuuk"/>
+                <element inactive_on_update="false" label="America/Ojinaga" sequence="158" value="America/Ojinaga"/>
+                <element inactive_on_update="false" label="America/Panama" sequence="159" value="America/Panama"/>
+                <element inactive_on_update="false" label="America/Paramaribo" sequence="160" value="America/Paramaribo"/>
+                <element inactive_on_update="false" label="America/Phoenix" sequence="161" value="America/Phoenix"/>
+                <element inactive_on_update="false" label="America/Port-au-Prince" sequence="162" value="America/Port-au-Prince"/>
+                <element inactive_on_update="false" label="America/Port_of_Spain" sequence="163" value="America/Port_of_Spain"/>
+                <element inactive_on_update="false" label="America/Porto_Velho" sequence="164" value="America/Porto_Velho"/>
+                <element inactive_on_update="false" label="America/Puerto_Rico" sequence="165" value="America/Puerto_Rico"/>
+                <element inactive_on_update="false" label="America/Punta_Arenas" sequence="166" value="America/Punta_Arenas"/>
+                <element inactive_on_update="false" label="America/Rankin_Inlet" sequence="167" value="America/Rankin_Inlet"/>
+                <element inactive_on_update="false" label="America/Recife" sequence="168" value="America/Recife"/>
+                <element inactive_on_update="false" label="America/Regina" sequence="169" value="America/Regina"/>
+                <element inactive_on_update="false" label="America/Resolute" sequence="170" value="America/Resolute"/>
+                <element inactive_on_update="false" label="America/Rio_Branco" sequence="171" value="America/Rio_Branco"/>
+                <element inactive_on_update="false" label="America/Santarem" sequence="172" value="America/Santarem"/>
+                <element inactive_on_update="false" label="America/Santiago" sequence="173" value="America/Santiago"/>
+                <element inactive_on_update="false" label="America/Santo_Domingo" sequence="174" value="America/Santo_Domingo"/>
+                <element inactive_on_update="false" label="America/Sao_Paulo" sequence="175" value="America/Sao_Paulo"/>
+                <element inactive_on_update="false" label="America/Scoresbysund" sequence="176" value="America/Scoresbysund"/>
+                <element inactive_on_update="false" label="America/Sitka" sequence="177" value="America/Sitka"/>
+                <element inactive_on_update="false" label="America/St_Barthelemy" sequence="178" value="America/St_Barthelemy"/>
+                <element inactive_on_update="false" label="America/St_Johns" sequence="179" value="America/St_Johns"/>
+                <element inactive_on_update="false" label="America/St_Kitts" sequence="180" value="America/St_Kitts"/>
+                <element inactive_on_update="false" label="America/St_Lucia" sequence="181" value="America/St_Lucia"/>
+                <element inactive_on_update="false" label="America/St_Thomas" sequence="182" value="America/St_Thomas"/>
+                <element inactive_on_update="false" label="America/St_Vincent" sequence="183" value="America/St_Vincent"/>
+                <element inactive_on_update="false" label="America/Swift_Current" sequence="184" value="America/Swift_Current"/>
+                <element inactive_on_update="false" label="America/Tegucigalpa" sequence="185" value="America/Tegucigalpa"/>
+                <element inactive_on_update="false" label="America/Thule" sequence="186" value="America/Thule"/>
+                <element inactive_on_update="false" label="America/Tijuana" sequence="187" value="America/Tijuana"/>
+                <element inactive_on_update="false" label="America/Toronto" sequence="188" value="America/Toronto"/>
+                <element inactive_on_update="false" label="America/Tortola" sequence="189" value="America/Tortola"/>
+                <element inactive_on_update="false" label="America/Vancouver" sequence="190" value="America/Vancouver"/>
+                <element inactive_on_update="false" label="America/Whitehorse" sequence="191" value="America/Whitehorse"/>
+                <element inactive_on_update="false" label="America/Winnipeg" sequence="192" value="America/Winnipeg"/>
+                <element inactive_on_update="false" label="America/Yakutat" sequence="193" value="America/Yakutat"/>
+                <element inactive_on_update="false" label="America/Yellowknife" sequence="194" value="America/Yellowknife"/>
+                <element inactive_on_update="false" label="Antarctica/Casey" sequence="195" value="Antarctica/Casey"/>
+                <element inactive_on_update="false" label="Antarctica/Davis" sequence="196" value="Antarctica/Davis"/>
+                <element inactive_on_update="false" label="Antarctica/DumontDUrville" sequence="197" value="Antarctica/DumontDUrville"/>
+                <element inactive_on_update="false" label="Antarctica/Macquarie" sequence="198" value="Antarctica/Macquarie"/>
+                <element inactive_on_update="false" label="Antarctica/Mawson" sequence="199" value="Antarctica/Mawson"/>
+                <element inactive_on_update="false" label="Antarctica/McMurdo" sequence="200" value="Antarctica/McMurdo"/>
+                <element inactive_on_update="false" label="Antarctica/Palmer" sequence="201" value="Antarctica/Palmer"/>
+                <element inactive_on_update="false" label="Antarctica/Rothera" sequence="202" value="Antarctica/Rothera"/>
+                <element inactive_on_update="false" label="Antarctica/Syowa" sequence="203" value="Antarctica/Syowa"/>
+                <element inactive_on_update="false" label="Antarctica/Troll" sequence="204" value="Antarctica/Troll"/>
+                <element inactive_on_update="false" label="Antarctica/Vostok" sequence="205" value="Antarctica/Vostok"/>
+                <element inactive_on_update="false" label="Arctic/Longyearbyen" sequence="206" value="Arctic/Longyearbyen"/>
+                <element inactive_on_update="false" label="Asia/Aden" sequence="207" value="Asia/Aden"/>
+                <element inactive_on_update="false" label="Asia/Almaty" sequence="208" value="Asia/Almaty"/>
+                <element inactive_on_update="false" label="Asia/Amman" sequence="209" value="Asia/Amman"/>
+                <element inactive_on_update="false" label="Asia/Anadyr" sequence="210" value="Asia/Anadyr"/>
+                <element inactive_on_update="false" label="Asia/Aqtau" sequence="211" value="Asia/Aqtau"/>
+                <element inactive_on_update="false" label="Asia/Aqtobe" sequence="212" value="Asia/Aqtobe"/>
+                <element inactive_on_update="false" label="Asia/Ashgabat" sequence="213" value="Asia/Ashgabat"/>
+                <element inactive_on_update="false" label="Asia/Atyrau" sequence="214" value="Asia/Atyrau"/>
+                <element inactive_on_update="false" label="Asia/Baghdad" sequence="215" value="Asia/Baghdad"/>
+                <element inactive_on_update="false" label="Asia/Bahrain" sequence="216" value="Asia/Bahrain"/>
+                <element inactive_on_update="false" label="Asia/Baku" sequence="217" value="Asia/Baku"/>
+                <element inactive_on_update="false" label="Asia/Bangkok" sequence="218" value="Asia/Bangkok"/>
+                <element inactive_on_update="false" label="Asia/Barnaul" sequence="219" value="Asia/Barnaul"/>
+                <element inactive_on_update="false" label="Asia/Beirut" sequence="220" value="Asia/Beirut"/>
+                <element inactive_on_update="false" label="Asia/Bishkek" sequence="221" value="Asia/Bishkek"/>
+                <element inactive_on_update="false" label="Asia/Brunei" sequence="222" value="Asia/Brunei"/>
+                <element inactive_on_update="false" label="Asia/Chita" sequence="223" value="Asia/Chita"/>
+                <element inactive_on_update="false" label="Asia/Choibalsan" sequence="224" value="Asia/Choibalsan"/>
+                <element inactive_on_update="false" label="Asia/Colombo" sequence="225" value="Asia/Colombo"/>
+                <element inactive_on_update="false" label="Asia/Damascus" sequence="226" value="Asia/Damascus"/>
+                <element inactive_on_update="false" label="Asia/Dhaka" sequence="227" value="Asia/Dhaka"/>
+                <element inactive_on_update="false" label="Asia/Dili" sequence="228" value="Asia/Dili"/>
+                <element inactive_on_update="false" label="Asia/Dubai" sequence="229" value="Asia/Dubai"/>
+                <element inactive_on_update="false" label="Asia/Dushanbe" sequence="230" value="Asia/Dushanbe"/>
+                <element inactive_on_update="false" label="Asia/Famagusta" sequence="231" value="Asia/Famagusta"/>
+                <element inactive_on_update="false" label="Asia/Gaza" sequence="232" value="Asia/Gaza"/>
+                <element inactive_on_update="false" label="Asia/Hebron" sequence="233" value="Asia/Hebron"/>
+                <element inactive_on_update="false" label="Asia/Ho_Chi_Minh" sequence="234" value="Asia/Ho_Chi_Minh"/>
+                <element inactive_on_update="false" label="Asia/Hong_Kong" sequence="235" value="Asia/Hong_Kong"/>
+                <element inactive_on_update="false" label="Asia/Hovd" sequence="236" value="Asia/Hovd"/>
+                <element inactive_on_update="false" label="Asia/Irkutsk" sequence="237" value="Asia/Irkutsk"/>
+                <element inactive_on_update="false" label="Asia/Jakarta" sequence="238" value="Asia/Jakarta"/>
+                <element inactive_on_update="false" label="Asia/Jayapura" sequence="239" value="Asia/Jayapura"/>
+                <element inactive_on_update="false" label="Asia/Jerusalem" sequence="240" value="Asia/Jerusalem"/>
+                <element inactive_on_update="false" label="Asia/Kabul" sequence="241" value="Asia/Kabul"/>
+                <element inactive_on_update="false" label="Asia/Kamchatka" sequence="242" value="Asia/Kamchatka"/>
+                <element inactive_on_update="false" label="Asia/Karachi" sequence="243" value="Asia/Karachi"/>
+                <element inactive_on_update="false" label="Asia/Kathmandu" sequence="244" value="Asia/Kathmandu"/>
+                <element inactive_on_update="false" label="Asia/Khandyga" sequence="245" value="Asia/Khandyga"/>
+                <element inactive_on_update="false" label="Asia/Kolkata" sequence="246" value="Asia/Kolkata"/>
+                <element inactive_on_update="false" label="Asia/Krasnoyarsk" sequence="247" value="Asia/Krasnoyarsk"/>
+                <element inactive_on_update="false" label="Asia/Kuala_Lumpur" sequence="248" value="Asia/Kuala_Lumpur"/>
+                <element inactive_on_update="false" label="Asia/Kuching" sequence="249" value="Asia/Kuching"/>
+                <element inactive_on_update="false" label="Asia/Kuwait" sequence="250" value="Asia/Kuwait"/>
+                <element inactive_on_update="false" label="Asia/Macau" sequence="251" value="Asia/Macau"/>
+                <element inactive_on_update="false" label="Asia/Magadan" sequence="252" value="Asia/Magadan"/>
+                <element inactive_on_update="false" label="Asia/Makassar" sequence="253" value="Asia/Makassar"/>
+                <element inactive_on_update="false" label="Asia/Manila" sequence="254" value="Asia/Manila"/>
+                <element inactive_on_update="false" label="Asia/Muscat" sequence="255" value="Asia/Muscat"/>
+                <element inactive_on_update="false" label="Asia/Nicosia" sequence="256" value="Asia/Nicosia"/>
+                <element inactive_on_update="false" label="Asia/Novokuznetsk" sequence="257" value="Asia/Novokuznetsk"/>
+                <element inactive_on_update="false" label="Asia/Novosibirsk" sequence="258" value="Asia/Novosibirsk"/>
+                <element inactive_on_update="false" label="Asia/Omsk" sequence="259" value="Asia/Omsk"/>
+                <element inactive_on_update="false" label="Asia/Oral" sequence="260" value="Asia/Oral"/>
+                <element inactive_on_update="false" label="Asia/Phnom_Penh" sequence="261" value="Asia/Phnom_Penh"/>
+                <element inactive_on_update="false" label="Asia/Pontianak" sequence="262" value="Asia/Pontianak"/>
+                <element inactive_on_update="false" label="Asia/Pyongyang" sequence="263" value="Asia/Pyongyang"/>
+                <element inactive_on_update="false" label="Asia/Qatar" sequence="264" value="Asia/Qatar"/>
+                <element inactive_on_update="false" label="Asia/Qostanay" sequence="265" value="Asia/Qostanay"/>
+                <element inactive_on_update="false" label="Asia/Qyzylorda" sequence="266" value="Asia/Qyzylorda"/>
+                <element inactive_on_update="false" label="Asia/Riyadh" sequence="267" value="Asia/Riyadh"/>
+                <element inactive_on_update="false" label="Asia/Sakhalin" sequence="268" value="Asia/Sakhalin"/>
+                <element inactive_on_update="false" label="Asia/Samarkand" sequence="269" value="Asia/Samarkand"/>
+                <element inactive_on_update="false" label="Asia/Seoul" sequence="270" value="Asia/Seoul"/>
+                <element inactive_on_update="false" label="Asia/Shanghai" sequence="271" value="Asia/Shanghai"/>
+                <element inactive_on_update="false" label="Asia/Singapore" sequence="272" value="Asia/Singapore"/>
+                <element inactive_on_update="false" label="Asia/Srednekolymsk" sequence="273" value="Asia/Srednekolymsk"/>
+                <element inactive_on_update="false" label="Asia/Taipei" sequence="274" value="Asia/Taipei"/>
+                <element inactive_on_update="false" label="Asia/Tashkent" sequence="275" value="Asia/Tashkent"/>
+                <element inactive_on_update="false" label="Asia/Tbilisi" sequence="276" value="Asia/Tbilisi"/>
+                <element inactive_on_update="false" label="Asia/Tehran" sequence="277" value="Asia/Tehran"/>
+                <element inactive_on_update="false" label="Asia/Thimphu" sequence="278" value="Asia/Thimphu"/>
+                <element inactive_on_update="false" label="Asia/Tokyo" sequence="279" value="Asia/Tokyo"/>
+                <element inactive_on_update="false" label="Asia/Tomsk" sequence="280" value="Asia/Tomsk"/>
+                <element inactive_on_update="false" label="Asia/Ulaanbaatar" sequence="281" value="Asia/Ulaanbaatar"/>
+                <element inactive_on_update="false" label="Asia/Urumqi" sequence="282" value="Asia/Urumqi"/>
+                <element inactive_on_update="false" label="Asia/Ust-Nera" sequence="283" value="Asia/Ust-Nera"/>
+                <element inactive_on_update="false" label="Asia/Vientiane" sequence="284" value="Asia/Vientiane"/>
+                <element inactive_on_update="false" label="Asia/Vladivostok" sequence="285" value="Asia/Vladivostok"/>
+                <element inactive_on_update="false" label="Asia/Yakutsk" sequence="286" value="Asia/Yakutsk"/>
+                <element inactive_on_update="false" label="Asia/Yangon" sequence="287" value="Asia/Yangon"/>
+                <element inactive_on_update="false" label="Asia/Yekaterinburg" sequence="288" value="Asia/Yekaterinburg"/>
+                <element inactive_on_update="false" label="Asia/Yerevan" sequence="289" value="Asia/Yerevan"/>
+                <element inactive_on_update="false" label="Atlantic/Azores" sequence="290" value="Atlantic/Azores"/>
+                <element inactive_on_update="false" label="Atlantic/Bermuda" sequence="291" value="Atlantic/Bermuda"/>
+                <element inactive_on_update="false" label="Atlantic/Canary" sequence="292" value="Atlantic/Canary"/>
+                <element inactive_on_update="false" label="Atlantic/Cape_Verde" sequence="293" value="Atlantic/Cape_Verde"/>
+                <element inactive_on_update="false" label="Atlantic/Faroe" sequence="294" value="Atlantic/Faroe"/>
+                <element inactive_on_update="false" label="Atlantic/Madeira" sequence="295" value="Atlantic/Madeira"/>
+                <element inactive_on_update="false" label="Atlantic/Reykjavik" sequence="296" value="Atlantic/Reykjavik"/>
+                <element inactive_on_update="false" label="Atlantic/South_Georgia" sequence="297" value="Atlantic/South_Georgia"/>
+                <element inactive_on_update="false" label="Atlantic/St_Helena" sequence="298" value="Atlantic/St_Helena"/>
+                <element inactive_on_update="false" label="Atlantic/Stanley" sequence="299" value="Atlantic/Stanley"/>
+                <element inactive_on_update="false" label="Australia/Adelaide" sequence="300" value="Australia/Adelaide"/>
+                <element inactive_on_update="false" label="Australia/Brisbane" sequence="301" value="Australia/Brisbane"/>
+                <element inactive_on_update="false" label="Australia/Broken_Hill" sequence="302" value="Australia/Broken_Hill"/>
+                <element inactive_on_update="false" label="Australia/Darwin" sequence="303" value="Australia/Darwin"/>
+                <element inactive_on_update="false" label="Australia/Eucla" sequence="304" value="Australia/Eucla"/>
+                <element inactive_on_update="false" label="Australia/Hobart" sequence="305" value="Australia/Hobart"/>
+                <element inactive_on_update="false" label="Australia/Lindeman" sequence="306" value="Australia/Lindeman"/>
+                <element inactive_on_update="false" label="Australia/Lord_Howe" sequence="307" value="Australia/Lord_Howe"/>
+                <element inactive_on_update="false" label="Australia/Melbourne" sequence="308" value="Australia/Melbourne"/>
+                <element inactive_on_update="false" label="Australia/Perth" sequence="309" value="Australia/Perth"/>
+                <element inactive_on_update="false" label="Australia/Sydney" sequence="310" value="Australia/Sydney"/>
+                <element inactive_on_update="false" label="Canada/Atlantic" sequence="311" value="Canada/Atlantic"/>
+                <element inactive_on_update="false" label="Canada/Central" sequence="312" value="Canada/Central"/>
+                <element inactive_on_update="false" label="Canada/Eastern" sequence="313" value="Canada/Eastern"/>
+                <element inactive_on_update="false" label="Canada/Mountain" sequence="314" value="Canada/Mountain"/>
+                <element inactive_on_update="false" label="Canada/Newfoundland" sequence="315" value="Canada/Newfoundland"/>
+                <element inactive_on_update="false" label="Canada/Pacific" sequence="316" value="Canada/Pacific"/>
+                <element inactive_on_update="false" label="Europe/Amsterdam" sequence="317" value="Europe/Amsterdam"/>
+                <element inactive_on_update="false" label="Europe/Andorra" sequence="318" value="Europe/Andorra"/>
+                <element inactive_on_update="false" label="Europe/Astrakhan" sequence="319" value="Europe/Astrakhan"/>
+                <element inactive_on_update="false" label="Europe/Athens" sequence="320" value="Europe/Athens"/>
+                <element inactive_on_update="false" label="Europe/Belgrade" sequence="321" value="Europe/Belgrade"/>
+                <element inactive_on_update="false" label="Europe/Berlin" sequence="322" value="Europe/Berlin"/>
+                <element inactive_on_update="false" label="Europe/Bratislava" sequence="323" value="Europe/Bratislava"/>
+                <element inactive_on_update="false" label="Europe/Brussels" sequence="324" value="Europe/Brussels"/>
+                <element inactive_on_update="false" label="Europe/Bucharest" sequence="325" value="Europe/Bucharest"/>
+                <element inactive_on_update="false" label="Europe/Budapest" sequence="326" value="Europe/Budapest"/>
+                <element inactive_on_update="false" label="Europe/Busingen" sequence="327" value="Europe/Busingen"/>
+                <element inactive_on_update="false" label="Europe/Chisinau" sequence="328" value="Europe/Chisinau"/>
+                <element inactive_on_update="false" label="Europe/Copenhagen" sequence="329" value="Europe/Copenhagen"/>
+                <element inactive_on_update="false" label="Europe/Dublin" sequence="330" value="Europe/Dublin"/>
+                <element inactive_on_update="false" label="Europe/Gibraltar" sequence="331" value="Europe/Gibraltar"/>
+                <element inactive_on_update="false" label="Europe/Guernsey" sequence="332" value="Europe/Guernsey"/>
+                <element inactive_on_update="false" label="Europe/Helsinki" sequence="333" value="Europe/Helsinki"/>
+                <element inactive_on_update="false" label="Europe/Isle_of_Man" sequence="334" value="Europe/Isle_of_Man"/>
+                <element inactive_on_update="false" label="Europe/Istanbul" sequence="335" value="Europe/Istanbul"/>
+                <element inactive_on_update="false" label="Europe/Jersey" sequence="336" value="Europe/Jersey"/>
+                <element inactive_on_update="false" label="Europe/Kaliningrad" sequence="337" value="Europe/Kaliningrad"/>
+                <element inactive_on_update="false" label="Europe/Kirov" sequence="338" value="Europe/Kirov"/>
+                <element inactive_on_update="false" label="Europe/Kyiv" sequence="339" value="Europe/Kyiv"/>
+                <element inactive_on_update="false" label="Europe/Lisbon" sequence="340" value="Europe/Lisbon"/>
+                <element inactive_on_update="false" label="Europe/Ljubljana" sequence="341" value="Europe/Ljubljana"/>
+                <element inactive_on_update="false" label="Europe/London" sequence="342" value="Europe/London"/>
+                <element inactive_on_update="false" label="Europe/Luxembourg" sequence="343" value="Europe/Luxembourg"/>
+                <element inactive_on_update="false" label="Europe/Madrid" sequence="344" value="Europe/Madrid"/>
+                <element inactive_on_update="false" label="Europe/Malta" sequence="345" value="Europe/Malta"/>
+                <element inactive_on_update="false" label="Europe/Mariehamn" sequence="346" value="Europe/Mariehamn"/>
+                <element inactive_on_update="false" label="Europe/Minsk" sequence="347" value="Europe/Minsk"/>
+                <element inactive_on_update="false" label="Europe/Monaco" sequence="348" value="Europe/Monaco"/>
+                <element inactive_on_update="false" label="Europe/Moscow" sequence="349" value="Europe/Moscow"/>
+                <element inactive_on_update="false" label="Europe/Oslo" sequence="350" value="Europe/Oslo"/>
+                <element inactive_on_update="false" label="Europe/Paris" sequence="351" value="Europe/Paris"/>
+                <element inactive_on_update="false" label="Europe/Podgorica" sequence="352" value="Europe/Podgorica"/>
+                <element inactive_on_update="false" label="Europe/Prague" sequence="353" value="Europe/Prague"/>
+                <element inactive_on_update="false" label="Europe/Riga" sequence="354" value="Europe/Riga"/>
+                <element inactive_on_update="false" label="Europe/Rome" sequence="355" value="Europe/Rome"/>
+                <element inactive_on_update="false" label="Europe/Samara" sequence="356" value="Europe/Samara"/>
+                <element inactive_on_update="false" label="Europe/San_Marino" sequence="357" value="Europe/San_Marino"/>
+                <element inactive_on_update="false" label="Europe/Sarajevo" sequence="358" value="Europe/Sarajevo"/>
+                <element inactive_on_update="false" label="Europe/Saratov" sequence="359" value="Europe/Saratov"/>
+                <element inactive_on_update="false" label="Europe/Simferopol" sequence="360" value="Europe/Simferopol"/>
+                <element inactive_on_update="false" label="Europe/Skopje" sequence="361" value="Europe/Skopje"/>
+                <element inactive_on_update="false" label="Europe/Sofia" sequence="362" value="Europe/Sofia"/>
+                <element inactive_on_update="false" label="Europe/Stockholm" sequence="363" value="Europe/Stockholm"/>
+                <element inactive_on_update="false" label="Europe/Tallinn" sequence="364" value="Europe/Tallinn"/>
+                <element inactive_on_update="false" label="Europe/Tirane" sequence="365" value="Europe/Tirane"/>
+                <element inactive_on_update="false" label="Europe/Ulyanovsk" sequence="366" value="Europe/Ulyanovsk"/>
+                <element inactive_on_update="false" label="Europe/Vaduz" sequence="367" value="Europe/Vaduz"/>
+                <element inactive_on_update="false" label="Europe/Vatican" sequence="368" value="Europe/Vatican"/>
+                <element inactive_on_update="false" label="Europe/Vienna" sequence="369" value="Europe/Vienna"/>
+                <element inactive_on_update="false" label="Europe/Vilnius" sequence="370" value="Europe/Vilnius"/>
+                <element inactive_on_update="false" label="Europe/Volgograd" sequence="371" value="Europe/Volgograd"/>
+                <element inactive_on_update="false" label="Europe/Warsaw" sequence="372" value="Europe/Warsaw"/>
+                <element inactive_on_update="false" label="Europe/Zagreb" sequence="373" value="Europe/Zagreb"/>
+                <element inactive_on_update="false" label="Europe/Zurich" sequence="374" value="Europe/Zurich"/>
+                <element inactive_on_update="false" label="GMT" sequence="375" value="GMT"/>
+                <element inactive_on_update="false" label="Indian/Antananarivo" sequence="376" value="Indian/Antananarivo"/>
+                <element inactive_on_update="false" label="Indian/Chagos" sequence="377" value="Indian/Chagos"/>
+                <element inactive_on_update="false" label="Indian/Christmas" sequence="378" value="Indian/Christmas"/>
+                <element inactive_on_update="false" label="Indian/Cocos" sequence="379" value="Indian/Cocos"/>
+                <element inactive_on_update="false" label="Indian/Comoro" sequence="380" value="Indian/Comoro"/>
+                <element inactive_on_update="false" label="Indian/Kerguelen" sequence="381" value="Indian/Kerguelen"/>
+                <element inactive_on_update="false" label="Indian/Mahe" sequence="382" value="Indian/Mahe"/>
+                <element inactive_on_update="false" label="Indian/Maldives" sequence="383" value="Indian/Maldives"/>
+                <element inactive_on_update="false" label="Indian/Mauritius" sequence="384" value="Indian/Mauritius"/>
+                <element inactive_on_update="false" label="Indian/Mayotte" sequence="385" value="Indian/Mayotte"/>
+                <element inactive_on_update="false" label="Indian/Reunion" sequence="386" value="Indian/Reunion"/>
+                <element inactive_on_update="false" label="Pacific/Apia" sequence="387" value="Pacific/Apia"/>
+                <element inactive_on_update="false" label="Pacific/Auckland" sequence="388" value="Pacific/Auckland"/>
+                <element inactive_on_update="false" label="Pacific/Bougainville" sequence="389" value="Pacific/Bougainville"/>
+                <element inactive_on_update="false" label="Pacific/Chatham" sequence="390" value="Pacific/Chatham"/>
+                <element inactive_on_update="false" label="Pacific/Chuuk" sequence="391" value="Pacific/Chuuk"/>
+                <element inactive_on_update="false" label="Pacific/Easter" sequence="392" value="Pacific/Easter"/>
+                <element inactive_on_update="false" label="Pacific/Efate" sequence="393" value="Pacific/Efate"/>
+                <element inactive_on_update="false" label="Pacific/Fakaofo" sequence="394" value="Pacific/Fakaofo"/>
+                <element inactive_on_update="false" label="Pacific/Fiji" sequence="395" value="Pacific/Fiji"/>
+                <element inactive_on_update="false" label="Pacific/Funafuti" sequence="396" value="Pacific/Funafuti"/>
+                <element inactive_on_update="false" label="Pacific/Galapagos" sequence="397" value="Pacific/Galapagos"/>
+                <element inactive_on_update="false" label="Pacific/Gambier" sequence="398" value="Pacific/Gambier"/>
+                <element inactive_on_update="false" label="Pacific/Guadalcanal" sequence="399" value="Pacific/Guadalcanal"/>
+                <element inactive_on_update="false" label="Pacific/Guam" sequence="400" value="Pacific/Guam"/>
+                <element inactive_on_update="false" label="Pacific/Honolulu" sequence="401" value="Pacific/Honolulu"/>
+                <element inactive_on_update="false" label="Pacific/Kanton" sequence="402" value="Pacific/Kanton"/>
+                <element inactive_on_update="false" label="Pacific/Kiritimati" sequence="403" value="Pacific/Kiritimati"/>
+                <element inactive_on_update="false" label="Pacific/Kosrae" sequence="404" value="Pacific/Kosrae"/>
+                <element inactive_on_update="false" label="Pacific/Kwajalein" sequence="405" value="Pacific/Kwajalein"/>
+                <element inactive_on_update="false" label="Pacific/Majuro" sequence="406" value="Pacific/Majuro"/>
+                <element inactive_on_update="false" label="Pacific/Marquesas" sequence="407" value="Pacific/Marquesas"/>
+                <element inactive_on_update="false" label="Pacific/Midway" sequence="408" value="Pacific/Midway"/>
+                <element inactive_on_update="false" label="Pacific/Nauru" sequence="409" value="Pacific/Nauru"/>
+                <element inactive_on_update="false" label="Pacific/Niue" sequence="410" value="Pacific/Niue"/>
+                <element inactive_on_update="false" label="Pacific/Norfolk" sequence="411" value="Pacific/Norfolk"/>
+                <element inactive_on_update="false" label="Pacific/Noumea" sequence="412" value="Pacific/Noumea"/>
+                <element inactive_on_update="false" label="Pacific/Pago_Pago" sequence="413" value="Pacific/Pago_Pago"/>
+                <element inactive_on_update="false" label="Pacific/Palau" sequence="414" value="Pacific/Palau"/>
+                <element inactive_on_update="false" label="Pacific/Pitcairn" sequence="415" value="Pacific/Pitcairn"/>
+                <element inactive_on_update="false" label="Pacific/Pohnpei" sequence="416" value="Pacific/Pohnpei"/>
+                <element inactive_on_update="false" label="Pacific/Port_Moresby" sequence="417" value="Pacific/Port_Moresby"/>
+                <element inactive_on_update="false" label="Pacific/Rarotonga" sequence="418" value="Pacific/Rarotonga"/>
+                <element inactive_on_update="false" label="Pacific/Saipan" sequence="419" value="Pacific/Saipan"/>
+                <element inactive_on_update="false" label="Pacific/Tahiti" sequence="420" value="Pacific/Tahiti"/>
+                <element inactive_on_update="false" label="Pacific/Tarawa" sequence="421" value="Pacific/Tarawa"/>
+                <element inactive_on_update="false" label="Pacific/Tongatapu" sequence="422" value="Pacific/Tongatapu"/>
+                <element inactive_on_update="false" label="Pacific/Wake" sequence="423" value="Pacific/Wake"/>
+                <element inactive_on_update="false" label="Pacific/Wallis" sequence="424" value="Pacific/Wallis"/>
+                <element inactive_on_update="false" label="US/Alaska" sequence="425" value="US/Alaska"/>
+                <element inactive_on_update="false" label="US/Arizona" sequence="426" value="US/Arizona"/>
+                <element inactive_on_update="false" label="US/Central" sequence="427" value="US/Central"/>
+                <element inactive_on_update="false" label="US/Eastern" sequence="428" value="US/Eastern"/>
+                <element inactive_on_update="false" label="US/Hawaii" sequence="429" value="US/Hawaii"/>
+                <element inactive_on_update="false" label="US/Mountain" sequence="430" value="US/Mountain"/>
+                <element inactive_on_update="false" label="US/Pacific" sequence="431" value="US/Pacific"/>
+                <element inactive_on_update="false" label="UTC" sequence="432" value="UTC"/>
+            </choice>
+        </element>
+        <element hint="Enable this option, to use the same approval setting from enroll" label="Use Approval Settings from Enroll" max_length="40" name="use_approval_settings_from_create" type="boolean"/>
+        <element hint="Enable this option, to use the same approval setting from enroll" label="Use Approval Settings from Enroll" max_length="40" name="use_approval_settings_from_create_for_revoke" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Vendor Name" max_length="4000" name="vendor_name" type="glide_list">
+            <choice>
+                <element inactive_on_update="false" label="F5" sequence="0" value="F5"/>
+                <element inactive_on_update="false" label="IIS" sequence="1" value="IIS"/>
+                <element inactive_on_update="false" label="Apache" sequence="3" value="Apache"/>
+                <element inactive_on_update="false" label="Azure" sequence="4" value="Azure"/>
+                <element inactive_on_update="false" label="Silverline" sequence="5" value="Silverline"/>
+                <element inactive_on_update="false" label="LinuxServer" sequence="6" value="LinuxServer"/>
+                <element inactive_on_update="false" label="Tomcat" sequence="7" value="Tomcat"/>
+                <element inactive_on_update="false" label="Microsoft Server" sequence="8" value="Microsoft Server"/>
+            </choice>
+        </element>
+        <element default="Enroll Certificate-SNOW APP" hint="Enter the AppViewX Visual Workflow name for certificate creation " label="Visual Workflow Name (AppViewX)" mandatory="true" max_length="100" name="workflow_name_for_create_appviewx" type="string"/>
+        <element default="Renew Certificate-SNOW APP" hint="Enter the AppViewX Visual Workflow name for certificate renewal" label="Visual Workflow Name (AppViewX)" mandatory="true" max_length="100" name="workflow_name_for_renew_appviewx" type="string"/>
+        <element default="Revoke Certificate-SNOW APP" hint="Enter the AppViewX Visual Workflow name for certificate revoke" label="Visual Workflow Name (AppViewX)" mandatory="true" max_length="100" name="workflow_name_for_revoke_appviewx" type="string"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to zip the certificate file? " max_length="40" name="zip_the_certificate_file" type="boolean"/>
+        <index name="index">
+            <element name="assignment_group"/>
+        </index>
+        <index name="index2">
+            <element name="assignment_group_renew"/>
+        </index>
+        <index name="index3">
+            <element name="assignment_group_revoke"/>
+        </index>
+        <index name="index4">
+            <element name="company"/>
+        </index>
+        <index name="index5">
+            <element name="enroll_user_group_approval_two"/>
+        </index>
+        <index name="index6">
+            <element name="push_user_group"/>
+        </index>
+        <index name="index7">
+            <element name="renew_user_group_snow_two"/>
+        </index>
+        <index name="index8">
+            <element name="revoke_user_group_snow_two"/>
+        </index>
+        <index name="index9">
+            <element name="sys_domain"/>
+        </index>
+        <index name="index10">
+            <element name="sys_domain_path"/>
+        </index>
+        <index name="index11">
+            <element name="task_assigned_to"/>
+        </index>
+        <index name="index12">
+            <element name="task_assignment_group"/>
+        </index>
+        <index name="index13">
+            <element name="ticket_assignment_group_name"/>
+        </index>
+    </element>
+</database>

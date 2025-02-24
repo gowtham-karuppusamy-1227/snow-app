@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="fecf8c871bf98290cda7db91dd4bcb27" label="Renewal Method" max_length="40" name="x_avx_appviewx_aut_renewal_method" type="collection">
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" display="true" label="Renewal Method Name" max_length="1000" name="renewal_method_name" type="string"/>
+    </element>
+</database>

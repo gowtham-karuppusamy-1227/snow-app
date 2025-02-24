@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="1c1e12a0db5a1d5016a0285b1396191e" label="Certificate Issuance Modes" max_length="40" name="x_avx_appviewx_aut_certificate_issuance_modes" type="collection">
+        <element display="true" label="Certificate issuance mode" mandatory="true" max_length="40" name="certificate_issuance_mode" type="string"/>
+    </element>
+</database>

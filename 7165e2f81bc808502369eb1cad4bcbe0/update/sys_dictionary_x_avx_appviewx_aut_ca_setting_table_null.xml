@@ -53,7 +53,6 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-01-24 06:59:12</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>c7cce38adb6c615016a0285b13961994</sys_id>
         <sys_name>x_avx_appviewx_aut_ca_setting_table</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>

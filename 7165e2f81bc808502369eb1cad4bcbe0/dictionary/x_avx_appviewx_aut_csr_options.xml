@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="801ede60db5a1d5016a0285b139619f8" label="CSR Options" max_length="40" name="x_avx_appviewx_aut_csr_options" type="collection">
+        <element display="true" label="CSR Upload Option" mandatory="true" max_length="40" name="csr_upload_option" type="string"/>
+    </element>
+</database>

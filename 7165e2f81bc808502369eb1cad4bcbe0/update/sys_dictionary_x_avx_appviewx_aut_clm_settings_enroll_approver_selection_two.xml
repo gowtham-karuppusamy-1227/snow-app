@@ -53,7 +53,6 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-07-17 11:54:11</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>159a21001be74250cda7db91dd4bcb34</sys_id>
         <sys_name>Level 2 Approver</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>

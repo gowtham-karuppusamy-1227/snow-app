@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="1bd3e9431b5d1d10cda7db91dd4bcb15" label="Test Connection" max_length="40" name="x_avx_appviewx_aut_appviewx_test_connection" type="collection">
+        <element label="Instance URL" max_length="100" name="appviewx_instance_url" read_only="true" type="string"/>
+        <element label="Client ID" max_length="100" name="client_id" read_only="true" type="string"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Company" max_length="32" name="company" reference="core_company" type="reference"/>
+        <element label="MID Server" max_length="100" name="enter_mid_server_name_for_appviewx_communication" read_only="true" type="string"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Request Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element label="Status" max_length="1000" name="status" read_only="true" type="string"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Domain" max_length="32" name="sys_domain" type="domain_id"/>
+        <element label="Domain Path" max_length="255" name="sys_domain_path" type="domain_path"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Tenant Name" max_length="32" name="tenant_name" reference="x_avx_appviewx_aut_connection_settings_table" type="reference"/>
+        <index name="index">
+            <element name="company"/>
+        </index>
+        <index name="index2">
+            <element name="sys_domain"/>
+        </index>
+        <index name="index3">
+            <element name="sys_domain_path"/>
+        </index>
+        <index name="index4">
+            <element name="tenant_name"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="4ecce6421b617d10cda7db91dd4bcb67" label="CSR Parameter" max_length="40" name="x_avx_appviewx_aut_csr_parameter" type="collection">
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" display="true" label="CSR Parameters " mandatory="true" max_length="100" name="csr_parameters" type="string"/>
+    </element>
+</database>

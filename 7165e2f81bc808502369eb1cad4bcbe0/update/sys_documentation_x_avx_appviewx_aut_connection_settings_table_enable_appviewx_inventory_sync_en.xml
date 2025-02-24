@@ -12,7 +12,6 @@
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2023-11-29 06:24:27</sys_created_on>
             <sys_customer_update>false</sys_customer_update>
-            <sys_id>e6183225dbf6319016a0285b13961945</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Enable AppViewX Inventory Sync</sys_name>
             <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
