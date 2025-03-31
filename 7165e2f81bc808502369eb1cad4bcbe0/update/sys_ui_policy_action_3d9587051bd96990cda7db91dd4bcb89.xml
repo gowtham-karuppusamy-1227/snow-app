@@ -3,6 +3,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field>task_priority</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>true</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2023-02-27 08:21:22</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Enable Task Settings">7d65c3051bd96990cda7db91dd4bcb23</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>true</visible>
     </sys_ui_policy_action>
 </record_update>

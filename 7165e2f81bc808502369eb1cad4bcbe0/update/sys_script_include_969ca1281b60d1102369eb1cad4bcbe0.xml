@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the Instance details configured in "AppViewX Settings" Page. </description>
+        <mobile_callable>false</mobile_callable>
         <name>get_appviewx_instance_details</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_appviewx_instance_details = Class.create();
 get_appviewx_instance_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getAVXDetails: function() {

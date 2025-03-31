@@ -11,7 +11,9 @@ There are three options:&#13;
 1) Based on Roles of the loggedin user&#13;
 2) Based on Usergroup in AppViewX&#13;
 3) Based on Usergroup in ServiceNow</description>
+        <mobile_callable>false</mobile_callable>
         <name>renew_get_cert</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var renew_get_cert = Class.create();
 renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getGroupName: function() {
@@ -238,6 +240,7 @@ renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 var retry_count = 0;
                 while (retry_count < 5) {
@@ -247,7 +250,7 @@ renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
                     r.setRequestHeader("Content-Type", "application/json");
                     r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
                     r.setRequestBody(JSON.stringify(payload));
-                    r.setHttpTimeout(180000);
+                    // r.setHttpTimeout(180000);
                     var response = r.executeAsync();
                     if (response.haveError()) {
                         var responseBody = response.getBody();
@@ -290,7 +293,7 @@ renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         <sys_created_on>2022-07-13 05:56:32</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>cf7e8b9f1be015502369eb1cad4bcb81</sys_id>
-        <sys_mod_count>260</sys_mod_count>
+        <sys_mod_count>261</sys_mod_count>
         <sys_name>renew_get_cert</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -298,6 +301,6 @@ renew_get_cert.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_cf7e8b9f1be015502369eb1cad4bcb81</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-07-30 10:22:42</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:36:04</sys_updated_on>
     </sys_script_include>
 </record_update>

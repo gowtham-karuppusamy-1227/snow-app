@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_avx_appviewx_aut_privacy_policy.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide">
+
+<title>Privacy Policy - AppViewX</title>
+<h3>INTRODUCTION</h3>
+
+<p>Welcome to AppViewX, Inc.'s privacy policy.</p>
+
+<p>AppViewX respects your privacy and is committed to protecting your personal information. This privacy policy explains how we handle your personal information, your rights, and how the law protects you.</p>
+
+<h3>1. IMPORTANT INFORMATION AND WHO WE ARE</h3>
+
+<h4>PURPOSE OF THIS PRIVACY POLICY</h4>
+
+<p>This policy outlines how AppViewX collects, processes, and protects your personal information when using our services, including when signing up for a webinar, requesting product information, or other interactions as described below.</p>
+
+<p>This website and our services are not intended for children, and we do not knowingly collect data from them. If you believe we have inadvertently collected personal information from a minor, please contact us immediately.</p>
+
+<h3>CONTROLLER</h3>
+
+<p>AppViewX, Inc. is the data controller responsible for handling your personal information (referred to as "AppViewX," "we," "us," or "our" in this policy).</p>
+
+<h4>CONTACT DETAILS</h4>
+
+<p>If you have any questions about this privacy policy or our data practices, please contact us at:</p>
+
+<p><b>AppViewX, Inc.</b></p>
+
+<p><b>Email:</b> (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>) </p>
+
+<p><b>Postal Address:</b><br/>
+City Hall, <br/>
+222 Broadway, <br/>
+New York, NY 10038</p>
+
+<p>You also have the right to file a complaint with the European Data Protection Supervisor (<a href="https://edps.europa.eu/" target="_blank">www.edps.europa.eu</a>).</p>
+
+<h4>CHANGES TO THIS PRIVACY POLICY</h4>
+
+<p>We regularly review our privacy policy. Any material changes will be communicated to you via email.</p>
+
+<h4>THIRD-PARTY LINKS</h4>
+
+<p>Our website may include links to third-party websites or services. We are not responsible for their privacy policies, so we encourage you to review their policies when leaving our site.</p>
+
+<h3>2. DATA WE COLLECT</h3>
+
+<p>We collect the following types of personal data:</p>
+
+<ul>
+  <li><b>Identity Data:</b> Name, username, or similar identifiers.</li>
+  <li><b>Contact Data:</b> Email addresses and phone numbers.</li>
+  <li><b>Transaction Data:</b> Payment details and purchase history.</li>
+  <li><b>Technical Data:</b> IP addresses and unique device IDs.</li>
+  <li><b>Geolocation Data:</b> Real-world geographic location.</li>
+  <li><b>Professional Data:</b> Employer information.</li>
+</ul>
+
+<p>We do not collect <b>special categories of personal data</b> such as race, religion, or biometric data.</p>
+
+<h4>HOW WE COLLECT YOUR DATA</h4>
+
+<ul>
+  <li><b>Direct interactions:</b> When you create an account, subscribe, or contact us.</li>
+  <li><b>Automated technologies:</b> Cookies, tracking tools, and similar technologies.</li>
+  <li><b>Third parties:</b> Data aggregators and analytics providers.</li>
+</ul>
+
+<h3>3. HOW WE USE YOUR DATA</h3>
+
+<p>We process your data for the following reasons:</p>
+
+<ul>
+  <li>To fulfill contractual obligations.</li>
+  <li>For legitimate business interests.</li>
+  <li>To comply with legal requirements.</li>
+</ul>
+
+<h4>Forums and Chat Rooms</h4>
+
+<p>Any information you share in forums or chat rooms is publicly accessible. If you wish to remove personal data, contact us at (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>).</p>
+
+<h4>PURPOSES FOR PROCESSING DATA</h4>
+
+<p>We have detailed our data processing purposes and legal bases in the table below:</p>
+
+<ul>
+  <li>Where we need to perform the contract we are about to enter into or have entered into with you.</li>
+  <li>Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests.</li>
+  <li>Where we need to comply with a legal obligation.</li>
+</ul>
+
+<p>Review the chart below to find out more about the types of lawful basis that we will rely on to process your personal information.</p>
+<p>Generally, we do not rely on consent as a legal basis for processing your personal information although we will get your consent before sending third party direct marketing communications to you via email or text message. You have the right to withdraw consent to marketing at any time by contacting us. </p>
+
+<h4>Forums and Chat Rooms</h4>
+
+<p>If you participate in a discussion forum, local communities, or chat room on any AppViewX website, you should be aware that the information you provide there (i.e. your public profile) will be made broadly available to others, and could be used to contact you, send you unsolicited messages, or for purposes neither AppViewX nor you have control over. Also, please recognize that individual forums and chat rooms may have additional rules and conditions.  AppViewX is not responsible for the personal information or any other information you choose to submit in these forums. To request removal of your personal information from our forums and chat rooms, contact us at (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>)</p>
+
+<h4>PURPOSES FOR WHICH WE WILL USE YOUR PERSONAL DATA</h4>
+
+<p>We have set out below, in a table format, a description of all the ways we plan to use your personal information, and which of the legal bases we rely on to do so. We have also identified what our legitimate interests are where appropriate.</p>
+ 
+<p>Note that we may process your personal information for more than one lawful ground depending on the specific purpose for which we are using your data. Please contact us if you need details about the specific legal ground we are relying on to process your personal information where more than one ground has been set out in the table below.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Purpose/Activity</th>
+      <th scope="col">Type of data</th>
+      <th scope="col">Lawful basis for processing including basis of legitimate interest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>To register you as a new customer</td>
+      <td>(a) Identity<br/>(b) Contact</td>
+      <td>Performance of a contract with you</td>
+    </tr>
+    <tr>
+      <td><p>To manage our relationship with you which will include:</p>
+       <br/>(a) Notifying you about changes to our terms or privacy policy<br/>(b) Asking you to leave a review or take a survey
+      </td>
+      <td>(a) Identity<br/>(b) Contact<br/>(c) Profile<br/>(d) Marketing and Communications</td>
+      <td>(a) Performance of a contract with you<br/>(b) Necessary to comply with a legal obligation<br/>(c) Necessary for our legitimate interests (to keep our records updated and to study how customers use our products/services)</td>
+    </tr>
+    <tr>
+      <td>To enable you to partake in a prize draw, competition or complete a survey</td>
+      <td>(a) Identity<br/>(b) Contact<br/>(c) Profile<br/>(d) Marketing and Communications</td>
+      <td>(a) Performance of a contract with you<br/>(b) Necessary for our legitimate interests (to study how customers use our products/services, to develop them and grow our business)</td>
+    </tr>
+    <tr>
+      <td>To administer and protect our business and our services (including troubleshooting, data analysis, testing, system maintenance, support, reporting and hosting of data)</td>
+      <td>(a) Identity<br/>(b) Contact<br/>(c) Technical</td>
+      <td>(a) Necessary for our legitimate interests (for running our business, provision of administration and IT services, network security, to prevent fraud and in the context of a business reorganization or group restructuring exercise)<br/>(b) Necessary to comply with a legal obligation</td>
+    </tr>
+    <tr>
+      <td>To deliver relevant content and advertisements to you and measure or understand the effectiveness of the advertising we serve to you</td>
+      <td>(a) Identity<br/>(b) Contact<br/>(c) Profile<br/>(d) Usage<br/>(e) Marketing and Communications<br/>(f) Technical</td>
+      <td>Necessary for our legitimate interests (to study how customers use our products/services, to develop them, to grow our business and to inform our marketing strategy)</td>
+    </tr>
+    <tr>
+      <td>To use data analytics to improve our services, products/services, marketing, customer relationships and experiences</td>
+      <td>(a) Technical<br/>(b) Usage</td>
+      <td>Necessary for our legitimate interests (to define types of customers for our products and services, to keep our services updated and relevant, to develop our business and to inform our marketing strategy)</td>
+    </tr>
+    <tr>
+      <td>To make suggestions and recommendations to you about goods or services that may be of interest to you</td>
+      <td>(a) Identity<br/>(b) Contact<br/>(c) Technical<br/>(d) Usage<br/>(e) Profile<br/>(f) Marketing and Communications</td>
+      <td>Necessary for our legitimate interests (to develop our products/services and grow our business)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>MARKETING</h4>
+
+<p>We strive to provide you with choices regarding certain personal information uses, particularly around marketing and advertising.</p>
+
+<h4>PROMOTIONAL OFFERS FROM US </h4>
+
+<p>We may use your Identity, Contact, Technical, Usage and Profile Data to form a view on what we think you may want or need, or what may be of interest to you. This is how we decide which products, services and offers may be relevant for you (we call this marketing).</p>
+ 
+<p>You will receive marketing communications from us if you have requested information from us or purchased goods or services from us and you have not opted out of receiving that marketing.</p>
+
+<h4>THIRD-PARTY MARKETING</h4>
+
+<p>We will get your express opt-in consent before we share your personal information with any third party for marketing purposes. </p>
+
+<h4>OPTING OUT</h4>
+
+<p>You can ask us to stop sending you marketing messages at any time by contacting us at <a href="https://pages.appviewx.com/email-preference-center.html" target="_blank">https://pages.appviewx.com/email-preference-center.html</a> where you opt out of receiving these marketing messages, this will not apply to personal information provided to us as a result of a product/service purchase or other transactions.</p>
+
+<h4>COOKIES</h4>
+
+<p>Like many websites and web-based Solutions, AppViewX uses automatic data collection tools, such as cookies, and embedded web links. These tools collect certain standard information that your browser sends to us. These tools help make your visit to our website and Solutions easier, more efficient, and personalized.</p>
+
+<p>We also use the information to improve our website and Solutions and provide greater service and value
+You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of our website may become inaccessible or not function properly. For more information about the cookies we use, please see our <a href="/appviewx-cookie-policy/" target="_blank">Cookie Policy.</a></p>
+
+<p>If you would prefer not to receive personalized ads based on your browser or device usage, you may generally express your opt-out preference to no longer receive tailored advertisements. Please note that you will continue to see advertisements, but they will no longer be tailored to your interests:</p>
+
+<p>To opt-out of interest-based advertising by participating companies in the following consumer choice mechanisms, please visit:</p>
+
+<ul>
+  <li>Digital Advertising Alliance (DAA)'s self-regulatory opt-out page (http://opt-out.aboutads.info/) and mobile application-based "AppChoices download page(https://youradchoices.com/appchoices) </li>
+  <li>Network Advertising Initiative (NAI)'s self-regulatory opt-out page (http://optout.networkadvertising.org/)</li>
+  <li>European Interactive Digital Advertising Alliance (EDAA)'s consumer opt-out page (http://youronlinechoices.eu)</li>
+</ul>
+
+<h4>CHANGE OF PURPOSE</h4>
+
+<p>We will only use your personal information for the purposes for which we collected it, unless we reasonably consider that we need to use it for another reason and that reason is compatible with the original purpose. If you wish to get an explanation as to how the processing for the new purpose is compatible with the original purpose, please contact us.</p>
+
+<p>If we need to use your personal information for an unrelated purpose, we will notify you and we will explain the legal basis which allows us to do so.</p>
+
+<p>Please note that we may process your personal information without your knowledge or consent, in compliance with the above rules, where this is required or permitted by law.</p>
+
+<h3>5.  DISCLOSURES OF YOUR PERSONAL DATA </h3>
+
+<p>We may share your personal information with the parties set out below for the purposes set out in the table above.</p>
+<ul>
+<li>Third parties to whom we may choose to sell, transfer or merge parts of our business or our assets. Alternatively, we may seek to acquire other businesses or merge with them. If a change happens to our business, then the new owners may use your personal information in the same way as set out in this privacy policy.</li>
+</ul>
+<p>We require all third parties to respect the security of your personal information and to treat it in accordance with the law. We do not allow our third-party service providers to use your personal information for their own purposes and only permit them to process your personal information for specified purposes and in accordance with our instructions.</p>
+
+<p>We may also disclose your personal information:</p>
+
+<ul>
+  <li>To comply with any court order, law, or legal process, including to respond to any government or regulatory request.</li>
+  <li>To enforce or apply our terms of use Terms of Use and other agreements, including for billing and collection purposes.</li>
+  <li>If we believe disclosure is necessary or appropriate to protect the rights, property, or safety of AppViewX, our customers, or others.</li>
+</ul>
+
+<h3>6.  INTERNATIONAL TRANSFERS OF PERSONAL DATA </h3>
+
+<p>As AppViewX is a global organization, we may transfer your personal information to any AppViewX subsidiary or affiliates worldwide, or to third parties and business partners that are located in various countries around the world. By using our websites and Solutions or providing any personal information to us, you acknowledge and accept the transfer, processing, and storage of such information outside of your country of residence where data protection standards may be different. Personal information, including personal information collected in the European Economic Area ("EEA") or Switzerland, may be transferred, stored and processed by us and/or our services providers, partners and affiliates in the United States and potentially other countries whose data protection laws may be different. We will protect your personal information in accordance with this Privacy Notice wherever it is processed and will take appropriate steps to protect the relevant personal information in accordance with applicable laws.</p>
+
+<h3>7.  DATA SECURITY</h3>
+
+<p>We have put in place appropriate security measures to prevent your personal information from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. In addition, we limit access to your personal information to those employees, agents, contractors and other third parties who have a business need to know. They will only process your personal information on our instructions and they are subject to a duty of confidentiality. The Internet, however, cannot be guaranteed to be 100% secure, and we cannot ensure or warrant the security of any personal information you provide.</p>
+
+<p>We have put in place procedures to deal with any suspected personal information breach and will notify you and any applicable regulator of a breach where we are legally required to do so.</p>
+
+<h3>8.  DATA RETENTION</h3>
+
+<h4>HOW LONG WILL YOU USE MY PERSONAL DATA FOR?</h4>
+
+<p>We will only retain your personal information for as long as reasonably necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, regulatory, tax, accounting or reporting requirements. We may retain your personal information for a longer period in the event of a complaint or if we reasonably believe there is a prospect of litigation in respect to our relationship with you.</p>
+ 
+<p>To determine the appropriate retention period for personal information, we consider the amount, nature and sensitivity of the personal information, the potential risk of harm from unauthorized use or disclosure of your personal information, the purposes for which we process your personal information and whether we can achieve those purposes through other means, and the applicable legal, regulatory, tax, accounting or other requirements.</p>
+  
+<p>By law, we may have to keep basic information about our customers (including Contact, Identity, and Transaction Data) for a certain number of years after they cease being customers for purposes.</p>
+ 
+<p>In some circumstances you can ask us to delete your data: see Your Legal Rights below for further information.</p>
+ 
+<p>In some circumstances we will anonymize your personal information (so that it can no longer be associated with you) for research or statistical purposes, in which case we may use this information indefinitely without further notice to you.</p>
+
+<h3>9.  YOUR LEGAL RIGHTS </h3>
+
+<p>You may exercise certain rights regarding the personal information which we process. In particular, you have the right to do the following:</p>
+
+<ul>
+  <li><b>Request access</b> to your personal information (commonly known as a "data subject access request"). You have the right to request that we disclose certain information to you about our collection and use of your personal information over the past 12 months. Once we receive and confirm your verifiable consumer request (see Exercising Access, Data Portability, and Deletion Rights), we will disclose to you:
+
+   <ul>
+     <li>The categories of personal information we collected about you.</li>
+     <li>The categories of sources for the personal information we collected about you.</li>
+     <li>Our business or commercial purpose for collecting or using that personal information.</li>
+     <li>The categories of third parties with whom we share that personal information.</li>
+     <li>The specific pieces of personal information we collected about you (also called a data portability request).</li>
+     <li>If we sold or disclosed your personal information for a business purpose, two separate lists disclosing:
+         <ul>
+           <li>sales, identifying the personal information categories that each category of recipient purchased; and</li>
+           <li>disclosures for a business purpose, identifying the personal information categories that each category of recipient obtained.</li>
+         </ul>
+     </li>
+   </ul>
+We do not provide these access and data portability rights for B2B personal information.
+</li>
+  <li><b>Request correction</b> of the personal information that we hold about you. This enables you to have any incomplete or inaccurate data we hold about you corrected, though we may need to verify the accuracy of the new data you provide to us.</li>
+  <li><b>Request erasure</b> of your personal information. You have the right to request that we delete any of your personal information that we collected from you and retained, subject to certain exceptions. You also have the right to ask us to delete or remove your personal information where you have successfully exercised your right to object to processing (see below), where we may have processed your information unlawfully or where we are required to erase your personal information to comply with local law.
+
+We may deny your deletion request if retaining the information is necessary for us or our service provider(s) to:
+  <ol>
+     <li>Complete the transaction for which we collected the personal information, provide a good or service that you requested, take actions reasonably anticipated within the context of our ongoing business relationship with you, fulfill the terms of a written warranty or product recall conducted in accordance with federal law, or otherwise perform our contract with you.</li>
+     <li>Detect security incidents, protect against malicious, deceptive, fraudulent, or illegal activity, or prosecute those responsible for such activities.</li>
+     <li>Debug products to identify and repair errors that impair existing intended functionality.</li>
+     <li>Exercise free speech, ensure the right of another consumer to exercise their free speech rights, or exercise another right provided for by law.</li>
+     <li>Comply with the California Electronic Communications Privacy Act (Cal. Penal Code § 1546 et. seq.).</li>
+     <li>Engage in public or peer-reviewed scientific, historical, or statistical research in the public interest that adheres to all other applicable ethics and privacy laws, when the information's deletion may likely render impossible or seriously impair the research's achievement, if you previously provided informed consent.</li>
+     <li>Enable solely internal uses that are reasonably aligned with consumer expectations based on your relationship with us.</li>
+     <li>Comply with a legal obligation.</li>
+     <li>Make other internal and lawful uses of that information that are compatible with the context in which you provided it.</li>
+  </ol>
+
+</li>
+  <li><b>Object to processing</b> of your personal information where we are relying on a legitimate interest (or those of a third party) and there is something about your particular situation which makes you want to object to processing on this ground as you feel it impacts on your fundamental rights and freedoms. You also have the right to object where we are processing your personal information for direct marketing purposes. In some cases, we may demonstrate that we have compelling legitimate grounds to process your information which override your rights and freedoms.</li>
+  <li><b>Request restriction of processing</b> of your personal information. This enables you to ask us to suspend the processing of your personal information in the following scenarios:
+    <ul>
+      <li>If you want us to establish the data's accuracy.</li>
+      <li>Where our use of the data is unlawful but you do not want us to erase it.</li>
+      <li>Where you need us to hold the data even if we no longer require it as you need it to establish, exercise or defend legal claims.</li>
+      <li>You have objected to our use of your data but we need to verify whether we have overriding legitimate grounds to use it.</li>
+    </ul>
+</li>
+  <li><b>Request the transfer</b> of your personal information to you or to a third party. We will provide to you, or a third party you have chosen, your personal information in a structured, commonly used, machine-readable format. Note that this right only applies to automated information which you initially provided consent for us to use or where we used the information to perform a contract with you.
+</li>
+  <li><b>Withdraw consent at any time</b> where we are relying on consent to process your personal information. However, this will not affect the lawfulness of any processing carried out before you withdraw your consent. If you withdraw your consent, we may not be able to provide certain products or services to you. We will advise you if this is the case at the time you withdraw your consent.</li>
+  <li>
+      <b>Notice to Nevada Residents:</b> Nevada provides its residence with a limited right to opt-out of certain personal information sales. Residents who wish to exercise this sale opt-out right may submit a request as explained further below.
+  </li>
+</ul>
+
+<h4>Exercising Your Legal Rights</h4>
+
+<p>If you wish to exercise any of the rights set out above, please submit a verifiable consumer request to us at (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>) or use the chat feature on our website.</p>
+
+<p>Only you, or someone legally authorized to act on your behalf, may make a verifiable consumer request related to your personal information. You may also make a verifiable consumer request on behalf of your minor child.</p>
+
+<p>You may only make a verifiable consumer request for access or data portability twice within a 12-month period. The verifiable consumer request must:</p>
+
+<ul>
+  <li>Provide sufficient information that allows us to reasonably verify you are the person about whom we collected personal information or an authorized representative, which may include:
+<p style="padding-top: 10px;padding-left: 20px;">Name, Email, Phone Number, Company Name, Address, City, State, Zip, Approximate Opt-In Date.</p>
+</li>
+  <li>Describe your request with sufficient detail that allows us to properly understand, evaluate, and respond to it.</li>
+</ul>
+
+<p>We cannot respond to your request or provide you with personal information if we cannot verify your identity or authority to make the request and confirm the personal information relates to you.</p>
+
+<p>Making a verifiable consumer request does not require you to create an account with us.</p>
+
+<p>We will only use personal information provided in a verifiable consumer request to verify the requestor's identity or authority to make the request.</p>
+
+<h4>Response Timing and Format</h4>
+
+<p>We endeavor to respond to a verifiable consumer request within thirty (30) days of its receipt. If we require more time (up to 45 days), we will inform you of the reason and extension period in writing.</p>
+
+<p>If you have an account with us, we will deliver our written response to that account. If you do not have an account with us, we will deliver our written response by mail or electronically, at your option.</p>
+
+<p>Any disclosures we provide will only cover the 12-month period preceding the verifiable consumer request's receipt. The response we provide will also explain the reasons we cannot comply with a request, if applicable. For data portability requests, we will select a format to provide your personal information that is readily useable and should allow you to transmit the information from one entity to another entity without hindrance.</p>
+
+<p>We do not charge a fee to process or respond to your verifiable consumer request unless it is excessive, repetitive, or manifestly unfounded. If we determine that the request warrants a fee, we will tell you why we made that decision and provide you with a cost estimate before completing your request.</p>
+
+<h3>10. NOTICE FOR CALIFORNIA RESIDENTS</h3>
+
+<p>This Privacy Notice for California Residents supplements the information contained in AppViewX's Privacy Policy and applies solely to all visitors, users, and others who reside in the State of California ("consumers" or "you"). We adopt this notice to comply with the California Consumer Privacy Act of 2018 ("CCPA"), as amended and restated by the California Privacy Rights Act of 2020 (the "CPRA"), and other applicable California law. Any terms defined in the CCPA and CPRA have the same meaning when used in this Notice.</p>
+
+<h4>INFORMATION WE COLLECT</h4>
+
+We collect information that identifies, relates to, describes, references, is reasonably capable of being associated with, or could reasonably be linked, directly or indirectly, with a particular consumer, household, or device ("<b>personal information</b>"). Personal information does not include:
+
+<ul>
+  <li>Publicly available information from government records.</li>
+  <li>Deidentified or aggregated consumer information.</li>
+</ul>
+
+<p>In particular, we have collected the following categories of personal information from its consumers within the last twelve (12) months:</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Examples</th>
+      <th scope="col">Collected</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A. Identifiers.</td>
+      <td>A real name, alias, postal address, unique personal identifier, online identifier, Internet Protocol address, email address, account name, Social Security number, driver's license number, passport number, or other similar identifiers.</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>B. Personal information categories listed in the California Customer Records statute (Cal. Civ. Code § 1798.80(e)).</td>
+      <td>A name, signature, Social Security number, physical characteristics or description, address, telephone number, passport number, driver's license or state identification card number, insurance policy number, education, employment, employment history, bank account number, credit card number, debit card number, or any other financial information, medical information, or health insurance information. Some personal information included in this category may overlap with other categories.</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>C. Protected classification characteristics Under California or federal law.</td>
+      <td>Age (40 years or older), race, color, ancestry, national origin, citizenship, religion or creed, marital status, medical condition, physical or mental disability, sex (including gender, gender identity, gender expression, pregnancy or childbirth and related medical conditions), sexual orientation, veteran or military status, genetic information (including familial genetic information).</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>D. Commercial information.</td>
+      <td>Records of personal property, products or services purchased, obtained, or considered, or other purchasing or consuming histories or tendencies.</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>E. Biometric information.</td>
+      <td>Genetic, physiological, behavioral, and biological characteristics, or activity patterns used to extract a template or other identifier or identifying information, such as, fingerprints, faceprints, and voiceprints, iris or retina scans, keystroke, gait, or other physical patterns, and sleep, health, or exercise data.</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>F. Internet or other similar network activity.</td>
+      <td>Browsing history, search history, information on a consumer's interaction with a website, application, or advertisement. </td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>G. Geolocation data.</td>
+      <td>Physical location or movements.</td>
+      <td>YES</td>
+    </tr>
+    <tr>
+      <td>H. Sensory data.</td>
+      <td>Audio, electronic, visual, thermal, olfactory, or similar information.</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>I. Professional or employment- related information.</td>
+      <td>Current or past job history or performance evaluations.</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>J. Non-public education information (per the Family Educational Rights and Privacy Act (20 U.S.C. Section 1232g, 34 C.F.R. Part 99)).</td>
+      <td>Education records directly related to a student maintained by an educational institution or party acting on its behalf, such as grades, transcripts, class lists, student schedules, student identification codes, student financial information, or student disciplinary records.</td>
+      <td>NO</td>
+    </tr>
+    <tr>
+      <td>K. Inferences drawn from other personal information.</td>
+      <td>Profile reflecting a person's preferences, characteristics, psychological trends, predispositions, behavior, attitudes, intelligence, abilities, and aptitudes.</td>
+      <td>NO</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>NON-DISCRIMINATION</h4>
+
+<p>We will not discriminate against you for exercising any of your CCPA and CRPA rights. Unless permitted by the CCPA and CPRA, we will not:</p>
+
+<ul>
+  <li>Deny you goods or services.</li>
+  <li>Charge you different prices or rates for goods or services, including through granting discounts or other benefits, or imposing penalties.</li>
+  <li>Provide you a different level or quality of goods or services.</li>
+  <li>Suggest that you may receive a different price or rate for goods or services or a different level or quality of goods or services.</li>
+</ul>
+
+<p>However, we may offer you certain financial incentives permitted by the CCPA and CPRA that <b>can result</b> in different prices, rates, or quality levels. Any CCPA and CPRA-permitted financial incentive we offer will reasonably relate to your personal information's value and contain written terms that describe the program's material aspects. Participation in a financial incentive program requires your prior opt in consent, which you may revoke at any time.</p>
+
+<h4>OTHER CALIFORNIA PRIVACY RIGHTS</h4>
+
+<p>California's "Shine the Light" law (Civil Code Section § 1798.83) permits users of our Website that are California residents to request certain information regarding our disclosure of personal information to third parties for their direct marketing purposes. To make such a request, please send an email to (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>) or write us at: City Hall, 222 Broadway, New York, NY 10038, Attention: AppViewX, Inc. Privacy Officer.</p>
+
+<h4>NO FEE USUALLY REQUIRED</h4>
+
+<p>You will not have to pay a fee to access your personal information (or to exercise any of the other rights). However, we may charge a reasonable fee if your request is clearly unfounded, repetitive or excessive. Alternatively, we could refuse to comply with your request in these circumstances.</p>
+
+<h4>WHAT WE MAY NEED FROM YOU</h4>
+
+<p>We may need to request specific information from you to help us confirm your identity and ensure your right to access your personal information (or to exercise any of your other rights). This is a security measure to ensure that personal information is not disclosed to any person who has no right to receive it. We may also contact you to ask you for further information in relation to your request to speed up our response.</p>
+
+<h4>TIME LIMIT TO RESPOND </h4>
+
+<p>We try to respond to all legitimate requests within one month. Occasionally it could take us longer than a month if your request is particularly complex or you have made a number of requests. In this case, we will notify you and keep you updated.</p>
+
+<h4>DO NOT TRACK SIGNALS</h4>
+
+<p>We respond to do-not-track signals. For more information, please contact us at (<a href="mailto:privacy@appviewx.com">privacy@appviewx.com</a>)</p>
+
+<h4>Updates to this Privacy Statement</h4>
+
+<p>We may update this Privacy Statement from time to time. If we modify our Privacy Statement, we will post the revised version here, with an updated revision date. You agree to visit these pages periodically to be aware of and review any such revisions. If we make material changes to our Privacy Statement, we may also notify you by other means prior to the changes taking effect, such as by posting a notice on our websites or sending you a notification. By continuing to use our website after such revisions are in effect, you accept and agree to the revisions and to abide by them.</p>
+
+
+</j:jelly>]]></html>
+        <name>privacy_policy</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-31 11:48:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>10c9c93e3be0e210b795659aa4e45a6c</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>privacy_policy</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ui_page_10c9c93e3be0e210b795659aa4e45a6c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-31 12:21:46</sys_updated_on>
+    </sys_ui_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>10c9c93e3be0e210b795659aa4e45a6c</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-31 12:15:55</sys_created_on>
+        <sys_id>596019b23b24e210b795659aa4e45a11</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-31 12:15:55</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

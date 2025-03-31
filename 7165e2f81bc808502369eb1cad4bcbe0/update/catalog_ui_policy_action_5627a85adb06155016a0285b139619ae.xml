@@ -5,6 +5,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>ignore</mandatory>
         <order>104</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2022-09-22 04:41:41</sys_updated_on>
         <table/>
         <ui_policy display_value="Renew - To toggle the fields to Read only based on user selection">1627a85adb06155016a0285b13961998</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>organisation</variable>
         <variable_set/>
         <visible>true</visible>

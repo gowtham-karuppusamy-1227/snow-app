@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the details of the selected CA Tag name from CLM Settings.</description>
+        <mobile_callable>false</mobile_callable>
         <name>renew_get_certificate_authority_name</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var renew_get_certificate_authority_name = Class.create();
 renew_get_certificate_authority_name.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getCaDetails: function() {

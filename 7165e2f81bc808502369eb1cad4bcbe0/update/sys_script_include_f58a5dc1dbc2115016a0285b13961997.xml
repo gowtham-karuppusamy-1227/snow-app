@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches all the Certificate Attributes which are configured in AppViewX.</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_cert_attributes</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_cert_attributes = Class.create();
 get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getCertificateAttributes: function() {
@@ -63,13 +65,14 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
                 r.setRequestHeader('User-Agent', 'snow');
                 r.setRequestHeader("Content-Type", "application/json");
                 r.setEndpoint(url + "/avxapi/certificate/attribute?&gwsource=web");
-                r.setHttpTimeout(60000);
+                // r.setHttpTimeout(60000);
                 var response = r.executeAsync();
                 var responseBody, responseMessage;
                 if (response.haveError()) {
@@ -105,7 +108,7 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         <sys_created_on>2022-09-18 11:10:30</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f58a5dc1dbc2115016a0285b13961997</sys_id>
-        <sys_mod_count>26</sys_mod_count>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>get_cert_attributes</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -113,6 +116,6 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_f58a5dc1dbc2115016a0285b13961997</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:28:18</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:26:00</sys_updated_on>
     </sys_script_include>
 </record_update>

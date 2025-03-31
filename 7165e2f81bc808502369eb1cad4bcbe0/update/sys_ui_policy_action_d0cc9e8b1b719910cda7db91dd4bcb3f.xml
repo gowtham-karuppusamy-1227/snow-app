@@ -3,6 +3,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field>approval_levels_in_servicenow_revoke</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>true</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2022-09-12 11:15:08</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Dynamic Servicenow approval logic population - Revoke">ca2b10af1be815502369eb1cad4bcbca</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>true</visible>
     </sys_ui_policy_action>
 </record_update>

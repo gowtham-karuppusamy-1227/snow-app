@@ -3,6 +3,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field>attach_trust_cert</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>ignore</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2024-04-01 06:19:49</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Disable Trust Cert Fields">d8ca9dad1bd50290cda7db91dd4bcbf2</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>true</visible>
     </sys_ui_policy_action>
 </record_update>

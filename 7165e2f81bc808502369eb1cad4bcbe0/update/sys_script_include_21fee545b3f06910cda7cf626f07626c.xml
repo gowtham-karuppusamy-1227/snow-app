@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>update_certificate_attributes</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var update_certificate_attributes = Class.create();
 update_certificate_attributes.prototype = {
     initialize: function() {},
@@ -42,13 +44,14 @@ update_certificate_attributes.prototype = {
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("get");
             r.setRequestHeader("token", token);
             r.setRequestHeader('User-Agent', 'snow');
             r.setRequestHeader("Content-Type", "application/json");
             r.setEndpoint(url + "/avxapi/certificate/attribute?&gwsource=web");
-            r.setHttpTimeout(60000);
+            // r.setHttpTimeout(60000);
             var response = r.executeAsync();
             var responseBody, responseMessage;
             if (response.haveError()) {
@@ -112,7 +115,7 @@ update_certificate_attributes.prototype = {
         <sys_created_on>2023-02-02 05:59:31</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>21fee545b3f06910cda7cf626f07626c</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>update_certificate_attributes</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -120,6 +123,6 @@ update_certificate_attributes.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_21fee545b3f06910cda7cf626f07626c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-01-03 15:17:03</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:48:36</sys_updated_on>
     </sys_script_include>
 </record_update>

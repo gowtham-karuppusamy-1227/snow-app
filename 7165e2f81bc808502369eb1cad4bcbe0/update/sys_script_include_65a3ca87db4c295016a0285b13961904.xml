@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the Slot Size for the selected CA from AppViewX.</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_godaddy_slot_size</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_godaddy_slot_size = Class.create();
 get_godaddy_slot_size.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getGodaddySlotSize: function() {
@@ -63,6 +65,7 @@ get_godaddy_slot_size.prototype = Object.extendsObject(global.AbstractAjaxProces
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader("token", token);
@@ -70,7 +73,7 @@ get_godaddy_slot_size.prototype = Object.extendsObject(global.AbstractAjaxProces
             r.setRequestHeader("Content-Type", "application/json");
             r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
             r.setRequestBody(JSON.stringify(payload));
-            r.setHttpTimeout(60000);
+            // r.setHttpTimeout(60000);
             var response = r.executeAsync();
             var responseBody, responseMessage;
             if (response.haveError()) {
@@ -105,7 +108,7 @@ get_godaddy_slot_size.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_created_on>2023-01-02 05:25:12</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>65a3ca87db4c295016a0285b13961904</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>get_godaddy_slot_size</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -113,6 +116,6 @@ get_godaddy_slot_size.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_65a3ca87db4c295016a0285b13961904</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:29:28</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:28:39</sys_updated_on>
     </sys_script_include>
 </record_update>

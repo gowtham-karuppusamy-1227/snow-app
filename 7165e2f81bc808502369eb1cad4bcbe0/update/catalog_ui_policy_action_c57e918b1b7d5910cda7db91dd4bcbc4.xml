@@ -5,6 +5,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>ignore</mandatory>
         <order>200</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2022-12-19 10:29:16</sys_updated_on>
         <table/>
         <ui_policy display_value="Enable DNS value fields">b0e144f51b65d550cda7db91dd4bcbae</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>dns</variable>
         <variable_set/>
         <visible>true</visible>

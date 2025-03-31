@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>get_profile_names</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_profile_names = Class.create();
 get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getProfileNames: function() {
@@ -70,6 +72,7 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -84,7 +87,7 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
 				}
 				r.setQueryParameter("gwsource", "web");
                 r.setRequestBody(JSON.stringify({}));
-                r.setHttpTimeout(60000);
+                // r.setHttpTimeout(60000);
                 var response = r.executeAsync();
                 var responseBody, responseMessage;
                 if (response.haveError()) {
@@ -122,7 +125,7 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_created_on>2023-02-07 08:50:48</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>073980f2db3c251016a0285b1396199b</sys_id>
-        <sys_mod_count>22</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>get_profile_names</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -130,6 +133,6 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_073980f2db3c251016a0285b1396199b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:29:58</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:31:03</sys_updated_on>
     </sys_script_include>
 </record_update>

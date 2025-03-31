@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Updates the RITM ticket with comments from AppViewX.</description>
+        <mobile_callable>false</mobile_callable>
         <name>update_ritm_comments</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var update_ritm_comments = Class.create();
 update_ritm_comments.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
 

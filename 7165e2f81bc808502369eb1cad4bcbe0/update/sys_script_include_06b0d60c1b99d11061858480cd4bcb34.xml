@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the email address associated to the selected User Group in CLM Settings (Enroll, Revoke and Renew Settings)</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_assignment_group_email</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_assignment_group_email = Class.create();
 get_assignment_group_email.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getGroupEmail: function() {

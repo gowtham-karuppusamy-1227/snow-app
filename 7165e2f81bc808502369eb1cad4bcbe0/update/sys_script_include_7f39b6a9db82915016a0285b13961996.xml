@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Writes data into the Logging table in ServiceNow for auditing.</description>
+        <mobile_callable>false</mobile_callable>
         <name>avx_logger</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var avx_logger = Class.create();
 avx_logger.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     fetchAssignmentGroup: function() {

@@ -3,6 +3,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field>certificate_retrieval_mode</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>false</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2023-02-17 06:10:59</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Disable Certificate Issuance Modes">5787cff1dbcde15016a0285b139619fe</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>false</visible>
     </sys_ui_policy_action>
 </record_update>

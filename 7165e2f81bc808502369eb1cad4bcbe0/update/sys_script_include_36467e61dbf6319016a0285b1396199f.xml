@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>get_logged_in_user_company</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var get_logged_in_user_company = Class.create();
 get_logged_in_user_company.prototype = {
     initialize: function() {},

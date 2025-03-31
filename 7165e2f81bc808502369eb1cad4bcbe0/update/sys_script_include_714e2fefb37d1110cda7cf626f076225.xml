@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Checks if the uploaded/pasted CSR content is valid or not.</description>
+        <mobile_callable>false</mobile_callable>
         <name>validate_csr_attachment</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var validate_csr_attachment = Class.create();
 validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     checkAttachmentSizeAndType: function() {
@@ -85,6 +87,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                     if (mid_server != "") {
                         r.setMIDServer(mid_server);
                         r.setEccParameter('skip_sensor', 'true');
+						r.setEccCorrelator('AVX_REST_CALL');
                     }
                     r.setHttpMethod("post");
                     r.setRequestHeader("token", token);
@@ -92,7 +95,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                     r.setRequestHeader("Content-Type", "application/json");
                     r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
                     r.setRequestBody(JSON.stringify(payload));
-                    r.setHttpTimeout(60000);
+                    // r.setHttpTimeout(60000);
                     var response = r.executeAsync();
                     var responseBody, responseMessage;
                     if (response.haveError()) {
@@ -152,7 +155,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_created_on>2022-09-14 06:09:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>714e2fefb37d1110cda7cf626f076225</sys_id>
-        <sys_mod_count>77</sys_mod_count>
+        <sys_mod_count>78</sys_mod_count>
         <sys_name>validate_csr_attachment</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -160,6 +163,6 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_714e2fefb37d1110cda7cf626f076225</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-01-31 09:54:27</sys_updated_on>
+        <sys_updated_on>2025-03-31 09:37:43</sys_updated_on>
     </sys_script_include>
 </record_update>

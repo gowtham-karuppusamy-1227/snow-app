@@ -5,6 +5,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>false</mandatory>
         <order>100</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2022-09-20 07:56:55</sys_updated_on>
         <table/>
         <ui_policy display_value="Clear Upload CSR Value">33110721dbc2915016a0285b139619e1</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>upload_csr</variable>
         <variable_set/>
         <visible>false</visible>

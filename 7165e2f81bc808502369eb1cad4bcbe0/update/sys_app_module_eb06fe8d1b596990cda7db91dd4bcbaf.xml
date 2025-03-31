@@ -18,6 +18,7 @@
         <override_menu_roles>false</override_menu_roles>
         <query>v_ws_editor.do?sysparm_query=name=x_avx_appviewx_aut_update_request_ticket</query>
         <report/>
+        <require_confirmation>true</require_confirmation>
         <roles/>
         <survey/>
         <survey_overwrite>true</survey_overwrite>

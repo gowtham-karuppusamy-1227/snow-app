@@ -3,6 +3,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field>revoke_user_group_snow_two</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>false</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2024-07-17 13:26:44</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Display Assignment Group For Second Level Approval In SNOW - Revoke">7d5fb5481b2b4250cda7db91dd4bcb8f</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>false</visible>
     </sys_ui_policy_action>
 </record_update>

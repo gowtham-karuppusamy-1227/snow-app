@@ -5,6 +5,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>ignore</mandatory>
         <order>104</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2022-09-11 12:10:44</sys_updated_on>
         <table/>
         <ui_policy display_value="Revoke - To hide fields on req items">47e3a5b21b315910cda7db91dd4bcbc3</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>certificate_category</variable>
         <variable_set/>
         <visible>false</visible>

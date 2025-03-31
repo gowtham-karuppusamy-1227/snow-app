@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches all the Policies associated to the selected CA Account in the CLM Settings.</description>
+        <mobile_callable>false</mobile_callable>
         <name>clm_settings_get_policy_search</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var clm_settings_get_policy_search = Class.create();
 clm_settings_get_policy_search.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getPolicySearch: function() {
@@ -54,6 +56,7 @@ clm_settings_get_policy_search.prototype = Object.extendsObject(global.AbstractA
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader("token", token);
@@ -61,7 +64,7 @@ clm_settings_get_policy_search.prototype = Object.extendsObject(global.AbstractA
             r.setRequestHeader("Content-Type", "application/json");
             r.setEndpoint(url + "/avxapi/execute-hook?gwsource=web");
             r.setRequestBody(JSON.stringify(payload));
-            r.setHttpTimeout(30000);
+            // r.setHttpTimeout(30000);
             var response = r.executeAsync();
             var responseBody, responseMessage;
             if (response.haveError()) {
@@ -97,7 +100,7 @@ clm_settings_get_policy_search.prototype = Object.extendsObject(global.AbstractA
         <sys_created_on>2022-07-13 10:10:14</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b469c02f1b6815502369eb1cad4bcb2e</sys_id>
-        <sys_mod_count>36</sys_mod_count>
+        <sys_mod_count>37</sys_mod_count>
         <sys_name>clm_settings_get_policy_search</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -105,6 +108,6 @@ clm_settings_get_policy_search.prototype = Object.extendsObject(global.AbstractA
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_b469c02f1b6815502369eb1cad4bcb2e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-26 07:31:25</sys_updated_on>
+        <sys_updated_on>2025-03-31 06:52:44</sys_updated_on>
     </sys_script_include>
 </record_update>

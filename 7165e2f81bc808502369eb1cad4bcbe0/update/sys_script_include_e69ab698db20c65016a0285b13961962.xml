@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>get_cert_common_name</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_cert_common_name = Class.create();
 get_cert_common_name.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getCertCommonName: function() {

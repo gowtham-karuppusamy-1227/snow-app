@@ -3,6 +3,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field>fetch_user_group_renew</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>false</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -20,6 +22,8 @@
         <sys_updated_on>2023-05-02 12:32:03</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Display Fetch User Group Field">f2642d3d1baa2d50cda7db91dd4bcbda</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <visible>false</visible>
     </sys_ui_policy_action>
 </record_update>

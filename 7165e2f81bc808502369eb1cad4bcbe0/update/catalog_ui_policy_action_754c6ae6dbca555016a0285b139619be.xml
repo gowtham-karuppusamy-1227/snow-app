@@ -5,6 +5,8 @@
         <cleared>true</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>false</mandatory>
         <order>600</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2022-09-23 08:57:43</sys_updated_on>
         <table/>
         <ui_policy display_value="renew_set_paste_csr">d0bbaea6dbca555016a0285b139619a4</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>file_upload</variable>
         <variable_set/>
         <visible>false</visible>

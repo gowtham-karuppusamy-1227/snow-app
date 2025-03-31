@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description>Triggers AppViewX's OAuth Service to obtain an authentication token, which will be used for subsequent requests.</description>
+        <mobile_callable>false</mobile_callable>
         <name>appviewx_oauth_token_generation</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var appviewx_oauth_token_generation = Class.create();
 appviewx_oauth_token_generation.prototype = {
     initialize: function() {},
@@ -45,6 +47,7 @@ appviewx_oauth_token_generation.prototype = {
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             var retry_count = 0;
             while (retry_count < 5) {
@@ -54,7 +57,7 @@ appviewx_oauth_token_generation.prototype = {
                 r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 r.setRequestHeader("User-Agent", "snow");
                 r.setRequestBody(request_body);
-                r.setHttpTimeout(30000);
+                // r.setHttpTimeout(30000);
                 logger.initialize();
                 logger.level = "Info";
                 logger.script = "appviewx_test_connection";
@@ -106,7 +109,7 @@ appviewx_oauth_token_generation.prototype = {
         <sys_created_on>2022-08-16 12:05:32</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>bdc92b961b91515061858480cd4bcbe8</sys_id>
-        <sys_mod_count>116</sys_mod_count>
+        <sys_mod_count>118</sys_mod_count>
         <sys_name>appviewx_oauth_token_generation</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -114,6 +117,6 @@ appviewx_oauth_token_generation.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_bdc92b961b91515061858480cd4bcbe8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-07-30 09:51:47</sys_updated_on>
+        <sys_updated_on>2025-03-31 06:45:16</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the details of the selected certificate from AppViewX.</description>
+        <mobile_callable>false</mobile_callable>
         <name>renew_get_certs_prams</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var renew_get_certs_prams = Class.create();
 renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getcsrprams: function() {
@@ -60,6 +62,7 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader('User-Agent', 'snow');
@@ -67,7 +70,7 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
             r.setRequestHeader("Content-Type", "application/json");
             r.setEndpoint(url + "/avxapi/certificate/search?&gwsource=web");
             r.setRequestBody(JSON.stringify(payload));
-            r.setHttpTimeout(180000);
+            // r.setHttpTimeout(180000);
             var response = r.executeAsync();
             var responseBody, responseMessage;
             if (response.haveError()) {
@@ -103,7 +106,7 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_created_on>2022-07-14 05:24:50</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2d0d84fb1ba8d55061858480cd4bcb7f</sys_id>
-        <sys_mod_count>47</sys_mod_count>
+        <sys_mod_count>48</sys_mod_count>
         <sys_name>renew_get_certs_prams</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -111,6 +114,6 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_2d0d84fb1ba8d55061858480cd4bcb7f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:30:52</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:37:38</sys_updated_on>
     </sys_script_include>
 </record_update>

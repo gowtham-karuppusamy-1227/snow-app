@@ -8,11 +8,14 @@
         <certificate_url/>
         <client_id>74b2f844afe4e910847da8de9bb5b5bf</client_id>
         <client_secret>﷞﷟﷒ca780d7f1b050110cda7db91dd4bcbb7﷬﷔1﷬﷭tRPSIL2FTok1LRRyVYeunQ==AHLdutqsWm6XXp6vmEKdtdqJ-k8P8vVzsVgjVw==﷮﷯</client_secret>
+        <client_type/>
         <client_uuid>34b2f844b3e4e910cda7cf626f0762bf</client_uuid>
         <code_challenge_method>S256</code_challenge_method>
         <comments/>
         <default_grant_type>password</default_grant_type>
+        <extend_refresh_token_expiry>false</extend_refresh_token_expiry>
         <id_token_lifespan>86400</id_token_lifespan>
+        <jwt_provider/>
         <login_url/>
         <logo_url/>
         <message_signature_lifespan>60</message_signature_lifespan>

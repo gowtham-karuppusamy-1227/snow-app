@@ -3,7 +3,10 @@
         <active>true</active>
         <admin_overrides>true</admin_overrides>
         <advanced>false</advanced>
+        <applies_to/>
         <condition/>
+        <controlled_by_refs/>
+        <decision_type>allow</decision_type>
         <description>Users will have delete access to the "CSR Options"  table if they have the following role x_avx_appviewx_aut.app_admin.</description>
         <local_or_existing>Local</local_or_existing>
         <name>x_avx_appviewx_aut_csr_options</name>

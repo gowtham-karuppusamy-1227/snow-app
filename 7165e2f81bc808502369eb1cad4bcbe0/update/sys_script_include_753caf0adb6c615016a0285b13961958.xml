@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>scheduler_for_ca_settings_sync</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var scheduler_for_ca_settings_sync = Class.create();
 scheduler_for_ca_settings_sync.prototype = {
     initialize: function() {},
@@ -61,6 +63,7 @@ scheduler_for_ca_settings_sync.prototype = {
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
+				r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader("token", token);
@@ -68,7 +71,7 @@ scheduler_for_ca_settings_sync.prototype = {
             r.setRequestHeader("Content-Type", "application/json");
             r.setEndpoint(url + "/avxapi/execute-hook?&gwsource=web");
             r.setRequestBody(JSON.stringify(payload));
-            r.setHttpTimeout(30000);
+            // r.setHttpTimeout(30000);
             var response = r.executeAsync();
             var responseBody, responseMessage;
             if (response.haveError()) {
@@ -119,6 +122,7 @@ scheduler_for_ca_settings_sync.prototype = {
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -126,7 +130,7 @@ scheduler_for_ca_settings_sync.prototype = {
                 r.setRequestHeader("Content-Type", "application/json");
                 r.setEndpoint(url + "/avxapi/cert-ca-settings-getbycaname?certificateAuthority=" + certificate_authority + "&gwsource=web");
                 r.setRequestBody(JSON.stringify(payload));
-                r.setHttpTimeout(60000);
+                // r.setHttpTimeout(60000);
                 response = r.executeAsync();
                 responseBody, responseMessage;
                 if (response.haveError()) {
@@ -198,7 +202,7 @@ scheduler_for_ca_settings_sync.prototype = {
         <sys_created_on>2023-01-24 07:23:27</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>753caf0adb6c615016a0285b13961958</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>scheduler_for_ca_settings_sync</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -206,6 +210,6 @@ scheduler_for_ca_settings_sync.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_753caf0adb6c615016a0285b13961958</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-01-06 12:27:27</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:43:03</sys_updated_on>
     </sys_script_include>
 </record_update>

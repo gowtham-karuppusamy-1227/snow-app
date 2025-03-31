@@ -5,6 +5,8 @@
         <cleared>false</cleared>
         <disabled>ignore</disabled>
         <field/>
+        <field_message/>
+        <field_message_type>none</field_message_type>
         <mandatory>ignore</mandatory>
         <order>100</order>
         <sys_class_name>catalog_ui_policy_action</sys_class_name>
@@ -23,6 +25,8 @@
         <sys_updated_on>2023-01-05 12:07:44</sys_updated_on>
         <table/>
         <ui_policy display_value="Enable San Email Address Field">35dc3244dbd42d5016a0285b1396191c</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
         <variable>san_email</variable>
         <variable_set/>
         <visible>true</visible>

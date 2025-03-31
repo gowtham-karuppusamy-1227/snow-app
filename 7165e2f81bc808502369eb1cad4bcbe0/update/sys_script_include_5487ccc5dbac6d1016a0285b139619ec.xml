@@ -6,19 +6,24 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>update_profile_table</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var update_profile_table = Class.create();
 update_profile_table.prototype = {
     initialize: function() {},
     updateProfileTable: function(company_name) {
         try {
-            var vendor_names = ["IIS", "F5", "Apache", "Azure", "Silverline"];
+            var vendor_names = ["IIS", "F5", "Apache", "Azure", "Silverline","LinuxServer","Tomcat", "Microsoft Server"];
             var category = {
                 "IIS": "Server",
                 "F5": "ADC",
                 "Apache": "Server",
                 "Azure": "cloud",
-				"Silverline": "Server"
+				"Silverline": "Server",
+				"LinuxServer": "Server",
+				"Tomcat" : "Server",
+				"Microsoft Server" : "Server"
             };
             var gr = new GlideRecordSecure('x_avx_appviewx_aut_vendor_profiles_table');
 			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
@@ -60,6 +65,7 @@ update_profile_table.prototype = {
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -72,7 +78,7 @@ update_profile_table.prototype = {
 					r.setQueryParameter("service", "Key vault");
 				}
                 r.setRequestBody(JSON.stringify(payload));
-                r.setHttpTimeout(60000);
+                // r.setHttpTimeout(60000);
                 var response = r.executeAsync();
                 var responseBody, message;
                 if (response.haveError()) {
@@ -136,7 +142,7 @@ update_profile_table.prototype = {
         <sys_created_on>2023-01-20 12:14:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>5487ccc5dbac6d1016a0285b139619ec</sys_id>
-        <sys_mod_count>21</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>update_profile_table</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -144,6 +150,6 @@ update_profile_table.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_5487ccc5dbac6d1016a0285b139619ec</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-01 12:40:15</sys_updated_on>
+        <sys_updated_on>2025-03-31 09:35:32</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -20,6 +20,7 @@
         <override_menu_roles>true</override_menu_roles>
         <query/>
         <report/>
+        <require_confirmation>true</require_confirmation>
         <roles>x_avx_appviewx_aut.app_admin,x_avx_appviewx_aut.super_admin</roles>
         <survey/>
         <survey_overwrite>true</survey_overwrite>

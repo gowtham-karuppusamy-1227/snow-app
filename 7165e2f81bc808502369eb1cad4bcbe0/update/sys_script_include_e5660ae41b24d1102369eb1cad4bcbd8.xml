@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the details of the selected CA Tag in the Enroll Form from CLM Settings.</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_ca_details</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_ca_details = Class.create();
 get_ca_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getCaDetails: function() {

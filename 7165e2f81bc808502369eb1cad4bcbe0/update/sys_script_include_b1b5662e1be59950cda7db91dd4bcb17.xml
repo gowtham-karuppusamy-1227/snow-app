@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Validates if the entered CA Tag already exists before creating a new entry in CLM Settings.</description>
+        <mobile_callable>false</mobile_callable>
         <name>check_ca_tag_name_exist</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var check_ca_tag_name_exist = Class.create();
 check_ca_tag_name_exist.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     checkCaTagNameExist: function() {

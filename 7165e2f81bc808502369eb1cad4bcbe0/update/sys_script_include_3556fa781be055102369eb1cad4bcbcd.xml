@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches the Policy details of the selected CA Account (based on CA Tag Name)</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_hash_details</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_hash_details = Class.create();
 get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getHashDetails: function() {
@@ -62,6 +64,7 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
+					r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -107,7 +110,7 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_created_on>2022-07-05 09:54:57</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3556fa781be055102369eb1cad4bcbcd</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name>get_hash_details</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -115,6 +118,6 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_3556fa781be055102369eb1cad4bcbcd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:29:45</sys_updated_on>
+        <sys_updated_on>2025-03-31 07:29:15</sys_updated_on>
     </sys_script_include>
 </record_update>

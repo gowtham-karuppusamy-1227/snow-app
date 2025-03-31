@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Fetches all the CA Tags configured in the CLM Settings.</description>
+        <mobile_callable>false</mobile_callable>
         <name>get_certificate_authority_name</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var get_certificate_authority_name = Class.create();
 get_certificate_authority_name.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     getCertificateAuthority: function() {
