@@ -36,6 +36,8 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
 		var ca_account = g_form.getValue('validate_ca_account');
         var swisssign_client_name = g_form.getValue('swisssign_client_name');
         var swisssign_product = g_form.getValue('swisssign_product');
+		var pqc_key_types = ['SPHINCSPLUS','FALCON','DILITHIUM'];
+        var spincsplus_hash_types = ['SHAKE256','SHA256','HARAKA256'];
         var iterator, key;
         g_form.clearOptions('bit_length');
         g_form.addOption('bit_length', '', "Select");
@@ -129,7 +131,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 }
             }
         }
-        else if (CA !== 'Amazon Private CA' && CA !== 'AppViewX PKIaaS') {
+        else if (CA !== 'Amazon Private CA' && CA !== 'AppViewX PKIaaS'&& CA !== 'AppViewX PKIaaS Native') {
             for (iterator = 0; iterator < ca_policy.length; iterator++) {
                 var result = ca_policy[iterator];
                 if (!result.certificateAuthority) {
@@ -177,6 +179,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                             if (!acc_details[m_acc].certificateKeyParams[key_type]) {
                                 throw 'KeyParameters are not configured in AppviewX policy.';
                             }
+
 							certificateKeyParams = acc_details[m_acc].certificateKeyParams[key_type];
                             for (key = 0; key < certificateKeyParams.length; key++) {
                                 g_form.addOption('bit_length', certificateKeyParams[key], certificateKeyParams[key]);
@@ -189,7 +192,66 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
 					}
 				}
 			}
-		} else {
+		} else if (CA === 'AppViewX PKIaaS Native') {
+			for (iterator = 0; iterator < ca_policy.length; iterator++) {
+				result = ca_policy[iterator];
+				if (!result.certificateAuthority) {
+					throw 'Certificate Autority is not configured in AppviewX policy.';
+				}
+                if (result.certificateAuthority === CA) {
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+					var acc_details = result.multipleAccountDetails;
+					for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+						if(!acc_details[m_acc].caSettings) {
+							throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+						}
+						if(!acc_details[m_acc].caSettings.name) {
+							throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+						}
+						var pki_acc_name = acc_details[m_acc].caSettings.name;
+						if (pki_acc_name === ca_account) {
+                            if (!acc_details[m_acc].certificateKeyParams[key_type]) {
+                                throw 'KeyParameters are not configured in AppviewX policy.';
+                            }
+							if (key_type === 'FALCON' || key_type === 'DILITHIUM'){
+								g_form.clearValue('hash_function');
+                                g_form.clearOptions('hash_function');
+								g_form.addOption('hash_function','SHAKE256' ,'SHAKE256');
+							}
+							if (key_type === 'SPHINCSPLUS') {
+								g_form.clearValue('hash_function');
+								g_form.clearOptions('hash_function');
+								for (var hash = 0; hash < spincsplus_hash_types.length; hash++) {
+									g_form.addOption('hash_function', spincsplus_hash_types[hash], spincsplus_hash_types[hash]);
+								
+								}
+							}
+                            if (!pqc_key_types.includes(key_type)) {
+								g_form.clearValue('hash_function');
+								g_form.clearOptions('hash_function');
+								var hash_type = acc_details[m_acc].shaType;
+								for (var j = 0; j < hash_type.length; j++) {
+									if (hash_type[j] !== 'SHAKE256' && hash_type[j] !== 'HARAKA256' ){
+									g_form.addOption('hash_function', hash_type[j], hash_type[j]);
+								}
+								}
+							}
+							certificateKeyParams = acc_details[m_acc].certificateKeyParams[key_type];
+                            for (key = 0; key < certificateKeyParams.length; key++) {
+                                g_form.addOption('bit_length', certificateKeyParams[key], certificateKeyParams[key]);
+                            }
+                            if (certificateKeyParams.length > 0) {
+                                g_form.setValue('bit_length', certificateKeyParams[0], certificateKeyParams[0]);
+                            }
+							break;
+						}
+					}
+				}
+			}
+		} 
+		else {
             for (iterator = 0; iterator < ca_policy.length; iterator++) {
                 result = ca_policy[iterator];
                 if (!result.certificateAuthority) {
@@ -238,7 +300,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>70e144f51b65d550cda7db91dd4bcbdf</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>25</sys_mod_count>
         <sys_name>set_bit_length</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -247,7 +309,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_70e144f51b65d550cda7db91dd4bcbdf</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-07-30 07:19:39</sys_updated_on>
+        <sys_updated_on>2025-05-01 20:04:46</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

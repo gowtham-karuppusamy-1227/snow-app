@@ -31,12 +31,12 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-04-01 15:05:23</sys_created_on>
         <sys_id>2dc083c73be0aa105876908a25e45a29</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-04-01 15:06:10</sys_updated_on>
+        <sys_updated_on>2025-04-27 20:44:55</sys_updated_on>
         <table>sc_req_item</table>
         <timezone/>
-        <validated>false</validated>
+        <validated>true</validated>
         <workflow display_value="Revoke Certificate">71b158391ba5d550cda7db91dd4bcb47</workflow>
     </wf_workflow_version>
     <wf_workflow action="INSERT_OR_UPDATE">

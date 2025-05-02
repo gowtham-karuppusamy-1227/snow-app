@@ -510,6 +510,10 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
             g_form.clearValue('avx_issuer_location');
             g_form.setMandatory('avx_issuer_location', false);
             g_form.setDisplay('avx_issuer_location', false);
+			g_form.clearOptions('avx_pki_native_issuer_location');
+            g_form.clearValue('avx_pki_native_issuer_location');
+            g_form.setMandatory('avx_pki_native_issuer_location', false);
+            g_form.setDisplay('avx_pki_native_issuer_location', false);
 			g_form.clearValue('organization_address');
 			g_form.setDisplay('organization_address', false);
 			g_form.clearValue('csr_zip_code');
@@ -533,6 +537,17 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
             g_form.setDisplay('swisssign_product', false);
 			g_form.clearValue('parsed_csr_values');
 			g_form.setDisplay('parsed_csr_values', false);
+			g_form.clearOptions('avx_template');
+			g_form.clearValue('avx_template');
+			g_form.setMandatory('avx_template', false);
+			g_form.setDisplay('avx_template', false);
+			g_form.clearOptions('issuer_name');
+            g_form.clearValue('issuer_name');
+			g_form.setMandatory('issuer_name', false);
+	        g_form.setDisplay('issuer_name', false);
+			g_form.clearValue('key_version');
+			g_form.setMandatory('key_version', false);
+			g_form.setDisplay('key_version', false);
         } catch (error) {
             g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
             var message = 'Error occured while setting ca details in the form - ' + error;
@@ -554,7 +569,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>30e144f51b65d550cda7db91dd4bcbf3</sys_id>
-        <sys_mod_count>147</sys_mod_count>
+        <sys_mod_count>151</sys_mod_count>
         <sys_name>set_ca_details</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -563,7 +578,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_30e144f51b65d550cda7db91dd4bcbf3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-01-22 10:01:29</sys_updated_on>
+        <sys_updated_on>2025-04-28 08:41:37</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

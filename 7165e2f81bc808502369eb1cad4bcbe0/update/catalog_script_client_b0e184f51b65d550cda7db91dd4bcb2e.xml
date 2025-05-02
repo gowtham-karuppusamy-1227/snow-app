@@ -81,6 +81,33 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                             break;
                         }
                     }
+                } else if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS Native') {
+                    if (!result.multipleAccountDetails) {
+                        throw 'Multiple Account Details is not configured in AppviewX Policy.';
+                    }
+                    var acc_details = result.multipleAccountDetails;
+                    for (var m_acc = 0; m_acc < acc_details.length; m_acc++) {
+                        if (!acc_details[m_acc].caSettings) {
+                            throw "Ca Settings is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        if (!acc_details[m_acc].caSettings.name) {
+                            throw "Account Name is not configured in the ca policy under multipleAccountDetails";
+                        }
+                        var pki_acc_name = acc_details[m_acc].caSettings.name;
+                        if (pki_acc_name === ca_account) {
+                            if (!acc_details[m_acc].certificateEcCurves[bit_length]) {
+                                throw 'Bit-length values missing in the AppviewX Policy.';
+                            }
+                            var certificateEcCurves = acc_details[m_acc].certificateEcCurves[bit_length];
+                            for (var pki_curve = 0; pki_curve < certificateEcCurves.length; pki_curve++) {
+                                g_form.addOption('ecdsa_curve', certificateEcCurves[pki_curve], certificateEcCurves[pki_curve]);
+                            }
+                            if (certificateEcCurves.length > 0) {
+                                g_form.setValue('ecdsa_curve', certificateEcCurves[0], certificateEcCurves[0]);
+                            }
+                            break;
+                        }
+                    }
                 } else if (result.certificateAuthority === CA && result.certificateAuthority !== 'Amazon Private CA') {
                     if (!result.certificateEcCurves[bit_length]) {
                         throw 'Bit-length values missing in the AppviewX Policy.';
@@ -141,7 +168,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b0e184f51b65d550cda7db91dd4bcb2e</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>set_ecdsa_curve</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -150,7 +177,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_b0e184f51b65d550cda7db91dd4bcb2e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-04-25 11:13:36</sys_updated_on>
+        <sys_updated_on>2025-04-27 11:18:00</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>
