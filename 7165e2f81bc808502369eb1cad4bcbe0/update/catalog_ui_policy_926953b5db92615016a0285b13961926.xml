@@ -63,6 +63,7 @@ function onCondition() {
         g_form.setDisplay('csr_upload_option', false);
         g_form.setDisplay('paste_csr', false);
         g_form.setDisplay('file_upload', false);
+		g_form.setDisplay('allow_new_common_name', false);
     } else if (g_form.getValue("renwal_type") == "Create with new key") {
         g_form.setDisplay('renwal_type', true);
         g_form.setDisplay('csr_type', true);
@@ -153,7 +154,7 @@ function onCondition() {
 		mandatory_attributes = JSON.parse(g_form.getValue('mandatory_attributes'));
 	}
     var meta_length = g_form.getValue('cert_attribute_length');
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 30; i++) {
         if (i < meta_length) {
             changeFieldLabel('Meta Data ' + (i + 1).toString(), meta_data_field_name[i]);
             if (mandatory_attributes.indexOf(meta_data_info[i]) !== -1) {
@@ -173,7 +174,7 @@ function onCondition() {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>926953b5db92615016a0285b13961926</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Renew Cert - Requested Item View</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -182,7 +183,7 @@ function onCondition() {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_926953b5db92615016a0285b13961926</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-06-04 18:15:20</sys_updated_on>
+        <sys_updated_on>2025-06-04 06:29:15</sys_updated_on>
         <table/>
         <ui_type>0</ui_type>
         <va_supported>true</va_supported>

@@ -282,6 +282,9 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         g_form.clearOptions('bit_length');
 		g_form.clearOptions('key_version');
         var CA = g_form.getValue('certificate_authority');
+		// if (CA === 'Comodo Certificate Manager') {
+        //    CA = 'Sectigo';
+        // }
         var itr_res = g_form.getValue('ca_policy_details');
         var csr_input = g_form.getValue('csr_input_method');
         var amazon_issuer = g_form.getValue('issuer');
@@ -326,6 +329,9 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     var result = itr_res[i];
                     if (!result.certificateAuthority) {
                         throw 'Certificate Autority is not configured in AppviewX Policy.';
+                    }
+					if (result.certificateAuthority === 'Sectigo') {
+                        CA = 'Sectigo';
                     }
                     if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS') {
 						g_form.clearOptions('avx_issuer_location');
@@ -670,6 +676,9 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 if (!result.certificateAuthority) {
                     throw 'Certificate Autority is not configured in AppviewX Policy.';
                 }
+				if (result.certificateAuthority === 'Sectigo') {
+                        CA = 'Sectigo';
+                    }
                 if (result.certificateAuthority === CA && result.certificateAuthority === 'AppViewX PKIaaS') {
 					g_form.clearOptions('avx_issuer_location');
 					g_form.clearValue('avx_issuer_location');
@@ -1004,7 +1013,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>74e184f51b65d550cda7db91dd4bcb3e</sys_id>
-        <sys_mod_count>230</sys_mod_count>
+        <sys_mod_count>237</sys_mod_count>
         <sys_name>set_hash_types</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -1013,7 +1022,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_74e184f51b65d550cda7db91dd4bcb3e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-01 21:10:46</sys_updated_on>
+        <sys_updated_on>2025-06-02 09:02:48</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

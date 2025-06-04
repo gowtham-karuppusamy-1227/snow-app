@@ -108,6 +108,9 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 if (!result.certificateAuthority) {
                     throw 'Certificate Authority Details is not configured in AppViewX Policy.';
                 }
+				if (result.certificateAuthority === 'Sectigo') {
+                        CA = 'Sectigo';
+                    }
                 if (result.certificateAuthority === CA) {
                     if (!result.caSettings) {
                         throw 'CA Account settings is not configured in AppViewX Policy.';
@@ -144,7 +147,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                                     }
                                     var keys = Object.keys(cert_types[cert_type].validityPeriods);
                                     for (var v_unit = 0; v_unit < keys.length; v_unit++) {
-										var unit_length = cert_types[cert_type].validityPeriods[keys[v_unit]];
+										var unit_length = cert_types[cert_type].validityPeriods[keys[v_unit]].length;
                                         if (keys[v_unit].includes("Years") && unit_length > 0) {
                                             g_form.addOption('validity_unit', "Years", "Years");
                                         } else if (keys[v_unit].includes("Months") && unit_length > 0) {
@@ -183,7 +186,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>57cb0828b3e31d50cda7cf626f07620e</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_name>set_sectigo_server_type</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -192,7 +195,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_57cb0828b3e31d50cda7cf626f07620e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-07-08 09:45:31</sys_updated_on>
+        <sys_updated_on>2025-06-04 06:11:52</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

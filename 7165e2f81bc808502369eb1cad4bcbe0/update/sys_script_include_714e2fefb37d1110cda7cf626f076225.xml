@@ -67,6 +67,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                 }
             }
             csr_content = csr_content.trim();
+			// gs.addErrorMessage(JSON.stringify(csr_content));
             if ((csr_content.startsWith('-----BEGIN CERTIFICATE REQUEST-----') && csr_content.endsWith('-----END CERTIFICATE REQUEST-----')) || (csr_content.startsWith('-----BEGIN NEW CERTIFICATE REQUEST-----') && csr_content.endsWith('-----END NEW CERTIFICATE REQUEST-----'))) {
                 var r = new sn_ws.RESTMessageV2();
                 var payload = {
@@ -82,6 +83,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                         }
                     }
                 };
+				// gs.addErrorMessage(JSON.stringify(payload));
                 var retry_count = 0;
                 while (retry_count < 5) {
                     if (mid_server != "") {
@@ -155,7 +157,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_created_on>2022-09-14 06:09:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>714e2fefb37d1110cda7cf626f076225</sys_id>
-        <sys_mod_count>78</sys_mod_count>
+        <sys_mod_count>81</sys_mod_count>
         <sys_name>validate_csr_attachment</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -163,6 +165,6 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_714e2fefb37d1110cda7cf626f076225</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 09:37:43</sys_updated_on>
+        <sys_updated_on>2025-05-27 10:11:58</sys_updated_on>
     </sys_script_include>
 </record_update>

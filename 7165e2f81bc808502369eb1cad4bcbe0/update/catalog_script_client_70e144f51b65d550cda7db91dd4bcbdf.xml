@@ -47,6 +47,12 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         } catch (err) {
             throw "Couldn't parse the ca policy to fetch the associated key type.";
         }
+		for (i = 0; i < ca_policy.length; i++) {
+            result = ca_policy[i];
+			if (result.certificateAuthority === 'Sectigo') {
+                        CA = 'Sectigo';
+                    }
+		}
         if (CA == 'DigiCert MPKI' && digicert_mpki_profile != "") {
             var profile_flag = 0;
             for (iterator = 0; iterator < ca_policy.length; iterator++) {
@@ -300,7 +306,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>70e144f51b65d550cda7db91dd4bcbdf</sys_id>
-        <sys_mod_count>25</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>set_bit_length</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -309,7 +315,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_70e144f51b65d550cda7db91dd4bcbdf</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-01 20:04:46</sys_updated_on>
+        <sys_updated_on>2025-06-02 11:52:05</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

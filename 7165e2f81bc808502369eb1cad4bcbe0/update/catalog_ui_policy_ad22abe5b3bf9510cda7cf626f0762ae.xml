@@ -427,6 +427,21 @@ function onCondition() {
         g_form.setMandatory('avx_issuer_location', false);
         g_form.setDisplay('avx_issuer_location', false);
     }
+	if (g_form.getValue('certificate_authority') === 'AppViewX PKIaaS Native') {
+        g_form.setDisplay('issuer_name', true);
+        g_form.setMandatory('issuer_name', true);
+        g_form.setDisplay('avx_pki_native_issuer_location', true);
+        g_form.setMandatory('avx_pki_native_issuer_location', true);
+		g_form.setDisplay('avx_template', true);
+        g_form.setMandatory('avx_template', true);
+    } else {
+        g_form.setMandatory('issuer_name', false);
+        g_form.setDisplay('issuer_name', false);
+		g_form.setMandatory('avx_template', false);
+        g_form.setDisplay('avx_template', false);
+        g_form.setMandatory('avx_pki_native_issuer_location', false);
+        g_form.setDisplay('avx_pki_native_issuer_location', false);
+    }
     if (g_form.getValue('certificate_authority') === 'SwissSign') {
         g_form.setDisplay('swisssign_product', true);
         g_form.setMandatory('swisssign_product', true);
@@ -537,7 +552,7 @@ function onCondition() {
                 g_form.setMandatory('push_certificate_format', false);
                 g_form.setDisplay('push_certificate_format', false);
             }
-            if (vendor_name == 'Apache') {
+            if (vendor_name == 'Apache' || vendor_name == 'LinuxServer' ) {
                 g_form.setDisplay('service_restart', true);
                 g_form.setDisplay('customize_push_location', true);
                 g_form.setDisplay('private_key_in_device', true);
@@ -547,19 +562,19 @@ function onCondition() {
                 g_form.setDisplay('private_key_in_device', false);
             }
             if (customize_push_location == 'true') {
-                g_form.setDisplay('apache_certificate_directory', true);
-                g_form.setMandatory('apache_certificate_directory', true);
-                g_form.setDisplay('apache_key_directory', true);
-                g_form.setMandatory('apache_key_directory', true);
-                g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', true);
-                g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', true);
+                g_form.setDisplay('certificate_directory', true);
+                g_form.setMandatory('certificate_directory', true);
+                g_form.setDisplay('key_directory', true);
+                g_form.setMandatory('key_directory', true);
+                g_form.setDisplay('intermediate_and_ca_certificate_directory', true);
+                g_form.setMandatory('intermediate_and_ca_certificate_directory', true);
             } else {
-                g_form.setMandatory('apache_certificate_directory', false);
-                g_form.setDisplay('apache_certificate_directory', false);
-                g_form.setMandatory('apache_key_directory', false);
-                g_form.setDisplay('apache_key_directory', false);
-                g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', false);
-                g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', false);
+                g_form.setMandatory('certificate_directory', false);
+                g_form.setDisplay('certificate_directory', false);
+                g_form.setMandatory('key_directory', false);
+                g_form.setDisplay('key_directory', false);
+                g_form.setMandatory('intermediate_and_ca_certificate_directory', false);
+                g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
             }
         } else {
             push_flag = 1;
@@ -585,12 +600,18 @@ function onCondition() {
         g_form.setDisplay('service_restart', false);
         g_form.setDisplay('customize_push_location', false);
         g_form.setDisplay('private_key_in_device', false);
-        g_form.setMandatory('apache_certificate_directory', false);
-        g_form.setDisplay('apache_certificate_directory', false);
-        g_form.setMandatory('apache_key_directory', false);
-        g_form.setDisplay('apache_key_directory', false);
-        g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', false);
-        g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', false);
+        g_form.setMandatory('certificate_directory', false);
+        g_form.setDisplay('certificate_directory', false);
+        g_form.setMandatory('key_directory', false);
+        g_form.setDisplay('key_directory', false);
+        g_form.setMandatory('intermediate_and_ca_certificate_directory', false);
+        g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
+		g_form.setMandatory('keystore_password', false);
+		g_form.setDisplay('keystore_password', false);
+		g_form.setMandatory('keystore_location', false);
+		g_form.setDisplay('keystore_location', false);
+		g_form.setMandatory('private_key_location', false);
+		g_form.setDisplay('private_key_location', false);
     }
 	if (g_form.getValue('csr_input_method') == 'Manual') {
 		if (csr_parameter_values.indexOf("Organization") >= 0) {
@@ -620,7 +641,7 @@ function onCondition() {
         mandatory_attributes = JSON.parse(g_form.getValue('mandatory_attributes'));
     }
     var meta_length = g_form.getValue('cert_attribute_length');
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 30; i++) {
         if (i < meta_length) {
             changeFieldLabel('Meta Data ' + (i + 1).toString(), meta_data_field_name[i]);
             if (mandatory_attributes.indexOf(meta_data_info[i]) !== -1) {
@@ -656,7 +677,7 @@ function onCondition() {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ad22abe5b3bf9510cda7cf626f0762ae</sys_id>
-        <sys_mod_count>54</sys_mod_count>
+        <sys_mod_count>58</sys_mod_count>
         <sys_name>Enroll cert - Requested Item View</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -665,7 +686,7 @@ function onCondition() {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_ad22abe5b3bf9510cda7cf626f0762ae</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-06-04 17:53:57</sys_updated_on>
+        <sys_updated_on>2025-06-04 06:24:07</sys_updated_on>
         <table/>
         <ui_type>0</ui_type>
         <va_supported>true</va_supported>

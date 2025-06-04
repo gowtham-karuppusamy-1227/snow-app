@@ -55,6 +55,7 @@
             var serial_number = res['serial_number'];
             var certificate_category = res['certificate_category'];
             var field_value = common_name + "|" + serial_number + "|" + certificate_category;
+			g_form.clearOptions('certificates');
             g_form.addOption('certificates', field_value, field_value);
         } catch (error) {
             g_form.addErrorMessage("Error: " + error);
@@ -102,7 +103,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>3ab6aefcdb95f11016a0285b139619f5</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>revoke_set_common_name</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -111,7 +112,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_3ab6aefcdb95f11016a0285b139619f5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 12:30:52</sys_updated_on>
+        <sys_updated_on>2025-05-28 06:37:32</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>
