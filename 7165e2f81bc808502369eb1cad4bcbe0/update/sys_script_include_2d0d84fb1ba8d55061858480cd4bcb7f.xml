@@ -14,29 +14,29 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
     getcsrprams: function() {
         try {
             var return_value = {};
-			var message;
-			var client_id;
+            var message;
+            var client_id;
             var serial_number = this.getParameter("sysparm_serial_number");
             var cert_category = this.getParameter("sysparm_Cert_category");
-			var company = this.getParameter("sysparm_company");
+            var company = this.getParameter("sysparm_company");
             var r = new sn_ws.RESTMessageV2();
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr.addQuery('company', company);
-				gr.query();
-				if (!gr.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr.next()) {
-					var url = gr.getValue('instance_url') || '';
-					var mid_server = gr.getValue('mid_server') || '';
-					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             var script_include_call = new appviewx_oauth_token_generation();
             var token_generation = script_include_call.TestConnection(client_id, company);
             if (token_generation.length > 1 && token_generation[0] == 200) {
@@ -62,7 +62,7 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
-				r.setEccCorrelator('AVX_REST_CALL');
+                r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader('User-Agent', 'snow');
@@ -90,12 +90,18 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
             }
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'renew_get_certs_prams';
-            log.application = 'AppViewX';
-            log.message = 'Error occurred while fetching certificate parameters from AppViewX  -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'renew_get_certs_prams';
+                log.application = 'AppViewX';
+                log.message = 'Error occurred while fetching certificate parameters from AppViewX  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occurred while fetching certificate parameters from AppViewX  -  ' + error + '\n\n Script : renew_get_certs_prams');
+            }
+
             return error;
         }
     },
@@ -106,7 +112,7 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_created_on>2022-07-14 05:24:50</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>2d0d84fb1ba8d55061858480cd4bcb7f</sys_id>
-        <sys_mod_count>48</sys_mod_count>
+        <sys_mod_count>49</sys_mod_count>
         <sys_name>renew_get_certs_prams</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -114,6 +120,6 @@ renew_get_certs_prams.prototype = Object.extendsObject(global.AbstractAjaxProces
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_2d0d84fb1ba8d55061858480cd4bcb7f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:37:38</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:37:57</sys_updated_on>
     </sys_script_include>
 </record_update>

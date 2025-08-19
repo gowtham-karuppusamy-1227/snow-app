@@ -19,30 +19,30 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
             if (gs.getProperty("glide.sys.domain.partitioning") == 'true' && !company) {
                 throw "Please select the company to proceed further to get the certificate attributes.";
             }
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr.addQuery('company', company);
-				gr.query();
-				if (!gr.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr.next()) {
-					var url = gr.getValue('instance_url') || '';
-					var mid_server = gr.getValue('mid_server') || '';
-					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             if (cmdb_sync == "true") {
                 var attribute_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_attribute');
                 attribute_obj.initialize();
                 attribute_obj.addQuery('name', 'certificate_attributes');
-				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-					attribute_obj.addQuery('company', company);
-				}
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    attribute_obj.addQuery('company', company);
+                }
                 attribute_obj.query();
                 if (!attribute_obj.hasNext()) {
                     throw "Could not find the certificate_attributes key in the attribute table";
@@ -52,7 +52,7 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
                 }
                 return table_response;
             } else {
-				var client_id;
+                var client_id;
                 var script_include_call = new appviewx_oauth_token_generation();
                 var token_generation = script_include_call.TestConnection(client_id, company);
                 if (token_generation.length == 2 && token_generation[0] == 200) {
@@ -65,7 +65,7 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
-					r.setEccCorrelator('AVX_REST_CALL');
+                    r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -91,13 +91,18 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
                 }
             }
         } catch (error) {
-            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'get_cert_attributes';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while getting certificate attributes from AppViewX -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_cert_attributes';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while getting certificate attributes from AppViewX -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while getting certificate attributes from AppViewX -  ' + error + '\n\n Script : get_cert_attributes');
+            }
             return error;
         }
     },
@@ -108,7 +113,7 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         <sys_created_on>2022-09-18 11:10:30</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f58a5dc1dbc2115016a0285b13961997</sys_id>
-        <sys_mod_count>27</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_name>get_cert_attributes</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -116,6 +121,6 @@ get_cert_attributes.prototype = Object.extendsObject(global.AbstractAjaxProcesso
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_f58a5dc1dbc2115016a0285b13961997</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:26:00</sys_updated_on>
+        <sys_updated_on>2025-08-06 18:37:48</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:55:41</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>03a5cd7b3b936a105876908a25e45abb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>get_keyvault_names.x_avx_appviewx_aut.certificate_request_user</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_security_acl display_value="get_keyvault_names">c3a5cd7b3b936a105876908a25e45ab4</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_03a5cd7b3b936a105876908a25e45abb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:55:41</sys_updated_on>
+        <sys_user_role display_value="x_avx_appviewx_aut.certificate_request_user" name="x_avx_appviewx_aut.certificate_request_user">215d6ea61bed049061858480cd4bcbee</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</application>
+        <file_path/>
+        <instance_id>91eece119b710f08a4e16b8af359ff41</instance_id>
+        <instance_name>ven02242</instance_name>
+        <name>sys_security_acl_role_03a5cd7b3b936a105876908a25e45abb</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-08-18 06:55:41</sys_created_on><sys_customer_update>false</sys_customer_update><sys_id>03a5cd7b3b936a105876908a25e45abb</sys_id><sys_mod_count>0</sys_mod_count><sys_name>get_keyvault_names.x_avx_appviewx_aut.certificate_request_user</sys_name><sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope><sys_security_acl display_value="get_keyvault_names">c3a5cd7b3b936a105876908a25e45ab4</sys_security_acl><sys_update_name>sys_security_acl_role_03a5cd7b3b936a105876908a25e45abb</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-08-18 06:55:41</sys_updated_on><sys_user_role display_value="x_avx_appviewx_aut.certificate_request_user" name="x_avx_appviewx_aut.certificate_request_user">215d6ea61bed049061858480cd4bcbee</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>1579669839</payload_hash>
+        <record_name>get_keyvault_names.x_avx_appviewx_aut.certificate_request_user</record_name>
+        <reverted_from/>
+        <source>9b3309a9b318a110cda7cf626f076219</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:55:41</sys_created_on>
+        <sys_id>8fa549bb3b936a105876908a25e45a05</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>198bbf65ab70000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:55:41</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>0ba5cd7bb3936a102ea43f7547d9febd</update_guid>
+        <update_guid_history>0ba5cd7bb3936a102ea43f7547d9febd:1579669839</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Record deleted 2025-08-18 07:03:40">48878d7f3b936a105876908a25e45a40</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 07:03:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>0aebd69766dc4c748322d10557626aa4</sys_id>
+        <sys_metadata>03a5cd7b3b936a105876908a25e45abb</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>get_keyvault_names.x_avx_appviewx_aut.certificate_request_user</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_scope_delete display_value="">74c257f6cc8c4ca6b194661e148ee244</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_03a5cd7b3b936a105876908a25e45abb</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_03a5cd7b3b936a105876908a25e45abb">8fa549bb3b936a105876908a25e45a05</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 07:03:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

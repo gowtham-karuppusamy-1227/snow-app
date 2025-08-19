@@ -15,33 +15,33 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         try {
             var return_value = {};
             var message;
-			var client_id;
+            var client_id;
             var policy = this.getParameter("sysparm_certPolicy");
-			var company = this.getParameter("sysparm_company");
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr.addQuery('company', company);
-				gr.query();
-				if (!gr.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr.next()) {
-					var url = gr.getValue('instance_url') || '';
-					var mid_server = gr.getValue('mid_server') || '';
-					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            var company = this.getParameter("sysparm_company");
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             if (cmdb_sync == "true") {
                 var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_policy_table');
                 response_obj.initialize();
                 response_obj.addQuery('policy_name', policy);
-				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-					response_obj.addQuery('company', company);
-				}
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    response_obj.addQuery('company', company);
+                }
                 response_obj.query();
                 if (!response_obj.hasNext()) {
                     throw 'Could not find the policy response for the given policy name ' + policy + 'in the policy table';
@@ -64,7 +64,7 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
-					r.setEccCorrelator('AVX_REST_CALL');
+                    r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
@@ -93,12 +93,18 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             }
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'get_hash_details';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while fetching CA policy details from appviewx  -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_hash_details';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while fetching CA policy details from appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while fetching CA policy details from appviewx  -  ' + error + '\n\n Script : get_hash_details');
+            }
+
             return error;
         }
     },
@@ -110,7 +116,7 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_created_on>2022-07-05 09:54:57</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3556fa781be055102369eb1cad4bcbcd</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>33</sys_mod_count>
         <sys_name>get_hash_details</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -118,6 +124,6 @@ get_hash_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_3556fa781be055102369eb1cad4bcbcd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:29:15</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:27:21</sys_updated_on>
     </sys_script_include>
 </record_update>

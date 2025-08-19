@@ -681,6 +681,7 @@
                 <element inactive_on_update="false" label="LinuxServer" sequence="6" value="LinuxServer"/>
                 <element inactive_on_update="false" label="Tomcat" sequence="7" value="Tomcat"/>
                 <element inactive_on_update="false" label="Microsoft Server" sequence="8" value="Microsoft Server"/>
+                <element inactive_on_update="false" label="Microsoft PC" sequence="9" value="Microsoft PC"/>
             </choice>
         </element>
         <element default="Enroll Certificate-SNOW APP" hint="Enter the AppViewX Visual Workflow name for certificate creation " label="Visual Workflow Name (AppViewX)" mandatory="true" max_length="100" name="workflow_name_for_create_appviewx" type="string"/>

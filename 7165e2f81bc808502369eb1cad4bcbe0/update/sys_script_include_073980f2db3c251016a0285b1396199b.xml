@@ -17,46 +17,46 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
             var message;
             var client_id;
             var vendor_name = this.getParameter("sysparm_vendorName");
-			var device_name = this.getParameter("sysparm_deviceName");
-			var company = this.getParameter("sysparm_company");
-			var category = "";
-			if (vendor_name == 'F5') {
-				category = 'ADC';
-			} else if (vendor_name == 'Azure') {
-				category = 'cloud';
-			} else {
-				category = 'Server';
-			}
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr.addQuery('company', company);
-				gr.query();
-				if (!gr.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr.next()) {
-					var url = gr.getValue('instance_url') || '';
-					var mid_server = gr.getValue('mid_server') || '';
-					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            var device_name = this.getParameter("sysparm_deviceName");
+            var company = this.getParameter("sysparm_company");
+            var category = "";
+            if (vendor_name == 'F5') {
+                category = 'ADC';
+            } else if (vendor_name == 'Azure') {
+                category = 'cloud';
+            } else {
+                category = 'Server';
+            }
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             if (cmdb_sync == "true") {
                 var table_response_list = [];
                 var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_vendor_profiles_table');
                 response_obj.initialize();
                 response_obj.addQuery('vendor_name', vendor_name);
-				response_obj.addQuery('profile_name', 'STARTSWITH', device_name);
-				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-					response_obj.addQuery('company', company);
-				}
+                response_obj.addQuery('profile_name', 'STARTSWITH', device_name);
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    response_obj.addQuery('company', company);
+                }
                 response_obj.query();
                 while (response_obj.next()) {
                     var profile_name = response_obj.getValue('vendor_profiles');
-					table_response_list.push(profile_name);
+                    table_response_list.push(profile_name);
                 }
                 return JSON.stringify(table_response_list);
             } else {
@@ -72,20 +72,20 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
-					r.setEccCorrelator('AVX_REST_CALL');
+                    r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("get");
                 r.setRequestHeader("token", token);
                 r.setRequestHeader('User-Agent', 'snow');
                 r.setRequestHeader("Content-Type", "application/json");
                 r.setEndpoint(url + "/avxapi/certificate/profiles");
-				r.setQueryParameter("category", category);
-				r.setQueryParameter("vendor", vendor_name);
-				r.setQueryParameter("deviceName", device_name);
-				if (vendor_name == 'Azure') {
-					r.setQueryParameter("service", "Key vault");
-				}
-				r.setQueryParameter("gwsource", "web");
+                r.setQueryParameter("category", category);
+                r.setQueryParameter("vendor", vendor_name);
+                r.setQueryParameter("deviceName", device_name);
+                if (vendor_name == 'Azure') {
+                    r.setQueryParameter("service", "Key vault");
+                }
+                r.setQueryParameter("gwsource", "web");
                 r.setRequestBody(JSON.stringify({}));
                 // r.setHttpTimeout(60000);
                 var response = r.executeAsync();
@@ -108,12 +108,18 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
             }
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'get_profile_names';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while fetching profile details from appviewx  -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_profile_names';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while fetching profile details from appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while fetching profile details from appviewx  -  ' + error + '\n\n Script : get_profile_names');
+            }
+
             return error;
         }
     },
@@ -125,7 +131,7 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_created_on>2023-02-07 08:50:48</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>073980f2db3c251016a0285b1396199b</sys_id>
-        <sys_mod_count>23</sys_mod_count>
+        <sys_mod_count>25</sys_mod_count>
         <sys_name>get_profile_names</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -133,6 +139,6 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_073980f2db3c251016a0285b1396199b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:31:03</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:29:51</sys_updated_on>
     </sys_script_include>
 </record_update>

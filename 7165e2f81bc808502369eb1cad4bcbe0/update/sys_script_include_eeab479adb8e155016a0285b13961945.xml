@@ -14,10 +14,10 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
     getServerTypes: function() {
         try {
             var return_value = {};
-			var message;
-			var client_id;
+            var message;
+            var client_id;
             var script_include_call = new appviewx_oauth_token_generation();
-			var company = this.getParameter("sysparm_company");
+            var company = this.getParameter("sysparm_company");
             var token_generation = script_include_call.TestConnection(client_id, company);
             if (token_generation.length == 2 && token_generation[0] == 200) {
                 var parse_response = JSON.parse(token_generation[1]);
@@ -30,23 +30,23 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             var certificate_type = this.getParameter("certificate_type");
             var cert_policy = this.getParameter("cert_policy");
             var certificate_category = this.getParameter("certificate_category");
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr.addQuery('company', company);
-				gr.query();
-				if (!gr.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr.next()) {
-					var url = gr.getValue('instance_url') || '';
-					var mid_server = gr.getValue('mid_server') || '';
-					var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             var r = new sn_ws.RESTMessageV2();
             var payload = {
                 "payload": {
@@ -65,7 +65,7 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
-				r.setEccCorrelator('AVX_REST_CALL');
+                r.setEccCorrelator('AVX_REST_CALL');
             }
             r.setHttpMethod("post");
             r.setRequestHeader("token", token);
@@ -92,12 +92,18 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
             }
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'Getting CA Server Types';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while getting server types from AppViewX -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_server_types';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while getting server types from AppViewX -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while getting server types from AppViewX -  ' + error + '\n\n Script : get_server_types');
+            }
+
             return error;
         }
     },
@@ -108,7 +114,7 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_created_on>2022-09-22 16:36:33</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>eeab479adb8e155016a0285b13961945</sys_id>
-        <sys_mod_count>17</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>get_server_types</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -116,6 +122,6 @@ get_server_types.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_eeab479adb8e155016a0285b13961945</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:34:24</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:30:59</sys_updated_on>
     </sys_script_include>
 </record_update>

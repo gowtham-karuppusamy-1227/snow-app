@@ -26,12 +26,13 @@
         var cmdb_sync = g_form.getValue('cmdb_sync');
         var vendor_name = g_form.getValue('vendor_name');
         var device_name = g_form.getValue('device_name');
-		var company_name = g_form.getValue('company_name');
+        var company_name = g_form.getValue('company_name');
+        var push_to_end_device = g_form.getValue('push_to_end_device');
         var ga = new GlideAjax('get_profile_names');
         ga.addParam("sysparm_name", "getProfileNames");
         ga.addParam("sysparm_vendorName", vendor_name);
         ga.addParam("sysparm_deviceName", device_name);
-		ga.addParam("sysparm_company", company_name);
+        ga.addParam("sysparm_company", company_name);
         ga.getXML(getResponse);
     } catch (error) {
         g_form.addErrorMessage("Error while fetching the profile names for push: " + error);
@@ -44,51 +45,54 @@
         ga.addParam("sysparm_message", message);
         ga.getXML(function() {});
     }
-	function getResponse(response) {
-		try {
-			g_form.clearValue('profile_name');
-            g_form.clearOptions('profile_name');
-			g_form.clearValue('profile_name_reference');
-			g_form.setMandatory('profile_name_reference', false);
-			g_form.setDisplay('profile_name_reference', false);
-			g_form.setMandatory('profile_name', false);
-			g_form.setDisplay('profile_name', false);
-			if (cmdb_sync == 'true') {
-				g_form.setDisplay('profile_name_reference', true);
-				g_form.setMandatory('profile_name_reference', true);
-			} else {
-				g_form.setDisplay('profile_name', true);
-				g_form.setMandatory('profile_name', true);
-			}
-			var iterator;
-            var res = response.responseXML.documentElement.getAttribute('answer');
-            try {
-                res = JSON.parse(res);
-            } catch (err) {
-                throw res || "Couldn't parse the response while trying to get profile names for push.";
-            }
-			if (cmdb_sync == 'true') {
-				if (res.length == 0) {
-					throw "The selected device doesn't have any profiles associated to it.";
-				}
-				// g_form.setDisplay('profile_name_reference', true);
-				// g_form.setMandatory('profile_name_reference', true);
-			} else {
-				// g_form.setDisplay('profile_name', true);
-				// g_form.setMandatory('profile_name', true);
-				g_form.addOption('profile_name', '', 'Select');
-				if(!res.response.objects) {
-					throw "Error while getting the response from the AppViewX for the profile names " + JSON.stringify(res);
-				}
-				var profile_list = res.response.objects;
-				if (profile_list.length == 0) {
-					throw "There is no profile available for the selected device " + device_name;
-				}
-                for (iterator = 0; iterator < profile_list.length; iterator++) {
-                    g_form.addOption('profile_name', profile_list[iterator], profile_list[iterator]);
+
+    function getResponse(response) {
+        try {
+            if (push_to_end_device == 'true') {
+                g_form.clearValue('profile_name');
+                g_form.clearOptions('profile_name');
+                g_form.clearValue('profile_name_reference');
+                g_form.setMandatory('profile_name_reference', false);
+                g_form.setDisplay('profile_name_reference', false);
+                g_form.setMandatory('profile_name', false);
+                g_form.setDisplay('profile_name', false);
+                if (cmdb_sync == 'true') {
+                    g_form.setDisplay('profile_name_reference', true);
+                    g_form.setMandatory('profile_name_reference', true);
+                } else {
+                    g_form.setDisplay('profile_name', true);
+                    g_form.setMandatory('profile_name', true);
                 }
-			}
-		} catch (error) {
+                var iterator;
+                var res = response.responseXML.documentElement.getAttribute('answer');
+                try {
+                    res = JSON.parse(res);
+                } catch (err) {
+                    throw res || "Couldn't parse the response while trying to get profile names for push.";
+                }
+                if (cmdb_sync == 'true') {
+                    if (res.length == 0) {
+                        throw "The selected device doesn't have any profiles associated to it.";
+                    }
+                    // g_form.setDisplay('profile_name_reference', true);
+                    // g_form.setMandatory('profile_name_reference', true);
+                } else {
+                    // g_form.setDisplay('profile_name', true);
+                    // g_form.setMandatory('profile_name', true);
+                    g_form.addOption('profile_name', '', 'Select');
+                    if (!res.response.objects) {
+                        throw "Error while getting the response from the AppViewX for the profile names " + JSON.stringify(res);
+                    }
+                    var profile_list = res.response.objects;
+                    if (profile_list.length == 0) {
+                        throw "There is no profile available for the selected device " + device_name;
+                    }
+                    for (iterator = 0; iterator < profile_list.length; iterator++) {
+                        g_form.addOption('profile_name', profile_list[iterator], profile_list[iterator]);
+                    }
+                }
+            }
+        } catch (error) {
             g_form.addErrorMessage("Error while fetching the profile names for push: " + error);
             var message = 'Error occured while fetching the profile names for push - ' + error;
             var ga = new GlideAjax('avx_logger');
@@ -98,8 +102,8 @@
             ga.addParam("sysparm_application", "AppViewX");
             ga.addParam("sysparm_message", message);
             ga.getXML(function() {});
-		}
-	}
+        }
+    }
 }]]></script>
         <sys_class_name>catalog_script_client</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -108,7 +112,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>82947991db8d215016a0285b1396197b</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>set_profile_names</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -117,7 +121,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_82947991db8d215016a0285b1396197b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-14 10:29:59</sys_updated_on>
+        <sys_updated_on>2025-08-11 10:10:34</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

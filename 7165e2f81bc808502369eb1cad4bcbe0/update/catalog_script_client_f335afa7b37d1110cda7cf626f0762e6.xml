@@ -25,11 +25,13 @@
 	var certificate_category = g_form.getValue('certificate_category');
 	var certificate_authority = g_form.getValue('certificate_authority');
 	var company_name = g_form.getValue('company_name');
+	var policy = g_form.getValue("certificate_policy");
     var ajax = new GlideAjax('validate_csr_attachment');
     ajax.addParam('sysparm_name', 'checkAttachmentSizeAndType');
 	ajax.addParam('sysparm_existing', newValue);
 	ajax.addParam('certificate_category', certificate_category);
 	ajax.addParam('certificate_authority', certificate_authority);
+	ajax.addParam('certificate_policy', policy);
 	ajax.addParam('sysparm_company', company_name);
 	ajax.getXML(getRITMdata);
 
@@ -62,7 +64,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f335afa7b37d1110cda7cf626f0762e6</sys_id>
-        <sys_mod_count>19</sys_mod_count>
+        <sys_mod_count>20</sys_mod_count>
         <sys_name>validate_uploaded_csr_file</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -71,7 +73,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_f335afa7b37d1110cda7cf626f0762e6</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-06-04 17:56:59</sys_updated_on>
+        <sys_updated_on>2025-07-23 10:04:07</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

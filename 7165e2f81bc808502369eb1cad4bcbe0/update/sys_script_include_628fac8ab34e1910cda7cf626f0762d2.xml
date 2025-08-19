@@ -17,7 +17,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
             var cert_authority = this.getParameter("sysparm_cert_authority");
             var cert_category = this.getParameter("sysparm_cert_type");
             var clm_action = this.getParameter("sysparm_clm_action");
-			var ca_tag_name  = this.getParameter("sysparm_ca_tag");
+            var ca_tag_name = this.getParameter("sysparm_ca_tag");
             var company = this.getParameter("sysparm_company");
             var cert_type = cert_category.split(",");
             var loggedin_user_roles = gs.getUser().getRoles();
@@ -27,70 +27,72 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                 gr.addQuery('company', company);
             }
             gr.query();
-			var user_group_option = "";
-			var user_name = "";
-			while (gr.next()) {
-				if (clm_action == "Renew") {
-					user_group_option = gr.getValue('fetch_user_group_renew');
-				} else {
-					user_group_option = gr.getValue('fetch_user_group_revoke');
-				}
-			}
-			if (user_group_option == 'Based on Email') {
-				user_name = gs.getUser().getEmail();
-			} else {
-				user_name = gs.getUserName();
-			}
+            var user_group_option = "";
+            var user_name = "";
+            while (gr.next()) {
+                if (clm_action == "Renew") {
+                    user_group_option = gr.getValue('fetch_user_group_renew');
+                } else {
+                    user_group_option = gr.getValue('fetch_user_group_revoke');
+                }
+            }
+            if (user_group_option == 'Based on Email') {
+                user_name = gs.getUser().getEmail();
+            } else {
+                user_name = gs.getUserName();
+            }
             for (var iterator = 0; iterator < loggedin_user_roles.length; iterator++) {
                 if (loggedin_user_roles[iterator] === "x_avx_appviewx_aut.app_admin" || loggedin_user_roles[iterator] === "admin" || loggedin_user_roles[iterator] === "x_avx_appviewx_aut.super_admin") {
                     var loggedin_user = "exist";
                     break;
                 }
             }
-			if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-				var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-				gr_connection.addQuery('company', company);
-				gr_connection.query();
-				if (!gr_connection.hasNext()) {
-					throw "Could not find AppViewX instance url to fetch the details.";
-				}
-				while (gr_connection.next()) {
-					var url = gr_connection.getValue('instance_url') || '';
-					var mid_server = gr_connection.getValue('mid_server') || '';
-					var cmdb_sync = gr_connection.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-				}
-			} else {
-				url = gs.getProperty("x_avx_appviewx_aut.URL");
-				mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-				cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-			}
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr_connection.addQuery('company', company);
+                gr_connection.query();
+                if (!gr_connection.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr_connection.next()) {
+                    var url = gr_connection.getValue('instance_url') || '';
+                    var mid_server = gr_connection.getValue('mid_server') || '';
+                    var cmdb_sync = gr_connection.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
             var r = new sn_ws.RESTMessageV2();
             var return_value = {};
             var message;
             if (cmdb_sync == "true") {
-				var encoded_query;
+                var encoded_query;
                 cert_category = cert_category + ",Others";
                 var table_response_list = [];
                 if (loggedin_user === "exist") {
                     var response_obj = new GlideRecordSecure('x_avx_appviewx_aut_certificate_table');
                     response_obj.initialize();
-					response_obj.orderByDesc('valid_from');
+                    response_obj.orderByDesc('valid_from');
                     if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
                         response_obj.addQuery('company', company);
                     }
                     response_obj.addQuery('certificate_authority', cert_authority);
                     response_obj.addQuery('certificate_category', 'IN', cert_category);
-					response_obj.addQuery('certificate_status', 'Managed');
+                    response_obj.addQuery('certificate_status', 'Managed');
                     if (clm_action == 'Renew') {
                         response_obj.addQuery('renewal_status', 'No');
                     }
                     response_obj.addQuery('expiry_status', 'IN', 'Expiry in 10 Days,Expiry in 30 Days,Expiry in 90 Days,Valid');
                     response_obj.query();
-					encoded_query = response_obj.getEncodedQuery();
+                    encoded_query = response_obj.getEncodedQuery();
                     if (!response_obj.hasNext()) {
                         throw 'Could not find the certificates for the given certificate authority ' + cert_authority + 'in the certificate table';
                     }
-                    return JSON.stringify({"encoded_query": encoded_query});
+                    return JSON.stringify({
+                        "encoded_query": encoded_query
+                    });
                 } else {
                     var script_include_call = new appviewx_oauth_token_generation();
                     var token_generation = script_include_call.TestConnection(client_id, company);
@@ -147,21 +149,23 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                         if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
                             response_obj.addQuery('company', company);
                         }
-						response_obj.orderByDesc('valid_from');
+                        response_obj.orderByDesc('valid_from');
                         response_obj.addQuery('certificate_authority', cert_authority);
                         response_obj.addQuery('certificate_category', 'IN', cert_category);
-						response_obj.addQuery('certificate_status', 'Managed');
+                        response_obj.addQuery('certificate_status', 'Managed');
                         if (clm_action == 'Renew') {
                             response_obj.addQuery('renewal_status', 'No');
                         }
                         response_obj.addQuery('expiry_status', 'IN', 'Expiry in 10 Days,Expiry in 30 Days,Expiry in 90 Days,Valid');
                         response_obj.addQuery('certificate_group', 'IN', groups);
                         response_obj.query();
-						encoded_query = response_obj.getEncodedQuery();
+                        encoded_query = response_obj.getEncodedQuery();
                         if (!response_obj.hasNext()) {
                             throw 'Could not find the certificates for the given certificate authority ' + cert_authority + 'in the certificate table';
                         }
-                        return JSON.stringify({"encoded_query": encoded_query});
+                        return JSON.stringify({
+                            "encoded_query": encoded_query
+                        });
                     }
                 }
             } else {
@@ -182,7 +186,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                             "input": {
                                 "certificate_authority": cert_authority,
                                 "cert_category": cert_type,
-								"clm_action": clm_action
+                                "clm_action": clm_action
                             }
                         }
                     };
@@ -204,7 +208,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
-					r.setEccCorrelator('AVX_REST_CALL');
+                    r.setEccCorrelator('AVX_REST_CALL');
                 }
                 r.setHttpMethod("post");
                 r.setRequestHeader("token", token);
@@ -232,12 +236,18 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
             }
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'renew_get_cert_based_on_appviewx';
-            log.application = 'AppViewX';
-            log.message = 'Error occurred while fetching certificates from appviewx  -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'renew_get_cert_based_on_appviewx';
+                log.application = 'AppViewX';
+                log.message = 'Error occurred while fetching certificates from appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occurred while fetching certificates from appviewx  -  ' + error + '\n\n Script : renew_get_cert_based_on_appviewx');
+            }
+
             return error;
         }
     },
@@ -248,7 +258,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
         <sys_created_on>2022-09-21 10:56:08</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>628fac8ab34e1910cda7cf626f0762d2</sys_id>
-        <sys_mod_count>81</sys_mod_count>
+        <sys_mod_count>82</sys_mod_count>
         <sys_name>renew_get_cert_based_on_appviewx</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -256,6 +266,6 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_628fac8ab34e1910cda7cf626f0762d2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-31 07:41:07</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:40:01</sys_updated_on>
     </sys_script_include>
 </record_update>

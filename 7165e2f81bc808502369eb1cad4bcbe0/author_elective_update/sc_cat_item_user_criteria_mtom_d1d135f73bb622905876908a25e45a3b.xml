@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_user_criteria_mtom">
+    <sc_cat_item_user_criteria_mtom action="DELETE">
+        <sc_cat_item display_value="Policy Central">ddf029733b7622905876908a25e45a05</sc_cat_item>
+        <sys_class_name>sc_cat_item_user_criteria_mtom</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-24 13:37:12</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>d1d135f73bb622905876908a25e45a3b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Policy Central.AppViewX Role Based Catalog Access</sys_name>
+        <sys_package/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sc_cat_item_user_criteria_mtom_d1d135f73bb622905876908a25e45a3b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-24 13:37:12</sys_updated_on>
+        <user_criteria display_value="AppViewX Role Based Catalog Access">969c1b141b95ca50cda7db91dd4bcbab</user_criteria>
+    </sc_cat_item_user_criteria_mtom>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</application>
+        <file_path/>
+        <instance_id>91eece119b710f08a4e16b8af359ff41</instance_id>
+        <instance_name>ven02242</instance_name>
+        <name>sc_cat_item_user_criteria_mtom_d1d135f73bb622905876908a25e45a3b</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_user_criteria_mtom"><sc_cat_item_user_criteria_mtom action="INSERT_OR_UPDATE"><sc_cat_item display_value="Policy Central">ddf029733b7622905876908a25e45a05</sc_cat_item><sys_class_name>sc_cat_item_user_criteria_mtom</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-07-24 13:37:12</sys_created_on><sys_customer_update>false</sys_customer_update><sys_id>d1d135f73bb622905876908a25e45a3b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Policy Central.AppViewX Role Based Catalog Access</sys_name><sys_package/><sys_policy/><sys_replace_on_upgrade>false</sys_replace_on_upgrade><sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope><sys_update_name>sc_cat_item_user_criteria_mtom_d1d135f73bb622905876908a25e45a3b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-07-24 13:37:12</sys_updated_on><user_criteria display_value="AppViewX Role Based Catalog Access">969c1b141b95ca50cda7db91dd4bcbab</user_criteria></sc_cat_item_user_criteria_mtom></record_update>]]></payload>
+        <payload_hash>362814500</payload_hash>
+        <record_name>Policy Central.AppViewX Role Based Catalog Access</record_name>
+        <reverted_from/>
+        <source>48e1b5ff3b3a6250b795659aa4e45af1</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-24 13:37:26</sys_created_on>
+        <sys_id>54e1f5ff3b3a6250b795659aa4e45a10</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1983ca72fbe0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-24 13:37:26</sys_updated_on>
+        <type>Catalog Item Available for</type>
+        <update_guid>18e1f5ff573a625080c6033e610e820f</update_guid>
+        <update_guid_history>18e1f5ff573a625080c6033e610e820f:362814500,d8e1f5ff0e3a62502e56995502472f0b:-1833373685</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Record deleted 2025-07-30 09:45:31">7556332d3b4faa50b795659aa4e45ac8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-07-30 09:45:31</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sc_cat_item_user_criteria_mtom">sc_cat_item_user_criteria_mtom</sys_db_object>
+        <sys_id>23ccc416fc8b4f9d84b24ad4ab880979</sys_id>
+        <sys_metadata>d1d135f73bb622905876908a25e45a3b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Policy Central.AppViewX Role Based Catalog Access</sys_name>
+        <sys_package/>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_scope_delete display_value="">74c257f6cc8c4ca6b194661e148ee244</sys_scope_delete>
+        <sys_update_name>sc_cat_item_user_criteria_mtom_d1d135f73bb622905876908a25e45a3b</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_user_criteria_mtom_d1d135f73bb622905876908a25e45a3b">54e1f5ff3b3a6250b795659aa4e45a10</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-07-30 09:45:31</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

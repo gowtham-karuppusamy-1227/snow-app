@@ -42,20 +42,6 @@
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2025-01-17 04:04:11</sys_updated_on>
         </sys_ui_form_section>
-        <sys_ui_form_section action="INSERT_OR_UPDATE">
-            <position>3</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-01-17 04:04:11</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_id>96c367833b03d210b795659aa4e45a23</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_overrides/>
-            <sys_ui_form display_value="x_avx_appviewx_aut_connection_settings_table" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">1d23898f1bd84210b31f21b7624bcbbd</sys_ui_form>
-            <sys_ui_section caption="Log Purging Settings" display_value="Log Purging Settings" name="x_avx_appviewx_aut_connection_settings_table" sys_domain="global" view="Default view">92c327833b03d210b795659aa4e45af4</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-01-17 04:04:11</sys_updated_on>
-        </sys_ui_form_section>
         <sys_ui_form action="INSERT_OR_UPDATE">
             <name>x_avx_appviewx_aut_connection_settings_table</name>
             <roles/>

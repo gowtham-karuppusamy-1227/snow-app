@@ -74,7 +74,7 @@
         <sys_created_on>2023-04-19 09:06:14</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>3cf8b1ed1b9a2d10cda7db91dd4bcb3c</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Meta Data 9</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
@@ -82,7 +82,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>item_option_new_3cf8b1ed1b9a2d10cda7db91dd4bcb3c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-04-19 09:06:14</sys_updated_on>
+        <sys_updated_on>2025-08-18 09:26:49</sys_updated_on>
         <table/>
         <tooltip/>
         <topic_block/>
@@ -91,7 +91,7 @@
         <unique>false</unique>
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
-        <validate_regex/>
+        <validate_regex display_value="Blocking Double Quotes">f5e1a9773b976a105876908a25e45aea</validate_regex>
         <variable_name/>
         <variable_set/>
         <variable_width/>

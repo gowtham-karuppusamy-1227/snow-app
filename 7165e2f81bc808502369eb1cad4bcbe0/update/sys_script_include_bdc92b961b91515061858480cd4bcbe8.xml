@@ -15,6 +15,7 @@ appviewx_oauth_token_generation.prototype = {
     TestConnection: function(client_id, company_name) {
         try {
             var logger = new GlideRecordSecure("x_avx_appviewx_aut_logs");
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
             var r = new sn_ws.RESTMessageV2();
             gs.info("Testing AppViewX Gateway API connection from ServiceNow");
             if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
@@ -47,7 +48,7 @@ appviewx_oauth_token_generation.prototype = {
             if (mid_server != "") {
                 r.setMIDServer(mid_server);
                 r.setEccParameter('skip_sensor', 'true');
-				r.setEccCorrelator('AVX_REST_CALL');
+                r.setEccCorrelator('AVX_REST_CALL');
             }
             var retry_count = 0;
             while (retry_count < 5) {
@@ -58,13 +59,17 @@ appviewx_oauth_token_generation.prototype = {
                 r.setRequestHeader("User-Agent", "snow");
                 r.setRequestBody(request_body);
                 // r.setHttpTimeout(30000);
-                logger.initialize();
-                logger.level = "Info";
-                logger.script = "appviewx_test_connection";
-                logger.application = "AppViewX";
-                logger.message = "Triggerring test connection between ServiceNow and AppViewX from script include";
-                logger.company = company_name;
-                logger.insert();
+                if (plugin_table_log == 'true') {
+                    logger.initialize();
+                    logger.level = "Info";
+                    logger.script = "appviewx_test_connection";
+                    logger.application = "AppViewX";
+                    logger.message = "Triggerring test connection between ServiceNow and AppViewX from script include";
+                    logger.company = company_name;
+                    logger.insert();
+                } else {
+                    gs.info("Triggerring test connection between ServiceNow and AppViewX from script include" + "\nScript : appviewx_test_connection");
+                }
                 var response = r.executeAsync();
                 var status = response.getStatusCode();
                 var responseBody, data;
@@ -85,21 +90,24 @@ appviewx_oauth_token_generation.prototype = {
                         message = response.getBody();
                     }
                 }
-				if (retry_count == 4) {
-					return [status, message];
-				}
-				retry_count = retry_count + 1;
+                if (retry_count == 4) {
+                    return [status, message];
+                }
+                retry_count = retry_count + 1;
             }
         } catch (exe) {
             gs.addErrorMessage("AppViewX REST API test failed: " + exe);
-            logger.initialize();
-            logger.level = "Error";
-            logger.script = "appviewx_test_connection";
-            logger.application = "AppViewX";
-            logger.message =
-                "Connection test result - Failed \n" + "Response - " + exe;
-            logger.company = company_name;
-            logger.insert();
+            if (plugin_table_log == 'true') {
+                gs.error("Connection test result - Failed \n" + "Response - " + exe + "\nScript : appviewx_test_connection");
+            } else {
+                logger.initialize();
+                logger.level = "Error";
+                logger.script = "appviewx_test_connection";
+                logger.application = "AppViewX";
+                logger.message = "Connection test result - Failed \n" + "Response - " + exe;
+                logger.company = company_name;
+                logger.insert();
+            }
         }
     },
     type: 'appviewx_oauth_token_generation'
@@ -109,7 +117,7 @@ appviewx_oauth_token_generation.prototype = {
         <sys_created_on>2022-08-16 12:05:32</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>bdc92b961b91515061858480cd4bcbe8</sys_id>
-        <sys_mod_count>122</sys_mod_count>
+        <sys_mod_count>125</sys_mod_count>
         <sys_name>appviewx_oauth_token_generation</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -117,6 +125,6 @@ appviewx_oauth_token_generation.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_bdc92b961b91515061858480cd4bcbe8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-27 10:13:52</sys_updated_on>
+        <sys_updated_on>2025-08-19 16:09:27</sys_updated_on>
     </sys_script_include>
 </record_update>

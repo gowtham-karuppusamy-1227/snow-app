@@ -14,21 +14,21 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
     getCaDetails: function() {
         try {
             var caTagName = this.getParameter("sysparm_caTagName");
-			var company = this.getParameter("sysparm_company");
+            var company = this.getParameter("sysparm_company");
             var gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
             gr.addQuery('ca_tag_name', caTagName);
-			if(company) {
-				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-					gr.addQuery('company', company);
-				}
-			}
+            if (company) {
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    gr.addQuery('company', company);
+                }
+            }
             gr.query();
             var values = {};
             if (!gr.hasNext()) {
                 throw "Could not find CA Tag with the name - " + caTagName;
             }
             while (gr.next()) {
-				values['ca_account'] = gr.getValue('ca_settings_name');
+                values['ca_account'] = gr.getValue('ca_settings_name');
                 values['certificate_authority'] = gr.getValue('ca_type');
                 values['cert_category'] = gr.getValue('certificate_category');
                 values['certificate_retrieval_file_format'] =
@@ -65,40 +65,46 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
                 values["certificates_fetch"] = gr.getValue('certificates_fetch');
                 values["certificates_fetch_revoke"] = gr.getValue('certificates_fetch_revoke');
                 values["loggedin_user_roles"] = gs.getUser().getRoles();
-				values['push_to_end_device'] = gr.getValue('push_to_end_device');
-				values['assignment_group_selection'] = gr.getValue('assignment_group_selection') || '';
-				values['send_certificate'] = gr.getValue('send_certificate_to_end_user') || '';
-				values['ticket_assignment_group'] = gr.getValue('ticket_assignment_group') || '';
-				values['certificate_attributes'] = gr.getValue('meta_data_configured_in_appviewx');
-				values['edit_certificate_attributes'] = gr.getValue('edit_certificate_attributes');
+                values['push_to_end_device'] = gr.getValue('push_to_end_device');
+                values['assignment_group_selection'] = gr.getValue('assignment_group_selection') || '';
+                values['send_certificate'] = gr.getValue('send_certificate_to_end_user') || '';
+                values['ticket_assignment_group'] = gr.getValue('ticket_assignment_group') || '';
+                values['certificate_attributes'] = gr.getValue('meta_data_configured_in_appviewx');
+                values['edit_certificate_attributes'] = gr.getValue('edit_certificate_attributes');
                 values["company_name"] = gr.getValue('company') || '';
-				values["renewal_method"] = gr.getDisplayValue('renewal_method') || '';
-				values["renewal_csr_type"] = gr.getDisplayValue('renewal_csr_type') || '';
-				var company_name = gr.getValue('company') || '';
-				if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
-					var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-					gr_connection.addQuery('company', company_name);
-					gr_connection.query();
-					if (!gr_connection.hasNext()) {
-						throw "Could not find AppViewX instance url to fetch the details.";
-					}
-					while (gr_connection.next()) {
-						var cmdb_sync = gr_connection.getDisplayValue('enable_appviewx_inventory_sync') || "false";
-					}
-					values["cmdb_sync"] = cmdb_sync;
-				} else {
-					values["cmdb_sync"] = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-				}
+                values["renewal_method"] = gr.getDisplayValue('renewal_method') || '';
+                values["renewal_csr_type"] = gr.getDisplayValue('renewal_csr_type') || '';
+                var company_name = gr.getValue('company') || '';
+                if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                    var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                    gr_connection.addQuery('company', company_name);
+                    gr_connection.query();
+                    if (!gr_connection.hasNext()) {
+                        throw "Could not find AppViewX instance url to fetch the details.";
+                    }
+                    while (gr_connection.next()) {
+                        var cmdb_sync = gr_connection.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                    }
+                    values["cmdb_sync"] = cmdb_sync;
+                } else {
+                    values["cmdb_sync"] = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+                }
             }
             return JSON.stringify(values);
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'renew_get_certificate_authority_name';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while fetching Certificate authorities from CLM settings table  -  ' + error;
-            log.insert();
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'renew_get_certificate_authority_name';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while fetching Certificate authorities from CLM settings table  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while fetching Certificate authorities from CLM settings table  -  ' + error + '\n\n Script : renew_get_certificate_authority_name');
+            }
+
             return error;
         }
     },
@@ -110,7 +116,7 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
         <sys_created_on>2022-08-17 14:08:13</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>797e0dfe1bd1d15061858480cd4bcb37</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>64</sys_mod_count>
         <sys_name>renew_get_certificate_authority_name</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -118,6 +124,6 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_797e0dfe1bd1d15061858480cd4bcb37</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-30 16:11:11</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:36:01</sys_updated_on>
     </sys_script_include>
 </record_update>

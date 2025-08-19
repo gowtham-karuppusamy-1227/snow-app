@@ -20,7 +20,8 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
             var csr_upload_option = this.getParameter("csr_upload_option");
             var certificate_category = this.getParameter("certificate_category");
             var certificate_authority = this.getParameter("certificate_authority");
-			var common_name = this.getParameter("common_name");
+            var policy = this.getParameter("certificate_policy");
+            var common_name = this.getParameter("common_name");
             var script_include_call = new appviewx_oauth_token_generation();
             var token_generation = script_include_call.TestConnection(client_id, company);
             if (token_generation.length == 2 && token_generation[0] == 200) {
@@ -67,7 +68,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                 }
             }
             csr_content = csr_content.trim();
-			// gs.addErrorMessage(JSON.stringify(csr_content));
+            // gs.addErrorMessage(JSON.stringify(csr_content));
             if ((csr_content.startsWith('-----BEGIN CERTIFICATE REQUEST-----') && csr_content.endsWith('-----END CERTIFICATE REQUEST-----')) || (csr_content.startsWith('-----BEGIN NEW CERTIFICATE REQUEST-----') && csr_content.endsWith('-----END NEW CERTIFICATE REQUEST-----'))) {
                 var r = new sn_ws.RESTMessageV2();
                 var payload = {
@@ -79,17 +80,18 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                             "certificate_authority": certificate_authority,
                             "csr_content": csr_content,
                             "certificate_category": certificate_category,
-							"common_name": common_name
+                            "common_name": common_name,
+                            "certificate_policy": policy
                         }
                     }
                 };
-				// gs.addErrorMessage(JSON.stringify(payload));
+                // gs.addErrorMessage(JSON.stringify(payload));
                 var retry_count = 0;
                 while (retry_count < 5) {
                     if (mid_server != "") {
                         r.setMIDServer(mid_server);
                         r.setEccParameter('skip_sensor', 'true');
-						r.setEccCorrelator('AVX_REST_CALL');
+                        r.setEccCorrelator('AVX_REST_CALL');
                     }
                     r.setHttpMethod("post");
                     r.setRequestHeader("token", token);
@@ -117,7 +119,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                                 if (response_status === "Success") {
                                     return JSON.stringify({
                                         "csr_parameters": responseBody.response.output.csr_parameters,
-										"cn_validity" : responseBody.response.output.cn_validity
+                                        "cn_validity": responseBody.response.output.cn_validity
                                     });
                                 } else {
                                     message = responseBody.response.output.message;
@@ -141,12 +143,17 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         } catch (error) {
             var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
             gs.addErrorMessage(JSON.stringify(responseBody));
-            log.initialize();
-            log.level = 'Error';
-            log.script = 'validate_csr_attachment';
-            log.application = 'AppViewX';
-            log.message = 'Error occured while parsing the given CSR in appviewx  -  ' + error;
-            log.insert();
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'validate_csr_attachment';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while parsing the given CSR in appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while parsing the given CSR in appviewx  -  ' + error + '\n\n Script : validate_csr_attachment');
+            }
+        
             return error;
         }
     },
@@ -157,7 +164,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_created_on>2022-09-14 06:09:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>714e2fefb37d1110cda7cf626f076225</sys_id>
-        <sys_mod_count>81</sys_mod_count>
+        <sys_mod_count>83</sys_mod_count>
         <sys_name>validate_csr_attachment</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -165,6 +172,6 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_714e2fefb37d1110cda7cf626f076225</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-27 10:11:58</sys_updated_on>
+        <sys_updated_on>2025-08-06 19:51:30</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.get_keyvault_names</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>get_keyvault_names</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var get_keyvault_names = Class.create();
+get_keyvault_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getProfileNames: function() {
+        try {
+            var return_value = {};
+            var message;
+            var client_id;
+            var vendor_name = this.getParameter("sysparm_vendorName");
+            var device_name = this.getParameter("sysparm_deviceName");
+            var company = this.getParameter("sysparm_company");
+            var category = "";
+            if (vendor_name == 'F5') {
+                category = 'ADC';
+            } else if (vendor_name == 'Azure') {
+                category = 'cloud';
+            } else {
+                category = 'Server';
+            }
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
+
+            var script_include_call = new appviewx_oauth_token_generation();
+            var token_generation = script_include_call.TestConnection(client_id, company);
+            if (token_generation.length == 2 && token_generation[0] == 200) {
+                var parse_response = JSON.parse(token_generation[1]);
+                var token = parse_response['response'];
+            } else {
+                throw "Error while generating the OAuth Token.";
+            }
+            var r = new sn_ws.RESTMessageV2();
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+                r.setEccCorrelator('AVX_REST_CALL');
+            }
+            r.setHttpMethod("get");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/certificate/profiles");
+            r.setQueryParameter("category", category);
+            r.setQueryParameter("vendor", vendor_name);
+            r.setQueryParameter("deviceName", device_name);
+            if (vendor_name == 'Azure') {
+                r.setQueryParameter("service", "Key vault");
+            }
+            r.setQueryParameter("gwsource", "web");
+            r.setRequestBody(JSON.stringify({}));
+            // r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var responseBody, responseMessage;
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    var res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+                responseBody = JSON.parse(responseBody);
+                return_value['error'] = responseBody;
+                return JSON.stringify(responseBody);
+            }
+
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_keyvault_names';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while fetching profile details from appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while fetching profile details from appviewx  -  ' + error + '\n\n Script : get_keyvault_names');
+            }
+
+            return error;
+        }
+    },
+
+    type: 'get_keyvault_names'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:44:44</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>0d90c1b33b936a105876908a25e45ae7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>get_keyvault_names</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_0d90c1b33b936a105876908a25e45ae7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:44:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="DELETE">
+        <id>0d90c1b33b936a105876908a25e45ae7</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:44:43</sys_created_on>
+        <sys_id>ea23c9733b936a105876908a25e45a8b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:44:43</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</application>
+        <file_path/>
+        <instance_id>91eece119b710f08a4e16b8af359ff41</instance_id>
+        <instance_name>ven02242</instance_name>
+        <name>sys_script_include_0d90c1b33b936a105876908a25e45ae7</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_avx_appviewx_aut.get_keyvault_names&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;true&lt;/client_callable&gt;&lt;description/&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;get_keyvault_names&lt;/name&gt;&lt;sandbox_callable&gt;true&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[var get_keyvault_names = Class.create();
+get_keyvault_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    getProfileNames: function() {
+        try {
+            var return_value = {};
+            var message;
+            var client_id;
+            var vendor_name = this.getParameter("sysparm_vendorName");
+            var device_name = this.getParameter("sysparm_deviceName");
+            var company = this.getParameter("sysparm_company");
+            var category = "";
+            if (vendor_name == 'F5') {
+                category = 'ADC';
+            } else if (vendor_name == 'Azure') {
+                category = 'cloud';
+            } else {
+                category = 'Server';
+            }
+            if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
+                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+                gr.addQuery('company', company);
+                gr.query();
+                if (!gr.hasNext()) {
+                    throw "Could not find AppViewX instance url to fetch the details.";
+                }
+                while (gr.next()) {
+                    var url = gr.getValue('instance_url') || '';
+                    var mid_server = gr.getValue('mid_server') || '';
+                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || "false";
+                }
+            } else {
+                url = gs.getProperty("x_avx_appviewx_aut.URL");
+                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+            }
+
+            var script_include_call = new appviewx_oauth_token_generation();
+            var token_generation = script_include_call.TestConnection(client_id, company);
+            if (token_generation.length == 2 &amp;&amp; token_generation[0] == 200) {
+                var parse_response = JSON.parse(token_generation[1]);
+                var token = parse_response['response'];
+            } else {
+                throw "Error while generating the OAuth Token.";
+            }
+            var r = new sn_ws.RESTMessageV2();
+            if (mid_server != "") {
+                r.setMIDServer(mid_server);
+                r.setEccParameter('skip_sensor', 'true');
+                r.setEccCorrelator('AVX_REST_CALL');
+            }
+            r.setHttpMethod("get");
+            r.setRequestHeader("token", token);
+            r.setRequestHeader('User-Agent', 'snow');
+            r.setRequestHeader("Content-Type", "application/json");
+            r.setEndpoint(url + "/avxapi/certificate/profiles");
+            r.setQueryParameter("category", category);
+            r.setQueryParameter("vendor", vendor_name);
+            r.setQueryParameter("deviceName", device_name);
+            if (vendor_name == 'Azure') {
+                r.setQueryParameter("service", "Key vault");
+            }
+            r.setQueryParameter("gwsource", "web");
+            r.setRequestBody(JSON.stringify({}));
+            // r.setHttpTimeout(60000);
+            var response = r.executeAsync();
+            var responseBody, responseMessage;
+            if (response.haveError()) {
+                responseBody = response.getBody();
+                try {
+                    var res = JSON.parse(responseBody);
+                    message = res.message;
+                } catch (err) {
+                    message = responseBody;
+                }
+                throw message;
+            } else {
+                responseBody = response.getBody();
+                responseBody = JSON.parse(responseBody);
+                return_value['error'] = responseBody;
+                return JSON.stringify(responseBody);
+            }
+
+        } catch (error) {
+            var log = new GlideRecordSecure('x_avx_appviewx_aut_logs');
+            var plugin_table_log = gs.getProperty("x_avx_appviewx_aut.Log Purge");
+            if (plugin_table_log == 'true') {
+                log.initialize();
+                log.level = 'Error';
+                log.script = 'get_keyvault_names';
+                log.application = 'AppViewX';
+                log.message = 'Error occured while fetching profile details from appviewx  -  ' + error;
+                log.insert();
+            } else {
+                gs.error('Error occured while fetching profile details from appviewx  -  ' + error + '\n\n Script : get_keyvault_names');
+            }
+
+            return error;
+        }
+    },
+
+    type: 'get_keyvault_names'
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-08-18 06:44:44&lt;/sys_created_on&gt;&lt;sys_customer_update&gt;false&lt;/sys_customer_update&gt;&lt;sys_id&gt;0d90c1b33b936a105876908a25e45ae7&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;get_keyvault_names&lt;/sys_name&gt;&lt;sys_package display_value="AppViewX" source="x_avx_appviewx_aut"&gt;7165e2f81bc808502369eb1cad4bcbe0&lt;/sys_package&gt;&lt;sys_policy&gt;read&lt;/sys_policy&gt;&lt;sys_replace_on_upgrade&gt;false&lt;/sys_replace_on_upgrade&gt;&lt;sys_scope display_value="AppViewX"&gt;7165e2f81bc808502369eb1cad4bcbe0&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_0d90c1b33b936a105876908a25e45ae7&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-08-18 06:44:44&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;0d90c1b33b936a105876908a25e45ae7&lt;/id&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-08-18 06:44:43&lt;/sys_created_on&gt;&lt;sys_id&gt;ea23c9733b936a105876908a25e45a8b&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-08-18 06:44:43&lt;/sys_updated_on&gt;&lt;table&gt;sys_script_include&lt;/table&gt;&lt;use_es_latest&gt;true&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>425651725</payload_hash>
+        <record_name>get_keyvault_names</record_name>
+        <reverted_from/>
+        <source>9b3309a9b318a110cda7cf626f076219</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:44:44</sys_created_on>
+        <sys_id>3e2305b73b936a105876908a25e45a76</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>198bbec560a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:44:44</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>fe2305b7e2936a10f4a023830db99575</update_guid>
+        <update_guid_history>fe2305b7e2936a10f4a023830db99575:425651725</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-18 06:57:48</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>1d5d5ac8337547008b00849b39590000</sys_id>
+        <sys_metadata>0d90c1b33b936a105876908a25e45ae7</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>get_keyvault_names</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_parent/>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_scope_delete display_value="">74c257f6cc8c4ca6b194661e148ee244</sys_scope_delete>
+        <sys_update_name>sys_script_include_0d90c1b33b936a105876908a25e45ae7</sys_update_name>
+        <sys_update_version display_value="sys_script_include_0d90c1b33b936a105876908a25e45ae7">3e2305b73b936a105876908a25e45a76</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-18 06:57:48</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

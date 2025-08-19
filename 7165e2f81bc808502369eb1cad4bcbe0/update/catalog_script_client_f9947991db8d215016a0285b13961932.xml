@@ -26,6 +26,8 @@
         var cmdb_sync = g_form.getValue('cmdb_sync');
         var vendor_name = g_form.getValue('vendor_name');
         var company_name = g_form.getValue('company_name');
+        var push_to_end_device = g_form.getValue('push_to_end_device');
+        var endpoint = g_form.getValue('endpoint');
         var ga = new GlideAjax('get_device_names');
         ga.addParam("sysparm_name", "getDeviceNames");
         ga.addParam("sysparm_vendorName", vendor_name);
@@ -48,8 +50,12 @@
             var push_formats = {};
             push_formats['Azure'] = ['PKCS#12(*.p12)', 'PKCS#12(*.pfx)'];
             push_formats['Apache'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)'];
-			push_formats['Tomcat'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)'];
-			push_formats['LinuxServer'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)', 'DER(*.der)', 'DER(*.cer)' , 'PKCS#12(*.p12)', 'PKCS#12(*.pfx)'];
+            push_formats['Tomcat'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)'];
+            if (endpoint == 'true') {
+                push_formats['LinuxServer'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)', 'DER(*.der)', 'DER(*.cer)'];
+            } else {
+                push_formats['LinuxServer'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)', 'DER(*.der)', 'DER(*.cer)', 'PKCS#12(*.p12)', 'PKCS#12(*.pfx)'];
+            }
             g_form.clearValue('push_assignment_group');
             g_form.setMandatory('push_assignment_group', false);
             g_form.setDisplay('push_assignment_group', false);
@@ -62,9 +68,6 @@
             g_form.setDisplay('profile_name_reference', false);
             g_form.clearOptions('device_name');
             g_form.clearValue('device_name');
-            g_form.setDisplay('device_name', true);
-            g_form.setMandatory('device_name', true);
-            g_form.addOption('device_name', '', 'Select');
             g_form.clearOptions('push_certificate_format');
             g_form.clearValue('push_certificate_format');
             g_form.setReadOnly('customize_push_location', false);
@@ -74,15 +77,15 @@
             g_form.setDisplay('service_restart', false);
             g_form.clearValue('private_key_in_device');
             g_form.setDisplay('private_key_in_device', false);
-            g_form.clearValue('apache_certificate_directory');
-            g_form.setMandatory('apache_certificate_directory', false);
-            g_form.setDisplay('apache_certificate_directory', false);
-            g_form.clearValue('apache_key_directory');
-            g_form.setMandatory('apache_key_directory', false);
-            g_form.setDisplay('apache_key_directory', false);
-            g_form.clearValue('apache_intermediate_and_ca_certificate_directory');
-            g_form.setMandatory('apache_intermediate_and_ca_certificate_directory', false);
-            g_form.setDisplay('apache_intermediate_and_ca_certificate_directory', false);
+            g_form.clearValue('certificate_directory');
+            g_form.setMandatory('certificate_directory', false);
+            g_form.setDisplay('certificate_directory', false);
+            g_form.clearValue('key_directory');
+            g_form.setMandatory('key_directory', false);
+            g_form.setDisplay('key_directory', false);
+            g_form.clearValue('intermediate_and_ca_certificate_directory');
+            g_form.setMandatory('intermediate_and_ca_certificate_directory', false);
+            g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
             g_form.clearValue('profile_name');
             g_form.clearOptions('profile_name');
             g_form.clearValue('profile_name_reference');
@@ -90,62 +93,73 @@
             g_form.setDisplay('profile_name_reference', false);
             g_form.setMandatory('profile_name', false);
             g_form.setDisplay('profile_name', false);
-            if (vendor_name == 'F5' || vendor_name == 'IIS' || vendor_name == 'Silverline' || vendor_name == 'Microsoft Server') {
-                g_form.setMandatory('push_certificate_format', false);
-                g_form.setDisplay('push_certificate_format', false);
-            } else {
-                g_form.setDisplay('push_certificate_format', true);
-                g_form.setMandatory('push_certificate_format', true);
-                g_form.addOption('push_certificate_format', '', 'Select');
-            }
-            var iterator;
-            var res = response.responseXML.documentElement.getAttribute('answer');
-            try {
-                res = JSON.parse(res);
-            } catch (err) {
-                throw res || "Couldn't parse the response while trying to get device names for push.";
-            }
-            if (cmdb_sync == 'true') {
-                if (res.length == 0) {
-                    throw "No devices were found for the given inputs.";
+            if (push_to_end_device == 'true') {
+                g_form.setDisplay('device_name', true);
+                g_form.setMandatory('device_name', true);
+                g_form.addOption('device_name', '', 'Select');
+                if (vendor_name == 'F5' || vendor_name == 'IIS' || vendor_name == 'Silverline' || vendor_name == 'Microsoft Server' || vendor_name == 'Microsoft PC') {
+                    g_form.setMandatory('push_certificate_format', false);
+                    g_form.setDisplay('push_certificate_format', false);
+                } else {
+                    g_form.setDisplay('push_certificate_format', true);
+                    g_form.setMandatory('push_certificate_format', true);
+                    g_form.addOption('push_certificate_format', '', 'Select');
                 }
-                for (iterator = 0; iterator < res.length; iterator++) {
-                    g_form.addOption('device_name', res[iterator], res[iterator]);
+                var iterator;
+                var res = response.responseXML.documentElement.getAttribute('answer');
+                try {
+                    res = JSON.parse(res);
+                } catch (err) {
+                    throw res || "Couldn't parse the response while trying to get device names for push.";
                 }
-            } else {
-                if (!res.response.output) {
-                    throw "Error while getting the response from the AppViewX for the device names " + JSON.stringify(res);
+                if (endpoint == 'true') {
+                    var device_name = g_form.getValue('device_name_csr');
+                    g_form.clearOptions('device_name');
+                    g_form.addOption('device_name', device_name, device_name);
+                } else {
+                    if (cmdb_sync == 'true') {
+                        if (res.length == 0) {
+                            throw "No devices were found for the given inputs.";
+                        }
+                        for (iterator = 0; iterator < res.length; iterator++) {
+                            g_form.addOption('device_name', res[iterator], res[iterator]);
+                        }
+                    } else {
+                        if (!res.response.output) {
+                            throw "Error while getting the response from the AppViewX for the device names " + JSON.stringify(res);
+                        }
+                        var device_list = res.response.output;
+                        if (device_list.length == 0) {
+                            throw "There is no devices available for the selected vendor " + vendor_name;
+                        }
+                        for (iterator = 0; iterator < device_list.length; iterator++) {
+                            g_form.addOption('device_name', device_list[iterator].name, device_list[iterator].name);
+                        }
+                    }
                 }
-                var device_list = res.response.output;
-                if (device_list.length == 0) {
-                    throw "There is no devices available for the selected vendor " + vendor_name;
+                if (vendor_name != 'F5' && vendor_name != 'IIS' && vendor_name != 'Silverline' && vendor_name != 'Microsoft Server' && vendor_name != 'Microsoft PC') {
+                    var format_list = push_formats[vendor_name];
+                    for (var format = 0; format < format_list.length; format++) {
+                        g_form.addOption('push_certificate_format', format_list[format], format_list[format]);
+                    }
                 }
-                for (iterator = 0; iterator < device_list.length; iterator++) {
-                    g_form.addOption('device_name', device_list[iterator].name, device_list[iterator].name);
+                if (vendor_name == 'Apache' | vendor_name == 'Tomcat') {
+                    g_form.setDisplay('customize_push_location', true);
+                    g_form.setDisplay('service_restart', true);
+                    g_form.setDisplay('private_key_in_device', true);
+                } else {
+                    g_form.setDisplay('customize_push_location', false);
+                    g_form.setDisplay('service_restart', false);
+                    g_form.setDisplay('private_key_in_device', false);
+                }
+                if (vendor_name == 'Silverline') {
+                    g_form.setDisplay('push_root_and_intermediate_certificates', false);
+                    g_form.setValue('push_root_and_intermediate_certificates', false, false);
+                }
+                if (vendor_name == 'LinuxServer') {
+                    g_form.setDisplay('private_key_in_device', true);
                 }
             }
-            if (vendor_name != 'F5' && vendor_name != 'IIS' && vendor_name != 'Silverline' && vendor_name != 'Microsoft Server') {
-                var format_list = push_formats[vendor_name];
-                for (var format = 0; format < format_list.length; format++) {
-                    g_form.addOption('push_certificate_format', format_list[format], format_list[format]);
-                }
-            }
-            if (vendor_name == 'Apache' |vendor_name == 'Tomcat' ) {
-                g_form.setDisplay('customize_push_location', true);
-                g_form.setDisplay('service_restart', true);
-                g_form.setDisplay('private_key_in_device', true);
-            } else {
-                g_form.setDisplay('customize_push_location', false);
-                g_form.setDisplay('service_restart', false);
-                g_form.setDisplay('private_key_in_device', false);
-            }
-            if (vendor_name == 'Silverline') {
-                g_form.setDisplay('push_root_and_intermediate_certificates', false);
-                g_form.setValue('push_root_and_intermediate_certificates', false, false);
-            }
-			if (vendor_name == 'LinuxServer') {
-                g_form.setDisplay('private_key_in_device', true);
-			}
         } catch (error) {
             g_form.addErrorMessage("Error while fetching the device names for push: " + error);
             var message = 'Error occured while fetching the device names for push - ' + error;
@@ -166,7 +180,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f9947991db8d215016a0285b13961932</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>24</sys_mod_count>
         <sys_name>set_device_names_for_push</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -175,7 +189,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_f9947991db8d215016a0285b13961932</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-18 10:45:52</sys_updated_on>
+        <sys_updated_on>2025-08-11 10:07:12</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>
