@@ -7,7 +7,7 @@
         <condition/>
         <controlled_by_refs/>
         <decision_type>allow</decision_type>
-        <description/>
+        <description>Allows the user to execute the Script Includes(get_hash_details) if the user has any one of the roles (x_avx_appviewx_aut.app_admin, x_avx_appviewx_aut.certificate_request_user).</description>
         <local_or_existing>Local</local_or_existing>
         <name>get_certificate_groups</name>
         <operation display_value="execute">execute</operation>
@@ -18,15 +18,15 @@
         <sys_created_on>2025-07-19 07:25:47</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>bfdcee0a3bfea6505876908a25e45a7e</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>get_certificate_groups</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_security_acl_bfdcee0a3bfea6505876908a25e45a7e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-19 07:25:47</sys_updated_on>
+        <sys_updated_on>2025-08-20 05:55:42</sys_updated_on>
         <type display_value="client_callable_script_include">client_callable_script_include</type>
     </sys_security_acl>
 </record_update>

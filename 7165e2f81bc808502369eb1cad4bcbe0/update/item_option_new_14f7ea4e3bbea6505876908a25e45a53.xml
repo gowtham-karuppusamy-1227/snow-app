@@ -44,7 +44,7 @@
         <mask_use_encryption>false</mask_use_encryption>
         <name>certificate_group</name>
         <not_available_conversation>false</not_available_conversation>
-        <order>1150</order>
+        <order>1200</order>
         <post_insert_script/>
         <price_if_checked>0</price_if_checked>
         <pricing_implications>false</pricing_implications>
@@ -80,7 +80,7 @@
         <sys_created_on>2025-07-19 07:05:04</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>14f7ea4e3bbea6505876908a25e45a53</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Certificate Group</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
@@ -88,7 +88,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>item_option_new_14f7ea4e3bbea6505876908a25e45a53</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-19 07:05:04</sys_updated_on>
+        <sys_updated_on>2025-08-20 06:07:40</sys_updated_on>
         <table/>
         <tooltip/>
         <topic_block/>
