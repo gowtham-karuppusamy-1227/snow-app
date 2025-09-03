@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Log Retention Period (Days)</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_avx_appviewx_aut.Log Retention</name>
+        <read_roles>x_avx_appviewx_aut.certificate_request_user,x_avx_appviewx_aut.app_admin,x_avx_appviewx_aut.service_account,x_avx_appviewx_aut.super_admin</read_roles>
+        <suffix>Log Retention</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-31 07:03:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>91b2d0773b1bd650b795659aa4e45a19</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>x_avx_appviewx_aut.Log Retention</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_properties_91b2d0773b1bd650b795659aa4e45a19</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-02 13:14:37</sys_updated_on>
+        <type>integer</type>
+        <value/>
+        <write_roles>x_avx_appviewx_aut.app_admin,x_avx_appviewx_aut.super_admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=91b2d0773b1bd650b795659aa4e45a19"/>
+</record_update>
