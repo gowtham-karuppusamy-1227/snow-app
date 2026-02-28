@@ -14,7 +14,7 @@
         <description/>
         <display_price_property>non_zero</display_price_property>
         <entitlement_script/>
-        <flow_designer_flow/>
+        <flow_designer_flow display_value="Renew Certificate">cd3a33e52f5bf690bbc4680cbfa4e35b</flow_designer_flow>
         <fulfillment_automation_level>unspecified</fulfillment_automation_level>
         <group/>
         <hide_sp>false</hide_sp>
@@ -67,26 +67,26 @@
         <sys_created_on>2022-08-10 06:35:14</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9e85ab541b1595102369eb1cad4bcb62</sys_id>
-        <sys_mod_count>185</sys_mod_count>
+        <sys_mod_count>186</sys_mod_count>
         <sys_name>Renew Certificate</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sc_cat_item_9e85ab541b1595102369eb1cad4bcb62</sys_update_name>
-        <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2025-08-18 09:30:10</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-02-27 18:07:31</sys_updated_on>
         <taxonomy_topic/>
         <template/>
         <template_manager_roles/>
         <type>item</type>
         <use_sc_layout>true</use_sc_layout>
         <vendor/>
-        <version>176</version>
+        <version>177</version>
         <visible_bundle>true</visible_bundle>
         <visible_guide>true</visible_guide>
         <visible_standalone>true</visible_standalone>
-        <workflow display_value="Renew Certificate">c378fc241b315110cda7db91dd4bcbf3</workflow>
+        <workflow/>
     </sc_cat_item>
     <sys_translated_text action="delete_multiple" query="documentkey=9e85ab541b1595102369eb1cad4bcb62"/>
     <fx_price action="delete_multiple" query="id=9e85ab541b1595102369eb1cad4bcb62"/>

@@ -14,6 +14,7 @@
         <delete_roles/>
         <delivery_plan/>
         <description/>
+        <disable_initial_slot_fill>false</disable_initial_slot_fill>
         <display_title>false</display_title>
         <do_not_select_first>false</do_not_select_first>
         <dynamic_default_value/>
@@ -31,8 +32,10 @@
         <instructions><![CDATA[<ul style="list-style-position: inside;"><li><strong>PEM</strong> - Text format, readable, multi-cert</li><li><strong>CER</strong> - Windows-compatible, cert-only format</li><li><strong>CRT</strong> - Unix/Linux naming for CER</li><li><strong>PFX</strong> - Contains cert &#43; private key</li><li><strong>P12</strong> - PFX successor, PKCS#12 standard</li><li><strong>JKS</strong> - Java-specific keystore format</li><li><strong>Download Link</strong> - AppViewX Holistic View Link</li></ul>]]></instructions>
         <layout>normal</layout>
         <list_table/>
+        <lookup_dependent_question/>
         <lookup_label/>
         <lookup_price/>
+        <lookup_source/>
         <lookup_table/>
         <lookup_unique>false</lookup_unique>
         <lookup_value/>

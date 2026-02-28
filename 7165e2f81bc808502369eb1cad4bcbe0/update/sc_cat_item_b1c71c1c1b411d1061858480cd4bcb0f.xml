@@ -14,7 +14,7 @@
         <description/>
         <display_price_property>non_zero</display_price_property>
         <entitlement_script/>
-        <flow_designer_flow/>
+        <flow_designer_flow display_value="Revoke Certificate">e57aa0f90f5ff2d0b2fa33d300d1b24c</flow_designer_flow>
         <fulfillment_automation_level>unspecified</fulfillment_automation_level>
         <group/>
         <hide_sp>false</hide_sp>
@@ -67,26 +67,26 @@
         <sys_created_on>2022-07-28 05:20:17</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b1c71c1c1b411d1061858480cd4bcb0f</sys_id>
-        <sys_mod_count>56</sys_mod_count>
+        <sys_mod_count>57</sys_mod_count>
         <sys_name>Revoke Certificate</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sc_cat_item_b1c71c1c1b411d1061858480cd4bcb0f</sys_update_name>
-        <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2025-08-08 08:34:40</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-02-27 18:08:06</sys_updated_on>
         <taxonomy_topic/>
         <template/>
         <template_manager_roles/>
         <type>item</type>
         <use_sc_layout>true</use_sc_layout>
         <vendor/>
-        <version>44</version>
+        <version>45</version>
         <visible_bundle>true</visible_bundle>
         <visible_guide>true</visible_guide>
         <visible_standalone>true</visible_standalone>
-        <workflow display_value="Revoke Certificate">71b158391ba5d550cda7db91dd4bcb47</workflow>
+        <workflow/>
     </sc_cat_item>
     <sys_translated_text action="delete_multiple" query="documentkey=b1c71c1c1b411d1061858480cd4bcb0f"/>
     <fx_price action="delete_multiple" query="id=b1c71c1c1b411d1061858480cd4bcb0f"/>

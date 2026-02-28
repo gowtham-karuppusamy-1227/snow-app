@@ -4,6 +4,7 @@
         <can_delegate>true</can_delegate>
         <description>AppViewX - SNOW Super Admin Role</description>
         <elevated_privilege>false</elevated_privilege>
+        <federated_id>jqTaQu/JRwkkCmDEgqTcnINfhhw50jnL+aZjGWrMwPQ=</federated_id>
         <grantable>true</grantable>
         <includes_roles/>
         <name>x_avx_appviewx_aut.super_admin</name>

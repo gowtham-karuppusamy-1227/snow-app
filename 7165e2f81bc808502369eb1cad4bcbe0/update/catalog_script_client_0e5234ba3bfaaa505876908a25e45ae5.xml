@@ -23,7 +23,7 @@
         return;
     }
 
-    supported_vendors = ['Microsoft PC', 'Tomcat', 'LinuxServer', 'Azure', 'Apache', 'IIS', 'F5'];
+    var supported_vendors = ['Microsoft PC', 'Tomcat', 'LinuxServer', 'Azure', 'Apache', 'IIS', 'F5'];
     var endpoint = g_form.getValue('endpoint');
     var send_certificate_to_end_user = g_form.getValue('send_certificate_to_end_user');
     var passwordProtectedFormats = ['PFX', 'P12', 'JKS'];
@@ -70,7 +70,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>0e5234ba3bfaaa505876908a25e45ae5</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>set_vendor_names_for_endpoint</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -79,7 +79,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_0e5234ba3bfaaa505876908a25e45ae5</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-22 21:11:20</sys_updated_on>
+        <sys_updated_on>2026-02-27 18:17:08</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

@@ -4,6 +4,7 @@
         <can_delegate>true</can_delegate>
         <description>AppViewX - SNOW App Certificate Requestor Role</description>
         <elevated_privilege>false</elevated_privilege>
+        <federated_id>NohJOWUW/HB9ncoNCDnwRlQpPSOyvV1iVxsycsua4bM=</federated_id>
         <grantable>true</grantable>
         <includes_roles/>
         <name>x_avx_appviewx_aut.certificate_request_user</name>
