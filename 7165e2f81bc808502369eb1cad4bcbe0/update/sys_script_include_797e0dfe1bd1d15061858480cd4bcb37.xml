@@ -74,6 +74,8 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
                 values["company_name"] = gr.getValue('company') || '';
                 values["renewal_method"] = gr.getDisplayValue('renewal_method') || '';
                 values["renewal_csr_type"] = gr.getDisplayValue('renewal_csr_type') || '';
+				values["enable_san_fields_for_renew"] = gr.getValue("enable_san_fields_for_renew");
+				values["subject_alternative_names_for_renew"] = gr.getValue("subject_alternative_names_for_renew");
                 var company_name = gr.getValue('company') || '';
                 if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
                     var gr_connection = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
@@ -116,7 +118,7 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
         <sys_created_on>2022-08-17 14:08:13</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>797e0dfe1bd1d15061858480cd4bcb37</sys_id>
-        <sys_mod_count>64</sys_mod_count>
+        <sys_mod_count>66</sys_mod_count>
         <sys_name>renew_get_certificate_authority_name</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -124,6 +126,6 @@ renew_get_certificate_authority_name.prototype = Object.extendsObject(global.Abs
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_797e0dfe1bd1d15061858480cd4bcb37</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:36:01</sys_updated_on>
+        <sys_updated_on>2026-05-05 07:40:06</sys_updated_on>
     </sys_script_include>
 </record_update>

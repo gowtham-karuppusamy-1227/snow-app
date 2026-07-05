@@ -4,7 +4,7 @@
         <disabled>ignore</disabled>
         <field>vendor_name</field>
         <field_message/>
-        <field_message_type>none</field_message_type>
+        <field_message_type/>
         <mandatory>false</mandatory>
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -23,7 +23,7 @@
         <table>x_avx_appviewx_aut_clm_settings</table>
         <ui_policy display_value="Hiding the push setting fields in the CLM table">fadd482ddb34a11016a0285b13961908</ui_policy>
         <value/>
-        <value_action>ignore</value_action>
+        <value_action/>
         <visible>false</visible>
     </sys_ui_policy_action>
 </record_update>

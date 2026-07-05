@@ -55,6 +55,11 @@
 	g_form.setDisplay('certificate_reference', false);
 	g_form.setDisplay('parsed_csr_values', false);
 	g_form.setDisplay('allow_new_common_name', false);
+	g_form.setDisplay('dns', false);
+    g_form.setDisplay('ip_address', false);
+	g_form.setDisplay('add_dns_values', false);
+    g_form.setDisplay('add_ip_address', false);
+
 	for (var iterator = 1; iterator <= 30; iterator++) {
 		g_form.setDisplay('meta_data_' + iterator, false);
 	}
@@ -68,7 +73,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ea27e85adb06155016a0285b13961909</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>11</sys_mod_count>
         <sys_name>Renew - Hiding all the hidden fields to make it dynamic</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -77,7 +82,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_ea27e85adb06155016a0285b13961909</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-01-31 08:09:09</sys_updated_on>
+        <sys_updated_on>2026-05-05 05:03:04</sys_updated_on>
         <table/>
         <ui_type>10</ui_type>
         <va_supported>true</va_supported>

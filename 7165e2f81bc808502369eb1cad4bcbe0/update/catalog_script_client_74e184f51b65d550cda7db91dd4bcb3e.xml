@@ -41,14 +41,14 @@ function set_file_formats() {
     if (csr_input_method == 'Upload CSR') {
         g_form.setDisplay("device_details", false);
         g_form.setDisplay("endpoint", false);
-		g_form.clearValue("endpoint");
-		g_form.setMandatory('vendor_csr', false);
-		g_form.setDisplay("vendor_csr", false);
-		g_form.setMandatory("device_name_csr",false);
-		g_form.setDisplay("device_name_csr", false);
-		g_form.clearValue('csr_location');
-		g_form.setMandatory('csr_location', false);
-		g_form.setDisplay('csr_location', false);
+        g_form.clearValue("endpoint");
+        g_form.setMandatory('vendor_csr', false);
+        g_form.setDisplay("vendor_csr", false);
+        g_form.setMandatory("device_name_csr", false);
+        g_form.setDisplay("device_name_csr", false);
+        g_form.clearValue('csr_location');
+        g_form.setMandatory('csr_location', false);
+        g_form.setDisplay('csr_location', false);
     }
 
     if (send_certificate_to_end_user == "1") {
@@ -878,6 +878,12 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     for (var ca = 0; ca < ca_settings.length; ca++) {
                         if (ca_settings[ca].name === ca_account) {
                             ca_flag = 1;
+                            if (CA === "GlobalSignAtlas") {
+                                var atlas_org = ca_settings[ca].vendorSpecificDetails.validationPolicy.subject_dn.organization.format;
+								g_form.setReadOnly('organization', true);
+                                g_form.setDisplay('organization', true);
+                                
+                            }
                         }
                     }
                     if (ca_flag === 0) {
@@ -920,13 +926,18 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     if (!result.certPolicyCsrParameter) {
                         throw "CSR parameters are not configured in appviewx Policy.";
                     }
-                    var organization = htmlUnescape(result.certPolicyCsrParameter.organization);
-                    g_form.setValue('organization', organization, organization);
-                    g_form.setValue('organization_unit', result.certPolicyCsrParameter.organizationUnit, result.certPolicyCsrParameter.organizationUnit);
-                    g_form.setValue('locality', result.certPolicyCsrParameter.locality, result.certPolicyCsrParameter.locality);
-                    g_form.setValue('state', result.certPolicyCsrParameter.state, result.certPolicyCsrParameter.state);
-                    g_form.setValue('country', result.certPolicyCsrParameter.country, result.certPolicyCsrParameter.country);
-                    g_form.setValue('email_address', (result.certPolicyCsrParameter.mailAddress).join(","), (result.certPolicyCsrParameter.mailAddress).join(","));
+                    
+                    if (CA === "GlobalSignAtlas") {
+						g_form.setValue('organization', atlas_org, atlas_org);
+                    } else {
+                        var organization = htmlUnescape(result.certPolicyCsrParameter.organization);
+                        g_form.setValue('organization', organization, organization);
+                        g_form.setValue('organization_unit', result.certPolicyCsrParameter.organizationUnit, result.certPolicyCsrParameter.organizationUnit);
+                        g_form.setValue('locality', result.certPolicyCsrParameter.locality, result.certPolicyCsrParameter.locality);
+                        g_form.setValue('state', result.certPolicyCsrParameter.state, result.certPolicyCsrParameter.state);
+                        g_form.setValue('country', result.certPolicyCsrParameter.country, result.certPolicyCsrParameter.country);
+                        g_form.setValue('email_address', (result.certPolicyCsrParameter.mailAddress).join(","), (result.certPolicyCsrParameter.mailAddress).join(","));
+                    }
                 } else if (result.certificateAuthority === CA && result.certificateAuthority === 'Amazon Private CA') {
                     ca_settings = result.caSettings;
                     for (ca = 0; ca < ca_settings.length; ca++) {
@@ -1025,7 +1036,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>74e184f51b65d550cda7db91dd4bcb3e</sys_id>
-        <sys_mod_count>244</sys_mod_count>
+        <sys_mod_count>253</sys_mod_count>
         <sys_name>set_hash_types</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -1034,7 +1045,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_74e184f51b65d550cda7db91dd4bcb3e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-11 10:19:05</sys_updated_on>
+        <sys_updated_on>2026-06-01 22:03:07</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

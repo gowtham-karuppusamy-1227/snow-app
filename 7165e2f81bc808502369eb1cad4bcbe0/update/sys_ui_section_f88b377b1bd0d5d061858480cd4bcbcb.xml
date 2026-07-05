@@ -4,13 +4,13 @@
             <element>.split</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:41</sys_created_on>
-            <sys_id>1cfd3dc41b2b4250cda7db91dd4bcbce</sys_id>
+            <sys_created_on>2026-07-05 07:00:04</sys_created_on>
+            <sys_id>510d4e032f3d4b50bbc4680cbfa4e354</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">f88b377b1bd0d5d061858480cd4bcbcb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:41</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:04</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>

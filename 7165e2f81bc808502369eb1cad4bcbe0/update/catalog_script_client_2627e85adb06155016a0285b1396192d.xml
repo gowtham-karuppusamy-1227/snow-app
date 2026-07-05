@@ -100,7 +100,7 @@
 			g_form.clearValue('cert_attribute_length');
 			g_form.clearValue('parsed_csr_values');
 			g_form.setDisplay('parsed_csr_values', false);
-            for (var iterator = 1; iterator <= 10; iterator++) {
+            for (var iterator = 1; iterator <= 30; iterator++) {
                 g_form.setMandatory('meta_data_' + iterator, false);
 				g_form.setReadOnly('meta_data_' + iterator, false);
                 g_form.clearValue('meta_data_' + iterator);
@@ -174,6 +174,10 @@
 				g_form.setDisplay('ticket_assignment_group', true);
 				g_form.setMandatory('ticket_assignment_group', true);
 			}
+			g_form.clearValue('enable_san_fields');
+            g_form.setValue('enable_san_fields', res['enable_san_fields_for_renew'], res['enable_san_fields_for_renew']);
+			g_form.clearValue('san_names');
+            g_form.setValue('san_names', JSON.stringify(res['subject_alternative_names_for_renew']), JSON.stringify(res['subject_alternative_names_for_renew']));
             if (res['use_approval_settings_from_create'] > 0) {
                 if ('is_approval_required_in_appviewx' in res) {
                     if (res['is_approval_required_in_appviewx'] > 0) {
@@ -227,7 +231,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>2627e85adb06155016a0285b1396192d</sys_id>
-        <sys_mod_count>44</sys_mod_count>
+        <sys_mod_count>51</sys_mod_count>
         <sys_name>renew_set_certificate_authority</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -236,7 +240,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_2627e85adb06155016a0285b1396192d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-20 06:16:59</sys_updated_on>
+        <sys_updated_on>2026-05-05 07:42:05</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

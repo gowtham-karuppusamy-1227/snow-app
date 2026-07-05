@@ -147,6 +147,7 @@
 	g_form.setDisplay('designation', false);
 	g_form.setDisplay('globalsign_mssl_certificate_type', false);
 	g_form.setDisplay('globalsign_mssl_profile_name', false);
+	g_form.setDisplay('globalsign_mssl_profile_name', false);
 	g_form.setDisplay('avx_issuer_name', false);
 	g_form.setDisplay('avx_issuer_location', false);
 	g_form.setDisplay('avx_pki_native_issuer_location', false);
@@ -177,7 +178,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>fce144f51b65d550cda7db91dd4bcbb1</sys_id>
-        <sys_mod_count>115</sys_mod_count>
+        <sys_mod_count>116</sys_mod_count>
         <sys_name>Enroll cert - Hiding the fields to make the form dynamic</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -186,7 +187,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_fce144f51b65d550cda7db91dd4bcbb1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-22 08:34:30</sys_updated_on>
+        <sys_updated_on>2026-06-01 20:35:59</sys_updated_on>
         <table/>
         <ui_type>10</ui_type>
         <va_supported>true</va_supported>

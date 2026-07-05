@@ -2,12 +2,13 @@
     <sys_ui_section caption="RITM Settings" section_id="e1c76b471b09ed50cda7db91dd4bcb59" sys_domain="global" table="x_avx_appviewx_aut_clm_settings" version="3" view="">
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>e0fd7dc41b2b4250cda7db91dd4bcb07</sys_id>
+            <sys_created_on>2026-07-05 07:00:06</sys_created_on>
+            <sys_id>bd0d8e032f3d4b50bbc4680cbfa4e396</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:06</sys_updated_on>
             <text>Catalog Task Settings</text>
             <type display_value="Section Separator">443e806c0fd30000b12e6903cfe01281</type>
         </sys_ui_annotation>
@@ -15,13 +16,13 @@
             <element>ticket_assignment_group</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>3cfd7dc41b2b4250cda7db91dd4bcb0a</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>710d8e032f3d4b50bbc4680cbfa4e3c7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -29,27 +30,27 @@
             <element>ticket_assignment_group_name</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>bcfd7dc41b2b4250cda7db91dd4bcb0a</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>3d0d8e032f3d4b50bbc4680cbfa4e3c7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>e0fd7dc41b2b4250cda7db91dd4bcb07</element>
+            <element>bd0d8e032f3d4b50bbc4680cbfa4e396</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>30fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>f50d8e032f3d4b50bbc4680cbfa4e3c8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>
@@ -57,13 +58,13 @@
             <element>create_catalog_task_ticket</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>b0fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>b10d8e032f3d4b50bbc4680cbfa4e3c9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -71,13 +72,13 @@
             <element>task_priority</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>34fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>7d0d8e032f3d4b50bbc4680cbfa4e3c9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -85,13 +86,13 @@
             <element>task_assignment_group</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>b4fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>390d8e032f3d4b50bbc4680cbfa4e3ca</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -99,13 +100,13 @@
             <element>task_assigned_to</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>38fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>f10d8e032f3d4b50bbc4680cbfa4e3cb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -113,13 +114,13 @@
             <element>.split</element>
             <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 13:17:42</sys_created_on>
-            <sys_id>b8fd7dc41b2b4250cda7db91dd4bcb0b</sys_id>
+            <sys_created_on>2026-07-05 07:00:07</sys_created_on>
+            <sys_id>bd0d8e032f3d4b50bbc4680cbfa4e3cb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="RITM Settings" display_value="RITM Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">e1c76b471b09ed50cda7db91dd4bcb59</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 13:17:42</sys_updated_on>
+            <sys_updated_on>2026-07-05 07:00:07</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>

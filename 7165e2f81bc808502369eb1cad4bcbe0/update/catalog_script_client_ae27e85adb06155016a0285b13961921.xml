@@ -27,10 +27,10 @@
         var ca_tag_name = g_form.getValue('ca_tag_name');
         var cert_authority = g_form.getValue('certificate_authority');
         var cert_type = g_form.getValue('certificate_category');
-		var company_name = g_form.getValue('company_name');
+        var company_name = g_form.getValue('company_name');
         gb.addParam("sysparm_name", "getCaDetails");
         gb.addParam("sysparm_caTagName", ca_tag_name);
-		gb.addParam("sysparm_company", company_name);
+        gb.addParam("sysparm_company", company_name);
         gb.getXML(getclmvalue);
     } catch (error) {
         g_form.addErrorMessage("Error: " + error);
@@ -56,7 +56,7 @@
             var certs_fetch = res['certificates_fetch'];
             var loggedin_user_roles = res['loggedin_user_roles'];
             var cmdb_sync = res['cmdb_sync'];
-			var company_name = g_form.getValue('company_name');
+            var company_name = g_form.getValue('company_name');
             if (certs_fetch === 'Based on ServiceNow' || certs_fetch === 'Based on User Group In ServiceNow' || certs_fetch === 'Get All Certificates') {
                 var ga = new GlideAjax('renew_get_cert'); //this is the script include
                 ga.addParam("sysparm_name", "getCert");
@@ -64,20 +64,20 @@
                 ga.addParam("sysparm_cert_authority", cert_authority);
                 ga.addParam("sysparm_cert_type", cert_type);
                 ga.addParam('sysparm_clm_action', 'Renew');
-				ga.addParam("sysparm_company", company_name);
+                ga.addParam("sysparm_company", company_name);
                 ga.getXML(function(response) {
                     getResponse(response, certs_fetch, loggedin_user_roles, cmdb_sync);
                 });
             } else {
                 var cert_fetch = "AVX";
-
                 ga = new GlideAjax('renew_get_cert_based_on_appviewx'); //this is the script include
                 ga.addParam("sysparm_name", "getCert");
+                ga.addParam("sysparm_certs_fetch", certs_fetch);
                 ga.addParam("sysparm_cert_authority", cert_authority);
                 ga.addParam("sysparm_cert_type", cert_type);
                 ga.addParam("sysparm_ca_tag", ca_tag_name);
                 ga.addParam('sysparm_clm_action', 'Renew');
-				ga.addParam("sysparm_company", company_name);
+                ga.addParam("sysparm_company", company_name);
                 ga.getXML(function(response) {
                     getResponse(response, certs_fetch, loggedin_user_roles, cmdb_sync);
                 });
@@ -112,21 +112,21 @@
                 }
             }
             if (cmdb_sync == 'true') {
-				var encoded_query = res['encoded_query'];
-				if (encoded_query) {
-					g_form.setValue('query_value', encoded_query, encoded_query);
-					g_form.clearValue('certificate_reference');
-					g_form.setDisplay('certificate_reference', true);
-					g_form.setMandatory('certificate_reference', true);
-				} else {
-					throw "Couldn't generate query for the logged-in user";
-				}
+                var encoded_query = res['encoded_query'];
+                if (encoded_query) {
+                    g_form.setValue('query_value', encoded_query, encoded_query);
+                    g_form.clearValue('certificate_reference');
+                    g_form.setDisplay('certificate_reference', true);
+                    g_form.setMandatory('certificate_reference', true);
+                } else {
+                    throw "Couldn't generate query for the logged-in user";
+                }
             } else {
-				g_form.clearOptions('certificate');
-				g_form.setDisplay('certificate', true);
-				g_form.setMandatory('certificate', true);
-				g_form.addOption('certificate', '', 'Select');
-                if (certs_fetch === 'Based on AppViewX' && loggedin_user !== 'exist') {
+                g_form.clearOptions('certificate');
+                g_form.setDisplay('certificate', true);
+                g_form.setMandatory('certificate', true);
+                g_form.addOption('certificate', '', 'Select');
+                if (certs_fetch === 'Based on AppViewX' && loggedin_user !== 'exist' || certs_fetch === 'Based on CA Tag' && loggedin_user !== 'exist') {
                     var response_message = res.response.output.data.message;
                     if (response_message !== 'Success') {
                         throw response_message;
@@ -146,7 +146,7 @@
                     }
                 } else {
                     if (res.response.output.Status == 'Success') {
-                        var cert_list = res.response.output.certificate_list;
+                        cert_list = res.response.output.certificate_list;
                         for (var cert = 0; cert < cert_list.length; cert++) {
                             g_form.addOption('certificate', cert_list[cert], cert_list[cert]);
                         }
@@ -181,7 +181,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ae27e85adb06155016a0285b13961921</sys_id>
-        <sys_mod_count>109</sys_mod_count>
+        <sys_mod_count>122</sys_mod_count>
         <sys_name>renew_set_certificates</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -190,7 +190,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_ae27e85adb06155016a0285b13961921</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-22 09:41:29</sys_updated_on>
+        <sys_updated_on>2026-06-09 09:25:25</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

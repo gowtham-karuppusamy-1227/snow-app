@@ -51,6 +51,10 @@
             push_formats['Azure'] = ['PKCS#12(*.p12)', 'PKCS#12(*.pfx)'];
             push_formats['Apache'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)'];
             push_formats['Tomcat'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)'];
+			push_formats['Citrix'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)', 'DER(*.der)', 'DER(*.cer)'];
+			push_formats['AWS'] = ['PEM(*.pem)','PKCS#12(*.pfx)'];
+			push_formats['Imperva'] = ['PEM(*.pem)','PKCS#12(*.pfx)'];
+
             if (endpoint == 'true') {
                 push_formats['LinuxServer'] = ['PEM(*.pem)', 'PEM(*.crt)', 'PEM(*.cer)', 'DER(*.der)', 'DER(*.cer)'];
             } else {
@@ -180,7 +184,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f9947991db8d215016a0285b13961932</sys_id>
-        <sys_mod_count>24</sys_mod_count>
+        <sys_mod_count>25</sys_mod_count>
         <sys_name>set_device_names_for_push</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -189,7 +193,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_f9947991db8d215016a0285b13961932</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-11 10:07:12</sys_updated_on>
+        <sys_updated_on>2026-06-04 18:47:34</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

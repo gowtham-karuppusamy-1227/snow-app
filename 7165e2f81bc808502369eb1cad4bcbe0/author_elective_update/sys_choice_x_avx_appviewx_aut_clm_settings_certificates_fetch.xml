@@ -93,5 +93,24 @@
             <sys_updated_on>2024-03-22 09:38:32</sys_updated_on>
             <value>Get All Certificates</value>
         </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>certificates_fetch</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Based on CA Tag</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-04-28 15:59:20</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-04-28 15:59:20</sys_updated_on>
+            <value>Based on CA Tag</value>
+        </sys_choice>
     </sys_choice>
 </record_update>

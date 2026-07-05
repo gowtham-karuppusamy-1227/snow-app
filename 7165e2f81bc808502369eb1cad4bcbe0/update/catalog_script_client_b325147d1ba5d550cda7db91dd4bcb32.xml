@@ -23,17 +23,18 @@
         return;
     }
     try {
-		var iterator;
+        var iterator;
         var CA = g_form.getValue('certificate_authority');
         var AppViewX = ["Key compromised", "CA compromised", "Privilege withdrawn"];
         var entrust = ["Superseded", "Cessation of operation", "Affiliation Changed", "Key compromised"];
         var ejbca = ["Key compromise", "CA compromise", "Affiliation Changed", "Superseded", "Cessation of operation", "Privilege withdrawn", "Unspecified", "AA compromise"];
         var Microsoft_Enterprise = ["Key compromise", "CA compromise", "Affiliation Changed", "Superseded", "Cessation of operation"];
-		var GoDaddy = ["Key compromise", "Affiliation Changed", "Superseded", "Cessation of operation", "Privilege Withdrawn"];
-		var pki = [ "Key compromise", "Affiliation Changed", "Unspecified", "CA compromise", "Attribute authority compromise", "Superseded", "Cessation of operation", "Privilege withdrawn"];
-		var hydrantId = ["Unspecified", "Key compromised", "Cessation of operation", "Affiliation Changed", "Superseded"];
-		var swisssign = ["Superseded", "Key compromise", "Affiliation changed", "Cessation of operation", "Unused"];
-		var digicert = ["Key compromise", "Affiliation Changed", "Superseded", "Cessation of operation"];
+        var GoDaddy = ["Key compromise", "Affiliation Changed", "Superseded", "Cessation of operation", "Privilege Withdrawn"];
+        var pki = ["Key compromise", "Affiliation Changed", "Unspecified", "CA compromise", "Attribute authority compromise", "Superseded", "Cessation of operation", "Privilege withdrawn"];
+        var hydrantId = ["Unspecified", "Key compromised", "Cessation of operation", "Affiliation Changed", "Superseded"];
+        var swisssign = ["Superseded", "Key compromise", "Affiliation changed", "Cessation of operation", "Unused"];
+        var digicert = ["Key compromise", "Affiliation Changed", "Superseded", "Cessation of operation"];
+        var globalsignatlas = ["Superseded", "Cessation of operation", "Affiliation Changed", "Key compromise", "Unspecified"];
         g_form.setDisplay('reason', true);
         g_form.setDisplay('comments', true);
         g_form.clearValue('comments');
@@ -75,6 +76,10 @@
             for (iterator = 0; iterator < digicert.length; iterator++) {
                 g_form.addOption('reason', digicert[iterator], digicert[iterator]);
             }
+        } else if (CA == "GlobalSignAtlas") {
+            for (iterator = 0; iterator < digicert.length; iterator++) {
+                g_form.addOption('reason', globalsignatlas[iterator], globalsignatlas[iterator]);
+            }
         } else {
             for (iterator = 0; iterator < AppViewX.length; iterator++) {
                 g_form.addOption('reason', AppViewX[iterator], AppViewX[iterator]);
@@ -100,7 +105,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b325147d1ba5d550cda7db91dd4bcb32</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>revoke_set_reason_based_on_CA</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -109,7 +114,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_b325147d1ba5d550cda7db91dd4bcb32</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-04-27 20:43:36</sys_updated_on>
+        <sys_updated_on>2026-06-01 23:45:35</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

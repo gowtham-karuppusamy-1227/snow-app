@@ -82,6 +82,12 @@
             </choice>
         </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to attach trust certificates?" max_length="40" name="attach_trust_cert" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" display="true" label="Automatic Certificate Action" max_length="40" name="automatic_certificate_action" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Auto Regeneration" value="Auto Regeneration"/>
+                <element inactive_on_update="false" label="Auto Renewal" value="Auto Renewal"/>
+            </choice>
+        </element>
         <element choice="1" hint="Select the CA policy applicable for CLM actions " label="CA Policy" mandatory="true" max_length="50" name="ca_policy_name" type="choice">
             <choice/>
         </element>
@@ -99,6 +105,7 @@
                 <element inactive_on_update="false" label="Based on User Group In AppViewX" value="Based on AppViewX"/>
                 <element inactive_on_update="false" label="Based on User Group In ServiceNow" sequence="2" value="Based on User Group In ServiceNow"/>
                 <element inactive_on_update="false" label="Get All Certificates" sequence="3" value="Get All Certificates"/>
+                <element inactive_on_update="false" label="Based on CA Tag" sequence="4" value="Based on CA Tag"/>
             </choice>
         </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Fetch Certificates" mandatory="true" max_length="40" name="certificates_fetch_revoke" type="choice">
@@ -107,6 +114,7 @@
                 <element inactive_on_update="false" label="Based on User Group In AppViewX" value="Based on AppViewX"/>
                 <element inactive_on_update="false" label="Based on User Group In ServiceNow" sequence="2" value="Based on User Group In ServiceNow"/>
                 <element inactive_on_update="false" label="Get All Certificates" sequence="3" value="Get All Certificates"/>
+                <element inactive_on_update="false" label="Based on CA Tag" sequence="4" value="Based on CA Tag"/>
             </choice>
         </element>
         <element choice="1" hint="Select the Certificate Categories under which users can perform CLM actions" label="Certificate Category" mandatory="true" max_length="4000" name="certificate_category" type="glide_list">
@@ -138,9 +146,12 @@
         <element choice="1" hint="Select the options through which user can provide the CSR" label="CSR Options" mandatory="true" max_length="4000" name="csr_upload_option" reference="x_avx_appviewx_aut_csr_options" type="glide_list">
             <choice/>
         </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="30" label="Days Before Expiry" max_length="40" name="days_before_expiry" type="integer"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Allow User to Edit Certificate Attributes" max_length="40" name="edit_certificate_attributes" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable Automatic Renewal/Regeneration" max_length="40" name="enable_automatic_renewal_regeneration" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable CSR Parameters" max_length="40" name="enable_csr_parameters" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable San Fields" max_length="40" name="enable_san_fields" type="boolean"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable San Fields" max_length="40" name="enable_san_fields_for_renew" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="enroll_approver_selection_two" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
@@ -183,6 +194,7 @@
             </choice>
         </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" max_length="32" name="renew_user_group_snow_two" reference="sys_user_group" type="reference"/>
+        <element active="false" calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Retrieve Devices Based on User(AppViewX)" max_length="40" name="retrieve_devices_based_on_user" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="revoke_approver_selection_two" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
@@ -204,6 +216,13 @@
             </choice>
         </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Subject Alternative Names" max_length="4000" name="subject_alternative_names" type="glide_list">
+            <choice>
+                <element inactive_on_update="false" label="DNS" sequence="0" value="DNS"/>
+                <element inactive_on_update="false" label="IP Address" sequence="1" value="IP Address"/>
+                <element inactive_on_update="false" label="Email Address" sequence="2" value="Email Address"/>
+            </choice>
+        </element>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Subject Alternative Names" max_length="4000" name="subject_alternative_names_for_renew" type="glide_list">
             <choice>
                 <element inactive_on_update="false" label="DNS" sequence="0" value="DNS"/>
                 <element inactive_on_update="false" label="IP Address" sequence="1" value="IP Address"/>
@@ -671,8 +690,11 @@
         </element>
         <element hint="Enable this option, to use the same approval setting from enroll" label="Use Approval Settings from Enroll" max_length="40" name="use_approval_settings_from_create" type="boolean"/>
         <element hint="Enable this option, to use the same approval setting from enroll" label="Use Approval Settings from Enroll" max_length="40" name="use_approval_settings_from_create_for_revoke" type="boolean"/>
-        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Vendor Name" max_length="4000" name="vendor_name" type="glide_list">
+        <element choice="1" label="Vendor Name" max_length="4000" name="vendor_name" type="glide_list">
             <choice>
+                <element inactive_on_update="false" label="AWS" value="AWS"/>
+                <element inactive_on_update="false" label="Citrix" value="Citrix"/>
+                <element inactive_on_update="false" label="Imperva" value="Imperva"/>
                 <element inactive_on_update="false" label="F5" sequence="0" value="F5"/>
                 <element inactive_on_update="false" label="IIS" sequence="1" value="IIS"/>
                 <element inactive_on_update="false" label="Apache" sequence="3" value="Apache"/>

@@ -12,53 +12,19 @@
         <script><![CDATA[var trigger_enroll_workflow = Class.create();
 trigger_enroll_workflow.prototype = {
     initialize: function() {},
-    execute: function(ritm_sys_id) {
-        try {
-            var log = new GlideRecord('x_avx_appviewx_aut_logs');
-            // Get the RITM record to access its variables
-            var ritmGR = new GlideRecord('sc_req_item');
-            ritmGR.get(ritm_sys_id);
-            var form = ritmGR.variables;
-            var company = form.company_name;
-            log.initialize();
-            var client_id;
 
-            if (gs.getProperty("glide.sys.domain.partitioning") === 'true') {
-                var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
-                gr.addQuery('company', company);
-                gr.query();
-                if (!gr.hasNext()) {
-                    throw "Could not find AppViewX instance url to fetch the details.";
-                }
-                while (gr.next()) {
-                    var url = gr.getValue('instance_url') || '';
-                    var mid_server = gr.getValue('mid_server') || '';
-                    var cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || 'false';
-                }
-            } else {
-                url = gs.getProperty("x_avx_appviewx_aut.URL");
-                mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
-                cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
-            }
-            var r = new sn_ws.RESTMessageV2();
-            var script_include_call = new appviewx_oauth_token_generation();
-            var token_generation = script_include_call.TestConnection(client_id, company);
-            if (token_generation.length == 2 && token_generation[0] == 200) {
-                var parse_response = JSON.parse(token_generation[1]);
-                var token = parse_response['response'];
-            } else {
-                throw "Error while generating the Token.";
-            }
-            var file_upload_sys_id = form.upload_csr;
-            var sysAttachmentGR = new GlideRecord('sys_attachment');
-            var attachmentGSA = new GlideSysAttachment();
-            sysAttachmentGR.addQuery('table_name', 'ZZ_YY' + ritmGR.getTableName());
-            sysAttachmentGR.addQuery('table_sys_id', ritmGR.sys_id);
-            sysAttachmentGR.addQuery('sys_id', file_upload_sys_id);
-            sysAttachmentGR.query();
-            while (sysAttachmentGR.next()) {
-                cert_content = attachmentGSA.getContent(sysAttachmentGR);
-            }
+    execute: function(ritm_sys_id) {
+        var helper = new trigger_workflow_common();
+        var context = {};
+        var requestScript = 'new_certificate_request';
+
+        try {
+            context = helper.createContext(ritm_sys_id);
+            var ritmGR = context.ritmGR;
+            var form = context.form;
+            var ca_tag_name = form.ca_tag_name;
+            var gr_clm = helper.getClmSettings(ca_tag_name);
+            var cert_content = helper.getUploadedContent(ritmGR, form.upload_csr);
 
             var upload_cert_content;
             if (form.csr_input_method == 'Upload CSR') {
@@ -68,33 +34,9 @@ trigger_enroll_workflow.prototype = {
                     upload_cert_content = (cert_content).toString();
                 }
             }
-            var ca_tag_name = form.ca_tag_name;
-            var gr_clm = new GlideRecord('x_avx_appviewx_aut_clm_settings');
-            gr_clm.addQuery('ca_tag_name', ca_tag_name);
-            gr_clm.query();
-            if (!gr_clm.hasNext()) {
-                throw "Could not find CA Tag with the name - " + ca_tag_name + " in the CLM Settings table";
-            }
-            gr_clm.next();
 
-            var grp = new GlideRecord('sys_user_grmember');
-            grp.addQuery('user', ritmGR.requested_for);
-            grp.query();
-            var assignment_group_name = "";
-			var attribute_mail = "";
-            while (grp.next()) {
-                var group = grp.group.getRefRecord();
-                if (group.email) {
-                    if (attribute_mail)
-                        attribute_mail += "," + group.email;
-                    else
-                        attribute_mail = group.email;
-                }
-                if (assignment_group_name)
-                    assignment_group_name += "," + group.name;
-                else
-                    assignment_group_name = group.name;
-            }
+            var groupDetails = helper.getAssignmentGroupDetails(ritmGR);
+            var assignment_group_name = groupDetails.assignment_group_name;
 
             var san_values = [];
             gr_clm.add_dns_values = (form.add_dns_values).toString();
@@ -106,6 +48,7 @@ trigger_enroll_workflow.prototype = {
             if (gr_clm.add_ip_address === "true") {
                 san_values.push("IP Address");
             }
+
             var cert_type;
             if (form.certificate_authority == 'DigiCert') {
                 cert_type = (form.certificate_type).toString();
@@ -126,6 +69,7 @@ trigger_enroll_workflow.prototype = {
             } else if (form.certificate_authority == 'SwissSign') {
                 cert_type = (form.swisssign_product).toString();
             }
+
             var client_san;
             if (form.certificate_category == 'Client' && form.certificate_authority != 'Microsoft Enterprise') {
                 san_values.push("Email Address");
@@ -136,9 +80,10 @@ trigger_enroll_workflow.prototype = {
                     client_san = form.san_email || '';
                 }
             }
+
             var profile_name;
             if (form.push_to_end_device == 'true') {
-                if (cmdb_sync == 'true') {
+                if (context.cmdb_sync == 'true') {
                     var profiles = form.profile_name_reference;
                     var profile_obj = new GlideRecord('x_avx_appviewx_aut_vendor_profiles_table');
                     profile_obj.addQuery('sys_id', 'IN', profiles);
@@ -156,9 +101,10 @@ trigger_enroll_workflow.prototype = {
                     profile_name = form.profile_name;
                 }
             }
+
             var key_vault_name;
             if (form.push_to_end_device == 'true' && form.vendor_csr == 'Azure') {
-                if (cmdb_sync == 'true') {
+                if (context.cmdb_sync == 'true') {
                     var akv_obj = new GlideRecord('x_avx_appviewx_aut_vendor_profiles_table');
                     akv_obj.addQuery('sys_id', 'IN', form.key_vault_name);
                     akv_obj.query();
@@ -175,6 +121,7 @@ trigger_enroll_workflow.prototype = {
                     key_vault_name = form.key_vault_name;
                 }
             }
+
             if (form.certificate_authority == 'DigiCert MPKI') {
                 var custom_cert_attr = [];
                 var custom_attributes = [];
@@ -200,260 +147,166 @@ trigger_enroll_workflow.prototype = {
                     }
                 }
             }
-            var cert_attr = [];
-            var cert_attributes = {};
-            var clm_cert_attribute;
-            cert_attributes['attribute'] = 'requestor';
-            cert_attributes['attribute_value'] = (ritmGR.requested_for.email || '').toString();
-            cert_attr.push(cert_attributes);
-            cert_attributes = {};
-            cert_attributes['attribute'] = 'requestor_assignment_group';
-            cert_attributes['attribute_value'] = (assignment_group_name || '');
-            cert_attr.push(cert_attributes);
-            gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
-            gr.addQuery('ca_tag_name', ca_tag_name);
-            if (gs.getProperty("glide.sys.domain.partitioning") === 'true') {
-                gr.addQuery('company', company);
-            }
-            gr.query();
-            while (gr.next()) {
-                clm_cert_attribute = gr.getValue('meta_data_configured_in_appviewx');
-            }
-            var meta_info = JSON.parse(clm_cert_attribute) || {};
-            var meta_length = Object.keys(meta_info).length;
-            if (meta_length > 0) {
-                var obj = [];
-                for (var key in meta_info) {
-                    var key_value = meta_info[key];
-                    obj.push(key_value);
-                }
-                for (var i = 1; i < meta_length + 1; i++) {
-                    cert_attributes = {};
-                    var meta_field_name = "meta_data_" + (i.toString());
-                    cert_attributes['attribute'] = obj[i - 1];
-                    cert_attributes['attribute_value'] = (form[meta_field_name] || '').toString();
-                    cert_attr.push(cert_attributes);
+
+            var auto_renew = 'Off';
+            var renew_before = '';
+            var auto_regenerate = 'Off';
+            var regenerate_before = '';
+            var automatic_action = (gr_clm.automatic_certificate_action || '').toString();
+            var days_before_expiry = (gr_clm.days_before_expiry || '').toString();
+
+            if ((gr_clm.enable_automatic_renewal_regeneration || '').toString() == 'true') {
+                if (automatic_action == 'Auto Renewal') {
+                    auto_renew = 'On';
+                    renew_before = days_before_expiry;
+                } else if (automatic_action == 'Auto Regeneration') {
+                    auto_regenerate = 'On';
+                    regenerate_before = days_before_expiry;
                 }
             }
-            log.level = 'Info';
-            log.script = 'create_certificate';
-            log.application = 'AppViewX';
-            log.message = 'Triggering new certificate request API';
-            log.insert();
-            var payload = {
-                "payload": {
-                    "header": {
-                        "workflowName": (gr_clm.workflow_name_for_create_appviewx || '').toString()
-                    },
-                    "data": {
-                        "input": {
-                            "requestData": [{
-                                "sequenceNo": 1,
-                                "scenario": "scenario",
-                                "fieldInfo": {
-                                    "cert_category": (form.certificate_category || '').toString(),
-                                    "certificate_policy": (form.certificate_policy || '').toString(),
-                                    "certificate_group": (form.certificate_group || '').toString(),
-                                    "certificate_authority": (form.certificate_authority).toString(),
-                                    "input_method": (form.csr_input_method || '').toString(),
-                                    "ca_account": (form.ca_account || '').toString(),
-                                    "division": (form.division || '').toString(),
-                                    "cert_type": (cert_type || '').toString(),
-                                    "avx_pkiaas_native_isssuer_name": (form.issuer_name || '').toString(),
-                                    "avx_pkiaas_native_template": (form.avx_template || '').toString(),
-                                    "auto_renew": "Off",
-                                    "renew_before": "",
-                                    "auto_regenerate": "Off",
-                                    "regenerate_before": "",
-                                    "upload_csr": (upload_cert_content || '').toString(),
-                                    "common_name": ((form.common_name || '').toString()).trim(),
-                                    "san": (san_values.join(",") || '').toString(), //"DNS,IP Address",
-                                    "directory_names": "",
-                                    "dns_names": (form.dns || '').toString(),
-                                    "rfc822names": (client_san || '').toString(),
-                                    "ip_addresses": (form.ip_address || '').toString(),
-                                    "registered_ids": "",
-                                    "uris": "",
-                                    "othernames": "",
-                                    "organization": (form.organization || '').toString(),
-                                    "organization_unit": (form.organization_unit || '').toString(),
-                                    "locality": (form.locality || '').toString(),
-                                    "state": (form.state || '').toString(),
-                                    "country": (form.country || '').toString(),
-                                    "email_address": (form.email_address || '').toString(),
-                                    "digicert_postal_code": "",
-                                    "validity_unit": (form.validity_unit || '').toString(),
-                                    "validity_value": (form.validity_value || '').toString(),
-                                    "challenge_password": "",
-                                    "hash_function": (form.hash_function || '').toString(),
-                                    "key_type": (form.key_type || '').toString(),
-                                    "bit_length": (form.bit_length || '').toString(),
-                                    "sphincsKeyVersion": (form.key_version || '').toString(),
-                                    "elliptic_curve": (form.ecdsa_curve || '').toString(),
-                                    "digicert_server_type": (form.server_type || '').toString(),
-                                    "ejbca_end_entity_profile_name": (form.ejbca_end_entity_profile_name || '').toString(),
-                                    "ejbca_end_entity_user_name": (form.ejbca_end_entity_user_name || '').toString(),
-                                    "ejbca_issuer_common_name": (form.ejbca_issuer_common_name || '').toString(),
-                                    "ejbca_certificate_profile_name": (form.ejbca_certificate_profile_name || '').toString(),
-                                    "entrust_additional_emails": "",
-                                    "microsoft_enterprise_template_name": (form.microsoft_template || '').toString(),
-                                    "user_email": (form.email_id || '').toString(),
-                                    "sync_mode": "Sync",
-                                    "ttl": "300",
-                                    "appviewx_approval": (gr_clm.approval_levels_in_appviewx || '').toString(),
-                                    "cert_format": ((form.certificate_issuance_format || '').toString()).trim(),
-                                    "cert_issue_mode": (gr_clm.certificate_retrieval_mode || '').toString(),
-                                    "requestor_id": (ritmGR.requested_for.email || '').toString(),
-                                    "sys_id": (ritmGR.sys_id || '').toString(),
-                                    "one_level_approver_mail_id": (gr_clm.appviewx_one_level_approval_mail_id_for_create || '').toString(),
-                                    "two_level_approver_mail_id": (gr_clm.appviewx_two_level_approval_mail_id_for_create || '').toString(),
-                                    "ritm_number": (ritmGR.number || '').toString(),
-                                    "req_number": (ritmGR.request.getDisplayValue() || '').toString(),
-                                    "req_sys_id": (ritmGR.request || '').toString(),
-                                    "cert_attributes": (cert_attr || []),
-                                    "appviewx_url": url.toString(),
-                                    "certificate_group_selection": (gr_clm.certificate_group_selection || '').toString(),
-                                    "servicenow_user_name": (ritmGR.requested_for.name || '').toString(),
-                                    "amazonCertValidationType": (form.certificate_validation_type || '').toString(),
-                                    "CertificateTransparencyLoggingPreference": (form.certificate_transparency_logging_preference || '').toString(),
-                                    "godaddy_slot_size": (form.godaddy_slot_size || '').toString(),
-                                    "issuer": (form.issuer || '').toString(),
-                                    "region": (form.region || '').toString(),
-                                    "ca_signing_algorithm": (form.ca_signing_algorithm || '').toString(),
-                                    "sectigo_server_type": (form.sectigo_server_type || '').toString(),
-                                    "assignment_group_name": (assignment_group_name || '').toString(),
-                                    "cmdb_sync": (cmdb_sync || '').toString(),
-                                    "push_to_end_device": (form.push_to_end_device || '').toString(),
-                                    "push_assignment_group": (gr_clm.push_assignment_group || '').toString(),
-                                    "send_certificate": (gr_clm.send_certificate_to_end_user || '').toString(),
-                                    "vendor_name": (form.vendor_name || '').toString(),
-                                    "device_name": (form.device_name || '').toString(),
-                                    "profile_name": (profile_name || '').toString(),
-                                    "time_zone": (gr_clm.time_zone || '').toString(),
-                                    "push_root_and_intermediate_certificates": (form.push_root_and_intermediate_certificates || '').toString(),
-                                    "push_certificate_format": (form.push_certificate_format || '').toString(),
-                                    "customize_push_location": (form.customize_push_location || '').toString(),
-                                    "private_key_in_device": (form.private_key_in_device || '').toString(),
-                                    "intermediate_and_ca_certificate_directory": (form.intermediate_and_ca_certificate_directory || '').toString(),
-                                    "certificate_directory": (form.certificate_directory || '').toString(),
-                                    "key_directory": (form.key_directory || '').toString(),
-                                    "keystore_location": (form.keystore_location || '').toString(),
-                                    "keystore_password": (form.keystore_password || '').toString(),
-                                    "service_restart": (form.service_restart || '').toString(),
-                                    "private_key_location": (form.private_key_location || '').toString(),
-                                    "catalog_task": (gr_clm.create_catalog_task_ticket || '').toString(),
-                                    "domain_admin_email": (form.domain_admin_email || '').toString(),
-                                    "business_category": (form.business_category || '').toString(),
-                                    "incorporating_agency_reg_no": (form.incorporating_agency_reg_no || '').toString(),
-                                    "designation": (form.designation || '').toString(),
-                                    "globalsign_mssl_profile_name": (form.globalsign_mssl_profile_name || '').toString(),
-                                    "avx_issuer_location": (form.avx_issuer_location || '').toString(),
-                                    "avx_issuer_name": (form.avx_issuer_name || '').toString(),
-                                    "organization_address": (form.organization_address || '').toString(),
-                                    "csr_zip_code": (form.csr_zip_code || '').toString(),
-                                    "form_assignment_group": (form.ticket_assignment_group.name || '').toString(),
-                                    "zip_certificate_file": (gr_clm.zip_the_certificate_file || false).toString(),
-                                    "digicert_mpki_profile_name": (form.digicert_mpki_profiles || '').toString(),
-                                    "custom_attributes": (custom_cert_attr || []),
-                                    "zip_trust_certificate": (gr_clm.attach_trust_cert || false).toString(),
-                                    "division_id": (form.division_id || '').toString(),
-                                    "swisssign_client_name": (form.swisssign_client_name || '').toString(),
-                                    "avx_pki_native_issuer_location": (form.avx_pki_native_issuer_location || '').toString(),
-                                    "endpoint": (form.endpoint || '').toString,
-                                    "vendor_csr": (form.vendor_csr || '').toString(),
-                                    "device_name_csr": (form.device_name_csr || '').toString(),
-                                    "key_vault_name": (key_vault_name || '').toString(),
-                                    "csr_location": (form.csr_location || '').toString(),
-                                }
-                            }]
-                        },
-                        "globalData": {},
-                        "task_action": 1
-                    }
-                }
+
+
+            var cert_attr = helper.getCertificateAttributes(form, ritmGR, ca_tag_name, context.company, assignment_group_name);
+            var fieldInfo = {
+                "cert_category": (form.certificate_category || '').toString(),
+                "certificate_policy": (form.certificate_policy || '').toString(),
+                "certificate_group": (form.certificate_group || '').toString(),
+                "certificate_authority": (form.certificate_authority).toString(),
+                "input_method": (form.csr_input_method || '').toString(),
+                "ca_account": (form.ca_account || '').toString(),
+                "division": (form.division || '').toString(),
+                "cert_type": (cert_type || '').toString(),
+                "avx_pkiaas_native_isssuer_name": (form.issuer_name || '').toString(),
+                "avx_pkiaas_native_template": (form.avx_template || '').toString(),
+                "auto_renew": auto_renew,
+                "renew_before": renew_before,
+                "auto_regenerate": auto_regenerate,
+                "regenerate_before": regenerate_before,
+                "upload_csr": (upload_cert_content || '').toString(),
+                "common_name": ((form.common_name || '').toString()).trim(),
+                "san": (san_values.join(",") || '').toString(),
+                "directory_names": "",
+                "dns_names": (form.dns || '').toString(),
+                "rfc822names": (client_san || '').toString(),
+                "ip_addresses": (form.ip_address || '').toString(),
+                "registered_ids": "",
+                "uris": "",
+                "othernames": "",
+                "organization": (form.organization || '').toString(),
+                "organization_unit": (form.organization_unit || '').toString(),
+                "locality": (form.locality || '').toString(),
+                "state": (form.state || '').toString(),
+                "country": (form.country || '').toString(),
+                "email_address": (form.email_address || '').toString(),
+                "digicert_postal_code": "",
+                "validity_unit": (form.validity_unit || '').toString(),
+                "validity_value": (form.validity_value || '').toString(),
+                "challenge_password": "",
+                "hash_function": (form.hash_function || '').toString(),
+                "key_type": (form.key_type || '').toString(),
+                "bit_length": (form.bit_length || '').toString(),
+                "sphincsKeyVersion": (form.key_version || '').toString(),
+                "elliptic_curve": (form.ecdsa_curve || '').toString(),
+                "digicert_server_type": (form.server_type || '').toString(),
+                "ejbca_end_entity_profile_name": (form.ejbca_end_entity_profile_name || '').toString(),
+                "ejbca_end_entity_user_name": (form.ejbca_end_entity_user_name || '').toString(),
+                "ejbca_issuer_common_name": (form.ejbca_issuer_common_name || '').toString(),
+                "ejbca_certificate_profile_name": (form.ejbca_certificate_profile_name || '').toString(),
+                "entrust_additional_emails": "",
+                "microsoft_enterprise_template_name": (form.microsoft_template || '').toString(),
+                "user_email": (form.email_id || '').toString(),
+                "sync_mode": "Sync",
+                "ttl": "300",
+                "appviewx_approval": (gr_clm.approval_levels_in_appviewx || '').toString(),
+                "cert_format": ((form.certificate_issuance_format || '').toString()).trim(),
+                "cert_issue_mode": (gr_clm.certificate_retrieval_mode || '').toString(),
+                "requestor_id": (ritmGR.requested_for.email || '').toString(),
+                "sys_id": (ritmGR.sys_id || '').toString(),
+                "one_level_approver_mail_id": (gr_clm.appviewx_one_level_approval_mail_id_for_create || '').toString(),
+                "two_level_approver_mail_id": (gr_clm.appviewx_two_level_approval_mail_id_for_create || '').toString(),
+                "ritm_number": (ritmGR.number || '').toString(),
+                "req_number": (ritmGR.request.getDisplayValue() || '').toString(),
+                "req_sys_id": (ritmGR.request || '').toString(),
+                "cert_attributes": (cert_attr || []),
+                "appviewx_url": context.url.toString(),
+                "certificate_group_selection": (gr_clm.certificate_group_selection || '').toString(),
+                "servicenow_user_name": (ritmGR.requested_for.name || '').toString(),
+                "amazonCertValidationType": (form.certificate_validation_type || '').toString(),
+                "CertificateTransparencyLoggingPreference": (form.certificate_transparency_logging_preference || '').toString(),
+                "godaddy_slot_size": (form.godaddy_slot_size || '').toString(),
+                "issuer": (form.issuer || '').toString(),
+                "region": (form.region || '').toString(),
+                "ca_signing_algorithm": (form.ca_signing_algorithm || '').toString(),
+                "sectigo_server_type": (form.sectigo_server_type || '').toString(),
+                "assignment_group_name": (assignment_group_name || '').toString(),
+                "cmdb_sync": (context.cmdb_sync || '').toString(),
+                "push_to_end_device": (form.push_to_end_device || '').toString(),
+                "push_assignment_group": (gr_clm.push_assignment_group || '').toString(),
+                "send_certificate": (gr_clm.send_certificate_to_end_user || '').toString(),
+                "vendor_name": (form.vendor_name || '').toString(),
+                "device_name": (form.device_name || '').toString(),
+                "profile_name": (profile_name || '').toString(),
+                "time_zone": (gr_clm.time_zone || '').toString(),
+                "push_root_and_intermediate_certificates": (form.push_root_and_intermediate_certificates || '').toString(),
+                "push_certificate_format": (form.push_certificate_format || '').toString(),
+                "customize_push_location": (form.customize_push_location || '').toString(),
+                "private_key_in_device": (form.private_key_in_device || '').toString(),
+                "intermediate_and_ca_certificate_directory": (form.intermediate_and_ca_certificate_directory || '').toString(),
+                "certificate_directory": (form.certificate_directory || '').toString(),
+                "key_directory": (form.key_directory || '').toString(),
+                "keystore_location": (form.keystore_location || '').toString(),
+                "keystore_password": (form.keystore_password || '').toString(),
+                "service_restart": (form.service_restart || '').toString(),
+                "private_key_location": (form.private_key_location || '').toString(),
+                "catalog_task": (gr_clm.create_catalog_task_ticket || '').toString(),
+                "domain_admin_email": (form.domain_admin_email || '').toString(),
+                "business_category": (form.business_category || '').toString(),
+                "incorporating_agency_reg_no": (form.incorporating_agency_reg_no || '').toString(),
+                "designation": (form.designation || '').toString(),
+                "globalsign_mssl_profile_name": (form.globalsign_mssl_profile_name || '').toString(),
+                "globalsign_atlas_certificate_profile": (form.globalsign_atlas_certificate_profile || '').toString(),
+                "avx_issuer_location": (form.avx_issuer_location || '').toString(),
+                "avx_issuer_name": (form.avx_issuer_name || '').toString(),
+                "organization_address": (form.organization_address || '').toString(),
+                "csr_zip_code": (form.csr_zip_code || '').toString(),
+                "form_assignment_group": (form.ticket_assignment_group.name || '').toString(),
+                "zip_certificate_file": (gr_clm.zip_the_certificate_file || false).toString(),
+                "digicert_mpki_profile_name": (form.digicert_mpki_profiles || '').toString(),
+                "custom_attributes": (custom_cert_attr || []),
+                "zip_trust_certificate": (gr_clm.attach_trust_cert || false).toString(),
+                "division_id": (form.division_id || '').toString(),
+                "swisssign_client_name": (form.swisssign_client_name || '').toString(),
+                "avx_pki_native_issuer_location": (form.avx_pki_native_issuer_location || '').toString(),
+                "endpoint": (form.endpoint || '').toString,
+                "vendor_csr": (form.vendor_csr || '').toString(),
+                "device_name_csr": (form.device_name_csr || '').toString(),
+                "key_vault_name": (key_vault_name || '').toString(),
+                "csr_location": (form.csr_location || '').toString()
             };
-            gs.info(JSON.stringify(payload));
-            log.level = 'Info';
-            log.script = 'create_certificate';
-            log.application = 'AppViewX';
-            log.message = JSON.stringify(payload);
-            log.insert();
-            if (mid_server != "") {
-                r.setMIDServer(mid_server);
-                r.setEccParameter('skip_sensor', 'true');
-                r.setEccCorrelator('AVX_REST_CALL');
-            }
-            r.setHttpMethod("post");
-            r.setRequestHeader("token", token);
-            r.setRequestHeader('User-Agent', 'snow');
-            r.setRequestHeader("Content-Type", "application/json");
-            r.setEndpoint(url + "/avxapi/visualworkflow-submit-request?gwsource=web");
-            r.setRequestBody(JSON.stringify(payload));
-            var response = r.executeAsync();
-            var reqRecord = ritmGR.request.getRefRecord();
-            if (response.haveError()) {
-                var responseMessage = response.getErrorMessage() || '';
-                var responseBody = response.getBody() || '';
-                log.level = 'Error';
-                log.script = 'new_certificate_request';
-                log.application = 'AppViewX';
-                log.message = 'Certificate request failed ' + responseBody + '\nMessage: ' + responseMessage;
-                log.insert();
-                responseBody = JSON.parse(responseBody);
-                form.request_id = "Failed to submit certificate request";
-                form.appviewx_response = responseBody["message"];
-                ritmGR.stage = "closed_incomplete";
-                ritmGR.state = 4;
-                // Set the values on the request table
-                reqRecord.state = 4;
-                reqRecord.request_state = "closed_incomplete";
-                reqRecord.update();
-                ritmGR.comments = "Failure while processing the service request.\n" + responseBody["message"];
-                ritmGR.update();
-                return "false";
-            } else {
-                responseBody = response.getBody();
-                responseBody = JSON.parse(responseBody);
-                var avx_id = responseBody["response"]["requestId"];
-                log.level = 'Info';
-                log.script = 'new_certificate_request';
-                log.application = 'AppViewX';
-                log.message = 'Successfully triggered appviewx workflow with request ID ' + avx_id;
-                log.insert();
-                var message = responseBody["response"]["message"] + "Status : " + responseBody["response"]["status"];
-                form.request_id = "R" + avx_id;
-                form.appviewx_response = message;
-				ritmGR.comments = 'Successfully triggered appviewx workflow with request ID ' + avx_id;
-                ritmGR.update();
-                return "true";
-            }
+
+            var payload = helper.createPayload(gr_clm.workflow_name_for_create_appviewx, fieldInfo);
+            return helper.submitWorkflow(context, payload, {
+                startScript: 'create_certificate',
+                requestScript: requestScript,
+                successComment: true
+            });
         } catch (error) {
-            log.level = 'Error';
-            log.script = 'new_certificate_request';
-            log.application = 'AppViewX';
-            log.message = 'Response for request with number ' + ritmGR.number + '\n ' + error;
-            log.insert();
-            ritmGR.comments = "Failure while processing the service request.";
-            ritmGR.stage = "closed_incomplete";
-            ritmGR.state = 4;
-            reqRecord = ritmGR.request.getRefRecord();
-            reqRecord.state = 4;
-            reqRecord.request_state = "closed_incomplete";
-            reqRecord.update();
-            gs.addErrorMessage(error);
-            ritmGR.update();
-            return "false";
+            return helper.failWorkflow(context, {
+                requestScript: requestScript,
+                error: error
+            });
         }
     },
 
     type: 'trigger_enroll_workflow'
-};]]></script>
+};
+]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-02-25 21:11:34</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>9fb0bf192f9f7690bbc4680cbfa4e3ff</sys_id>
-        <sys_mod_count>10</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>trigger_enroll_workflow</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -461,7 +314,7 @@ trigger_enroll_workflow.prototype = {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_9fb0bf192f9f7690bbc4680cbfa4e3ff</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-02-27 18:12:04</sys_updated_on>
+        <sys_updated_on>2026-07-05 08:39:12</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>9fb0bf192f9f7690bbc4680cbfa4e3ff</id>

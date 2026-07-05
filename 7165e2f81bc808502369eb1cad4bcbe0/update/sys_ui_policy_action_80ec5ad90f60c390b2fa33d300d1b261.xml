@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>true</cleared>
+        <disabled>ignore</disabled>
+        <field>retrieve_devices_based_on_user</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-04-28 18:22:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>80ec5ad90f60c390b2fa33d300d1b261</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>retrieve_devices_based_on_user</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_ui_policy_action_80ec5ad90f60c390b2fa33d300d1b261</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-04-28 18:22:11</sys_updated_on>
+        <table>x_avx_appviewx_aut_clm_settings</table>
+        <ui_policy display_value="Enable Retrieve Devices Based on User">e8ac92d90f60c390b2fa33d300d1b226</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

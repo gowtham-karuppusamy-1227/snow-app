@@ -11,6 +11,7 @@
         <script>gs.getUser().company.getDisplayValue()</script>
         <script_reference_id/>
         <script_reference_table/>
+        <secondary_script/>
         <sys_class_name>sys_filter_option_dynamic</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-20 10:02:44</sys_created_on>

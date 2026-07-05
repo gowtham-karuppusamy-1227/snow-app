@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_avx_appviewx_aut.trigger_workflow_common</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>trigger_workflow_common</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var trigger_workflow_common = Class.create();
+trigger_workflow_common.prototype = {
+    initialize: function() {},
+
+    createContext: function(ritm_sys_id) {
+        var log = new GlideRecord('x_avx_appviewx_aut_logs');
+        var ritmGR = new GlideRecord('sc_req_item');
+        if (!ritmGR.get(ritm_sys_id)) {
+            throw "Could not find Requested Item with sys_id - " + ritm_sys_id;
+        }
+
+        var form = ritmGR.variables;
+        var company = form.company_name;
+        log.initialize();
+
+        var connection = this.getConnection(company);
+        return {
+            log: log,
+            ritmGR: ritmGR,
+            form: form,
+            company: company,
+            url: connection.url,
+            mid_server: connection.mid_server,
+            cmdb_sync: connection.cmdb_sync,
+            token: this.getToken(company)
+        };
+    },
+
+    getConnection: function(company) {
+        var connection = {};
+        if (gs.getProperty("glide.sys.domain.partitioning") === 'true') {
+            var gr = new GlideRecordSecure('x_avx_appviewx_aut_connection_settings_table');
+            gr.addQuery('company', company);
+            gr.query();
+            if (!gr.hasNext()) {
+                throw "Could not find AppViewX instance url to fetch the details.";
+            }
+            while (gr.next()) {
+                connection.url = gr.getValue('instance_url') || '';
+                connection.mid_server = gr.getValue('mid_server') || '';
+                connection.cmdb_sync = gr.getDisplayValue('enable_appviewx_inventory_sync') || 'false';
+            }
+        } else {
+            connection.url = gs.getProperty("x_avx_appviewx_aut.URL");
+            connection.mid_server = gs.getProperty("x_avx_appviewx_aut.MID Server Name");
+            connection.cmdb_sync = gs.getProperty("x_avx_appviewx_aut.CMDB Sync");
+        }
+        return connection;
+    },
+
+    getToken: function(company) {
+        var script_include_call = new appviewx_oauth_token_generation();
+        var token_generation = script_include_call.TestConnection(undefined, company);
+        if (token_generation.length == 2 && token_generation[0] == 200) {
+            var parse_response = JSON.parse(token_generation[1]);
+            return parse_response['response'];
+        }
+        throw "Error while generating the Token.";
+    },
+
+    getClmSettings: function(ca_tag_name) {
+        var gr_clm = new GlideRecord('x_avx_appviewx_aut_clm_settings');
+        gr_clm.addQuery('ca_tag_name', ca_tag_name);
+        gr_clm.query();
+        if (!gr_clm.hasNext()) {
+            throw "Could not find CA Tag with the name - " + ca_tag_name + " in the CLM Settings table";
+        }
+        gr_clm.next();
+        return gr_clm;
+    },
+
+    getUploadedContent: function(ritmGR, file_upload_sys_id) {
+        var cert_content = "";
+        var sysAttachmentGR = new GlideRecord('sys_attachment');
+        var attachmentGSA = new GlideSysAttachment();
+        sysAttachmentGR.addQuery('table_name', 'ZZ_YY' + ritmGR.getTableName());
+        sysAttachmentGR.addQuery('table_sys_id', ritmGR.sys_id);
+        sysAttachmentGR.addQuery('sys_id', file_upload_sys_id);
+        sysAttachmentGR.query();
+        while (sysAttachmentGR.next()) {
+            cert_content = attachmentGSA.getContent(sysAttachmentGR);
+        }
+        return cert_content;
+    },
+
+    getAssignmentGroupDetails: function(ritmGR) {
+        var grp = new GlideRecord('sys_user_grmember');
+        grp.addQuery('user', ritmGR.requested_for);
+        grp.query();
+
+        var assignment_group_name = "";
+        var attribute_mail = "";
+        while (grp.next()) {
+            var group = grp.group.getRefRecord();
+            if (group.email) {
+                attribute_mail = attribute_mail ? attribute_mail + "," + group.email : group.email;
+            }
+            assignment_group_name = assignment_group_name ? assignment_group_name + "," + group.name : group.name;
+        }
+
+        return {
+            assignment_group_name: assignment_group_name,
+            attribute_mail: attribute_mail
+        };
+    },
+
+    getCertificateAttributes: function(form, ritmGR, ca_tag_name, company, assignment_group_name) {
+        var cert_attr = [];
+        var cert_attributes = {};
+        cert_attributes['attribute'] = 'requestor';
+        cert_attributes['attribute_value'] = (ritmGR.requested_for.email || '').toString();
+        cert_attr.push(cert_attributes);
+
+        cert_attributes = {};
+        cert_attributes['attribute'] = 'requestor_assignment_group';
+        cert_attributes['attribute_value'] = (assignment_group_name || '');
+        cert_attr.push(cert_attributes);
+
+        var gr = new GlideRecordSecure('x_avx_appviewx_aut_clm_settings');
+        gr.addQuery('ca_tag_name', ca_tag_name);
+        if (gs.getProperty("glide.sys.domain.partitioning") === 'true') {
+            gr.addQuery('company', company);
+        }
+        gr.query();
+
+        var clm_cert_attribute = "{}";
+        while (gr.next()) {
+            clm_cert_attribute = gr.getValue('meta_data_configured_in_appviewx') || "{}";
+        }
+
+        var meta_info = JSON.parse(clm_cert_attribute) || {};
+        var meta_length = Object.keys(meta_info).length;
+        if (meta_length > 0) {
+            var obj = [];
+            for (var key in meta_info) {
+                obj.push(meta_info[key]);
+            }
+            for (var i = 1; i < meta_length + 1; i++) {
+                cert_attributes = {};
+                var meta_field_name = "meta_data_" + (i.toString());
+                cert_attributes['attribute'] = obj[i - 1];
+                cert_attributes['attribute_value'] = (form[meta_field_name] || '').toString();
+                cert_attr.push(cert_attributes);
+            }
+        }
+        return cert_attr;
+    },
+
+    getApprovalSettings: function(gr_clm, workflow_type) {
+        var approval = {
+            appviewx_approval: "",
+            first_level_mail: "",
+            second_level_mail: ""
+        };
+
+        if (gr_clm.use_approval_settings_from_create == "true") {
+            approval.appviewx_approval = gr_clm.approval_levels_in_appviewx;
+            approval.first_level_mail = gr_clm.appviewx_one_level_approval_mail_id_for_create;
+            approval.second_level_mail = gr_clm.appviewx_two_level_approval_mail_id_for_create;
+            return approval;
+        }
+
+        if (workflow_type == "renew") {
+            approval.appviewx_approval = gr_clm.is_approval_needed_in_appviewx_renewal;
+            approval.first_level_mail = gr_clm.appviewx_one_level_approval_mail_id_for_renew;
+            approval.second_level_mail = gr_clm.appviewx_two_level_approval_mail_id_for_renew;
+        } else if (workflow_type == "revoke") {
+            approval.appviewx_approval = gr_clm.is_approval_needed_in_appviewx_revoke;
+            approval.first_level_mail = gr_clm.appviewx_one_level_approval_mail_id_for_revoke;
+            approval.second_level_mail = gr_clm.appviewx_two_level_approval_mail_id_for_revoke;
+        }
+
+        return approval;
+    },
+
+    createPayload: function(workflow_name, field_info) {
+        return {
+            "payload": {
+                "header": {
+                    "workflowName": (workflow_name || '').toString()
+                },
+                "data": {
+                    "input": {
+                        "requestData": [{
+                            "sequenceNo": 1,
+                            "scenario": "scenario",
+                            "fieldInfo": field_info
+                        }]
+                    },
+                    "globalData": {},
+                    "task_action": 1
+                }
+            }
+        };
+    },
+
+    submitWorkflow: function(context, payload, config) {
+
+        this.insertLog(context.log, 'Info', config.startScript, JSON.stringify(payload));
+
+        var r = new sn_ws.RESTMessageV2();
+        if (context.mid_server != "") {
+            r.setMIDServer(context.mid_server);
+            r.setEccParameter('skip_sensor', 'true');
+            r.setEccCorrelator('AVX_REST_CALL');
+        }
+        r.setHttpMethod("post");
+        r.setRequestHeader("token", context.token);
+        r.setRequestHeader('User-Agent', 'snow');
+        r.setRequestHeader("Content-Type", "application/json");
+        r.setEndpoint(context.url + "/avxapi/visualworkflow-submit-request?gwsource=web");
+        r.setRequestBody(JSON.stringify(payload));
+
+        var response = r.execute();
+        var form = context.form;
+        var ritmGR = context.ritmGR;
+        var reqRecord = ritmGR.request.getRefRecord();
+
+        if (response.haveError()) {
+            var responseMessage = response.getErrorMessage() || '';
+            var responseBody = response.getBody() || '';
+            this.insertLog(context.log, 'Error', config.requestScript, 'Certificate request failed ' + responseBody + '\nMessage: ' + responseMessage);
+            responseBody = JSON.parse(responseBody);
+            form.request_id = "Failed to submit certificate request";
+            form.appviewx_response = responseBody["message"];
+            ritmGR.stage = "closed_incomplete";
+            ritmGR.state = 4;
+            reqRecord.state = 4;
+            reqRecord.request_state = "closed_incomplete";
+            reqRecord.update();
+            ritmGR.comments = "Failure while processing the service request.\n" + responseBody["message"];
+            ritmGR.update();
+            return "false";
+        }
+
+        responseBody = response.getBody();
+        responseBody = JSON.parse(responseBody);
+        var avx_id = responseBody["response"]["requestId"];
+        this.insertLog(context.log, 'Info', config.requestScript, 'Successfully triggered appviewx workflow with request ID ' + avx_id);
+        var message = responseBody["response"]["message"] + "Status : " + responseBody["response"]["status"];
+        form.request_id = "R" + avx_id;
+        form.appviewx_response = message;
+        if (config.successComment) {
+            ritmGR.comments = 'Successfully triggered appviewx workflow with request ID ' + avx_id;
+        }
+        ritmGR.update();
+        return "true";
+    },
+
+    failWorkflow: function(context, config) {
+        var ritmGR = context.ritmGR;
+        var log = context.log;
+        var requestNumber = ritmGR ? ritmGR.number : '';
+        this.insertLog(log, 'Error', config.requestScript, 'Response for request with number ' + requestNumber + '\n ' + config.error);
+
+        if (ritmGR) {
+            ritmGR.comments = "Failure while processing the service request.";
+            ritmGR.stage = "closed_incomplete";
+            ritmGR.state = 4;
+            var reqRecord = ritmGR.request.getRefRecord();
+            reqRecord.state = 4;
+            reqRecord.request_state = "closed_incomplete";
+            reqRecord.update();
+            ritmGR.update();
+        }
+        gs.addErrorMessage(config.error);
+        return "false";
+    },
+
+    insertLog: function(log, level, script, message) {
+        if (!log) {
+            log = new GlideRecord('x_avx_appviewx_aut_logs');
+        }
+        log.initialize();
+        log.level = level;
+        log.script = script;
+        log.application = 'AppViewX';
+        log.message = message;
+        log.insert();
+    },
+
+    type: 'trigger_workflow_common'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-28 16:20:53</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>26e94cc92f75c710bbc4680cbfa4e345</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>trigger_workflow_common</sys_name>
+        <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
+        <sys_update_name>sys_script_include_26e94cc92f75c710bbc4680cbfa4e345</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-28 16:45:51</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>26e94cc92f75c710bbc4680cbfa4e345</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-06-28 16:20:52</sys_created_on>
+        <sys_id>3b3a840d2f75c710bbc4680cbfa4e3cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-28 16:20:52</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

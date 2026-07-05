@@ -2,6 +2,7 @@
     <sys_alias action="INSERT_OR_UPDATE">
         <configuration_template/>
         <connection_type>http_connection</connection_type>
+        <description/>
         <id>x_avx_appviewx_aut.appviewx</id>
         <is_internal>false</is_internal>
         <multiple_connections>false</multiple_connections>

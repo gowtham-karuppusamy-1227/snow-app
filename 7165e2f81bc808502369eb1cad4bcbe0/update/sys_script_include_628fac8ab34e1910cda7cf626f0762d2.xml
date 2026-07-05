@@ -14,6 +14,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
     getCert: function() {
         try {
             var client_id;
+            var certs_fetch = this.getParameter("sysparm_certs_fetch");
             var cert_authority = this.getParameter("sysparm_cert_authority");
             var cert_category = this.getParameter("sysparm_cert_type");
             var clm_action = this.getParameter("sysparm_clm_action");
@@ -29,12 +30,16 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
             gr.query();
             var user_group_option = "";
             var user_name = "";
+			var ca_policy = "";
+            renew_get_cert_based_on_appviewx = "";
             while (gr.next()) {
+                renew_get_cert_based_on_appviewx = gr.getValue('ca_renew_get_cert_based_on_appviewx');
                 if (clm_action == "Renew") {
                     user_group_option = gr.getValue('fetch_user_group_renew');
                 } else {
                     user_group_option = gr.getValue('fetch_user_group_revoke');
                 }
+				ca_policy = gr.getValue('ca_policy_name');
             }
             if (user_group_option == 'Based on Email') {
                 user_name = gs.getUser().getEmail();
@@ -102,16 +107,30 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                     } else {
                         throw "Error while generating the token";
                     }
-                    var payload = {
-                        "payload": {
-                            "hook": {
-                                "name": "snow_fetch_certificate_group_for_the_user"
-                            },
-                            "input": {
-                                "user_name": user_name
+                    if (certs_fetch == "Based on CA Tag") {
+                        var payload = {
+                            "payload": {
+                                "hook": {
+                                    "name": "snow_fetch_certificate_group_for_the_policy"
+                                },
+                                "input": {
+                                    "policy_name": ca_policy,
+                                }
                             }
-                        }
-                    };
+                        };
+
+                    } else {
+                        payload = {
+                            "payload": {
+                                "hook": {
+                                    "name": "snow_fetch_certificate_group_for_the_user"
+                                },
+                                "input": {
+                                    "user_name": user_name
+                                }
+                            }
+                        };
+                    }
                     if (mid_server != "") {
                         r.setMIDServer(mid_server);
                         r.setEccParameter('skip_sensor', 'true');
@@ -190,6 +209,21 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
                             }
                         }
                     };
+                } else if (certs_fetch == "Based on CA Tag") {
+                    payload = {
+                        "payload": {
+                            "hook": {
+                                "name": "ServiceNow - Get Certificates Based On CA Tag"
+                            },
+                            "input": {
+                                "policy_name": ca_policy,
+                                "certificate_authority": cert_authority,
+                                "cert_category": cert_type,
+                                "clm_action": clm_action
+                            }
+                        }
+                    };
+
                 } else {
                     payload = {
                         "payload": {
@@ -258,7 +292,7 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
         <sys_created_on>2022-09-21 10:56:08</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>628fac8ab34e1910cda7cf626f0762d2</sys_id>
-        <sys_mod_count>82</sys_mod_count>
+        <sys_mod_count>89</sys_mod_count>
         <sys_name>renew_get_cert_based_on_appviewx</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -266,6 +300,6 @@ renew_get_cert_based_on_appviewx.prototype = Object.extendsObject(global.Abstrac
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_628fac8ab34e1910cda7cf626f0762d2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:40:01</sys_updated_on>
+        <sys_updated_on>2026-06-09 05:04:48</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -27,20 +27,21 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
     if (isLoading || newValue === '') {
         return;
     }
-	function htmlUnescape(str) {
-    var parser = new DOMParser();
-    var dom = parser.parseFromString(
-        '<!doctype html><body>' + str,
-        'text/html');
-    return dom.body.textContent;
-    }  
+
+    function htmlUnescape(str) {
+        var parser = new DOMParser();
+        var dom = parser.parseFromString(
+            '<!doctype html><body>' + str,
+            'text/html');
+        return dom.body.textContent;
+    }
 
     function set_ejbca_profile_name(profile_name) {
         try {
             var ejbca_profile_flag = 0;
             g_form.setDisplay('ejbca_end_entity_profile_name', true);
             g_form.setMandatory('ejbca_end_entity_profile_name', true);
-			g_form.clearValue('ejbca_end_entity_profile_name');
+            g_form.clearValue('ejbca_end_entity_profile_name');
             g_form.clearOptions('ejbca_end_entity_profile_name');
             g_form.setDisplay('ejbca_end_entity_user_name', true);
             g_form.clearValue('ejbca_end_entity_user_name');
@@ -74,26 +75,26 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         try {
             g_form.setDisplay('ejbca_end_entity_profile_name', true);
             g_form.setMandatory('ejbca_end_entity_profile_name', true);
-			g_form.clearValue('ejbca_end_entity_profile_name');
+            g_form.clearValue('ejbca_end_entity_profile_name');
             g_form.clearOptions('ejbca_end_entity_profile_name');
-			var ca_account = g_form.getValue('ca_account');
+            var ca_account = g_form.getValue('ca_account');
             var answer = response.responseXML.documentElement.getAttribute('answer');
             try {
                 answer = JSON.parse(answer);
             } catch (err) {
                 throw "Couldn't parse ejbca certificate authority details.";
             }
-			var ca_response = answer.response;
-			var flag = 0;
-			for (var iterator = 0; iterator < ca_response.length; iterator++) {
-				if (ca_response[iterator].name == ca_account) {
-					flag = 1;
-					var ejbca_response = answer.response[iterator].vendorSpecificSettings;
-				}
-			}
-			if (flag == 0) {
-				throw "The selected CA-Account in the CLM Settings is not available in the response";
-			}
+            var ca_response = answer.response;
+            var flag = 0;
+            for (var iterator = 0; iterator < ca_response.length; iterator++) {
+                if (ca_response[iterator].name == ca_account) {
+                    flag = 1;
+                    var ejbca_response = answer.response[iterator].vendorSpecificSettings;
+                }
+            }
+            if (flag == 0) {
+                throw "The selected CA-Account in the CLM Settings is not available in the response";
+            }
             g_form.setValue('ejbca_ca_details', JSON.stringify(ejbca_response), JSON.stringify(ejbca_response));
             var profile_name = ejbca_response.endEntityProfiles;
             set_ejbca_profile_name(profile_name);
@@ -118,8 +119,8 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         var ejbca_ca_details = g_form.getValue('ejbca_ca_details');
         var amazon_issuer = g_form.getValue('issuer');
         var ca_flag = 0;
-		
-		var i, k;
+
+        var i, k;
         if (CA !== 'Amazon') {
             try {
                 ca_policy = JSON.parse(ca_policy);
@@ -159,7 +160,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                             g_form.setValue('division', '', 'Select');
                             for (var j = 0; j < division.length; j++) {
                                 if ('name' in division[j]) {
-									var divison_name = htmlUnescape(division[j].name);
+                                    var divison_name = htmlUnescape(division[j].name);
                                     g_form.addOption('division', divison_name, divison_name);
                                     if (flag == 0) {
                                         g_form.setValue('division', divison_name, divison_name);
@@ -222,7 +223,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 }
             }
         }
-		if (CA === 'AppViewX' || CA === 'AppViewX PKIaaS Native') {
+        if (CA === 'AppViewX' || CA === 'AppViewX PKIaaS Native') {
             g_form.clearOptions('validity_unit');
             g_form.addOption('validity_unit', '', 'Select');
             for (var ca = 0; ca < ca_policy.length; ca++) {
@@ -382,11 +383,11 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         if (CA === "Ejbca") {
             ca_flag = 1;
             if (ejbca_ca_details === "") {
-				var company_name = g_form.getValue('company_name');
+                var company_name = g_form.getValue('company_name');
                 var ajax = new GlideAjax('get_ejbca_details');
                 ajax.addParam('sysparm_name', 'getEjbcaDetails');
                 ajax.addParam('certificate_authority', CA);
-				ajax.addParam('sysparm_company', company_name);
+                ajax.addParam('sysparm_company', company_name);
                 ajax.getXML(getResponse);
             } else {
                 try {
@@ -411,7 +412,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
             g_form.setDisplay('ejbca_certificate_profile_name', false);
         }
         if (CA === 'Comodo Certificate Manager') {
-			// CA = 'Sectigo';
+            // CA = 'Sectigo';
             g_form.setDisplay('sectigo_certificate_type', true);
             g_form.setMandatory('sectigo_certificate_type', true);
             g_form.clearOptions('sectigo_certificate_type');
@@ -421,9 +422,9 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 if (!result.certificateAuthority) {
                     throw 'Certificate Authority is not configured in AppviewX Policy.';
                 }
-				if (result.certificateAuthority === 'Sectigo') {
-                        CA = 'Sectigo';
-                    }
+                if (result.certificateAuthority === 'Sectigo') {
+                    CA = 'Sectigo';
+                }
                 if (result.certificateAuthority === CA) {
                     if (!result.caSettings) {
                         throw 'CA settings are not configured in AppViewX Policy.';
@@ -532,11 +533,11 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                 }
             }
         }
-		if (CA === 'GlobalSign') {
-			g_form.clearOptions('globalsign_certificate_type');
-			g_form.addOption('globalsign_certificate_type', '', 'Select');
-			g_form.setDisplay('globalsign_certificate_type', true);
-			g_form.setMandatory('globalsign_certificate_type', true);
+        if (CA === 'GlobalSign') {
+            g_form.clearOptions('globalsign_certificate_type');
+            g_form.addOption('globalsign_certificate_type', '', 'Select');
+            g_form.setDisplay('globalsign_certificate_type', true);
+            g_form.setMandatory('globalsign_certificate_type', true);
             for (i = 0; i < ca_policy.length; i++) {
                 result = ca_policy[i];
                 if (!result.certificateAuthority) {
@@ -564,7 +565,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     }
                 }
             }
-		} else {
+        } else {
             g_form.clearOptions('globalsign_certificate_type');
             g_form.setMandatory('globalsign_certificate_type', false);
             g_form.setDisplay('globalsign_certificate_type', false);
@@ -580,12 +581,12 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
             g_form.clearValue('incorporating_agency_reg_no');
             g_form.setMandatory('incorporating_agency_reg_no', false);
             g_form.setDisplay('incorporating_agency_reg_no', false);
-		}
-		if (CA === 'GlobalSignMSSL') {
-			g_form.clearOptions('globalsign_mssl_certificate_type');
-			g_form.addOption('globalsign_mssl_certificate_type', '', 'Select');
-			g_form.setDisplay('globalsign_mssl_certificate_type', true);
-			g_form.setMandatory('globalsign_mssl_certificate_type', true);
+        }
+        if (CA === 'GlobalSignMSSL') {
+            g_form.clearOptions('globalsign_mssl_certificate_type');
+            g_form.addOption('globalsign_mssl_certificate_type', '', 'Select');
+            g_form.setDisplay('globalsign_mssl_certificate_type', true);
+            g_form.setMandatory('globalsign_mssl_certificate_type', true);
             for (i = 0; i < ca_policy.length; i++) {
                 result = ca_policy[i];
                 if (!result.certificateAuthority) {
@@ -613,14 +614,14 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     }
                 }
             }
-		} else {
+        } else {
             g_form.clearOptions('globalsign_mssl_certificate_type');
             g_form.setMandatory('globalsign_mssl_certificate_type', false);
             g_form.setDisplay('globalsign_mssl_certificate_type', false);
             g_form.clearOptions('globalsign_mssl_profile_name');
             g_form.setMandatory('globalsign_mssl_profile_name', false);
             g_form.setDisplay('globalsign_mssl_profile_name', false);
-		}
+        }
         if (CA === "Trustwave") {
             for (i = 0; i < ca_policy.length; i++) {
                 result = ca_policy[i];
@@ -731,8 +732,8 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
             g_form.setMandatory('swisssign_client_name', false);
             g_form.setDisplay('swisssign_client_name', false);
         }
-		if (CA === 'Microsoft Standalone') {
-			ca_flag = 1;
+        if (CA === 'Microsoft Standalone') {
+            ca_flag = 1;
             g_form.clearOptions('validity_unit');
             g_form.setMandatory('validity_unit', false);
             g_form.setDisplay('validity_unit', false);
@@ -748,11 +749,59 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
                     if (!result.caSettings) {
                         throw 'CA Settings name is either wrong/missing';
                     }
-                    
+
                 }
             }
         }
-        
+        if (CA === 'GlobalSignAtlas') {
+            ca_flag = 1;
+            g_form.clearOptions('validity_unit');
+            g_form.addOption('validity_unit', '', 'Select');
+            for (i = 0; i < ca_policy.length; i++) {
+                result = ca_policy[i];
+                if (!result.certificateAuthority) {
+                    throw "Certificate Authority is not configured in AppviewX policy.";
+                }
+                if (result.certificateAuthority == CA) {
+                    if (!result.caSettings) {
+                        throw 'CA Settings name is either wrong/missing';
+                    }
+                    var atlas_caSetting = result.caSettings;
+                    for (var value = 0; value < atlas_caSetting.length; value++) {
+                        if (atlas_caSetting[value].name === ca_account) {
+                            ca_flag = 1;
+                            g_form.setMandatory('globalsign_atlas_certificate_profile', true);
+                            g_form.setDisplay('globalsign_atlas_certificate_profile', true);
+							g_form.addOption('globalsign_atlas_certificate_profile', "Server", "Server");
+							g_form.addOption('globalsign_atlas_certificate_profile', "OscpSigning", "OscpSigning");
+                            if (!atlas_caSetting[value].validityPeriods) {
+                                throw 'Validity details are missing in the AppviewX policy.';
+                            }
+                            var atlas_validity = atlas_caSetting[value].validityPeriods;
+                            var atlas_keys = Object.keys(atlas_validity);
+                            g_form.setMandatory('validity_unit', true);
+                            g_form.setDisplay('validity_unit', true);
+                            for (var val_unit = 0; val_unit < atlas_keys.length; val_unit++) {
+                                if (atlas_validity[atlas_keys[val_unit]].length > 0) {
+                                    if (atlas_keys[val_unit].includes('Years')) {
+                                        g_form.addOption('validity_unit', "Years", "Years");
+                                    } else if (atlas_keys[val_unit].includes('Months')) {
+                                        g_form.addOption('validity_unit', "Months", "Months");
+                                    } else if (atlas_keys[val_unit].includes('Days')) {
+                                        g_form.addOption('validity_unit', "Days", "Days");
+                                    }
+                                }
+                            }
+                            g_form.setValue("validity_unit", "", "Select");
+							g_form.setValue("globalsign_atlas_certificate_profile", "", "Select");
+                        }
+                    }
+
+
+                }
+            }
+        }
+
         if (ca_flag === 0) {
             throw "The selected CA " + ca_account + " account is not configured in AppViewX.";
         }
@@ -775,7 +824,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f0e184f51b65d550cda7db91dd4bcb16</sys_id>
-        <sys_mod_count>98</sys_mod_count>
+        <sys_mod_count>105</sys_mod_count>
         <sys_name>set_vendor_specific_fields</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -784,7 +833,7 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_f0e184f51b65d550cda7db91dd4bcb16</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-06-02 09:12:01</sys_updated_on>
+        <sys_updated_on>2026-06-01 20:44:42</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

@@ -22,6 +22,63 @@
             <element>vendor_name</element>
             <hint/>
             <inactive>false</inactive>
+            <label>AWS</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-04 06:20:12</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-04 06:20:12</sys_updated_on>
+            <value>AWS</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Citrix</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-04 06:28:51</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-04 06:28:51</sys_updated_on>
+            <value>Citrix</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Imperva</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-04 06:27:31</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-04 06:27:31</sys_updated_on>
+            <value>Imperva</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
             <label>F5</label>
             <language>en</language>
             <name>x_avx_appviewx_aut_clm_settings</name>
