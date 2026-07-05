@@ -6,7 +6,7 @@
         <is_private>false</is_private>
         <name>glide.session.admission.returning_auth_user_cookie.hmac_key</name>
         <read_roles/>
-        <suffix/>
+        <suffix>glide.session.admission.returning_auth_user_cookie.hmac_key</suffix>
         <sys_class_name>sys_properties</sys_class_name>
         <sys_created_by>aravindm</sys_created_by>
         <sys_created_on>2026-06-18 10:30:32</sys_created_on>
