@@ -123,7 +123,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
                                     });
                                 } else {
                                     message = responseBody.response.output.message;
-                                    throw message;
+                                    return message;
                                 }
                             }
                         }
@@ -164,7 +164,7 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_created_on>2022-09-14 06:09:22</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>714e2fefb37d1110cda7cf626f076225</sys_id>
-        <sys_mod_count>83</sys_mod_count>
+        <sys_mod_count>84</sys_mod_count>
         <sys_name>validate_csr_attachment</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -172,6 +172,6 @@ validate_csr_attachment.prototype = Object.extendsObject(global.AbstractAjaxProc
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_714e2fefb37d1110cda7cf626f076225</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:51:30</sys_updated_on>
+        <sys_updated_on>2026-07-23 07:10:01</sys_updated_on>
     </sys_script_include>
 </record_update>

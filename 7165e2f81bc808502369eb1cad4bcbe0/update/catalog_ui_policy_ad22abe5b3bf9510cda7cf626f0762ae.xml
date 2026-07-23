@@ -73,14 +73,26 @@ function onCondition() {
     if (enable_san_value == '1') {
         san_names = JSON.parse(san_names);
     }
-	var csr_parameter_values = g_form.getValue('csr_parameter_values');
-	csr_parameter_values = csr_parameter_values.split(',');
+    var csr_parameter_values = g_form.getValue('csr_parameter_values');
+    csr_parameter_values = csr_parameter_values.split(',');
     g_form.setReadOnly('status', true);
     g_form.setMandatory('certificate_authority', false);
     g_form.setDisplay('certificate_authority', false);
     g_form.setDisplay('san_fields', false);
     g_form.setDisplay('add_dns_values', false);
     g_form.setDisplay('add_ip_address', false);
+    var endpoint_csr = g_form.getValue('endpoint');
+    if (endpoint_csr == 'true'){
+        g_form.setDisplay("vendor_csr", true);
+        g_form.setDisplay("device_name_csr", true);
+        g_form.setDisplay('csr_location', true);
+        g_form.setDisplay('key_vault_name', true);
+    }else{
+		g_form.setDisplay("vendor_csr", false);
+        g_form.setDisplay("device_name_csr", false);
+        g_form.setDisplay('csr_location', false);
+        g_form.setDisplay('key_vault_name', false);
+	}
     if (g_form.getValue('certificate_authority') == 'DigiCert') {
         g_form.setDisplay('division', true);
         g_form.setMandatory('division', true);
@@ -180,9 +192,9 @@ function onCondition() {
             g_form.setMandatory('paste_csr', false);
             g_form.setDisplay('paste_csr', false);
         }
-		g_form.setDisplay('parsed_csr_values', true);
+        g_form.setDisplay('parsed_csr_values', true);
     } else {
-		g_form.setDisplay('parsed_csr_values', false);
+        g_form.setDisplay('parsed_csr_values', false);
         g_form.setMandatory('csr_upload_option', false);
         g_form.setDisplay('csr_upload_option', false);
         g_form.setMandatory('upload_csr', false);
@@ -214,11 +226,11 @@ function onCondition() {
     } else if (g_form.getValue('csr_input_method') == 'Manual') {
         g_form.setDisplay('common_name', true);
         g_form.setMandatory('common_name', true);
-		if (g_form.getValue('certificate_category') === 'CodeSigning' || g_form.getValue('certificate_category') === 'Client') {
-			g_form.setDisplay('san_fields', false);
-			g_form.setDisplay('add_dns_values', false);
-			g_form.setDisplay('add_ip_address', false);
-		} else {
+        if (g_form.getValue('certificate_category') === 'CodeSigning' || g_form.getValue('certificate_category') === 'Client') {
+            g_form.setDisplay('san_fields', false);
+            g_form.setDisplay('add_dns_values', false);
+            g_form.setDisplay('add_ip_address', false);
+        } else {
             if (enable_san_value == '1') {
                 g_form.setDisplay('san_fields', true);
                 if (san_names.includes('DNS')) {
@@ -228,7 +240,7 @@ function onCondition() {
                     g_form.setDisplay('add_ip_address', true);
                 }
             }
-		}
+        }
         g_form.setDisplay('key_type', true);
         g_form.setMandatory('key_type', true);
         g_form.setDisplay('bit_length', true);
@@ -238,8 +250,8 @@ function onCondition() {
         if (g_form.getValue('certificate_category') === 'Server' || g_form.getValue('certificate_category') === 'Client') {
             g_form.setDisplay('subject_alternative_name', true);
         } else {
-			g_form.setDisplay('subject_alternative_name', false);
-		}
+            g_form.setDisplay('subject_alternative_name', false);
+        }
         g_form.setMandatory('certificate_validation_type', false);
         g_form.setDisplay('certificate_validation_type', false);
         g_form.setMandatory('certificate_transparency_logging_preference', false);
@@ -247,8 +259,8 @@ function onCondition() {
     } else {
         g_form.setMandatory('common_name', false);
         g_form.setDisplay('common_name', false);
-		if (g_form.getValue('certificate_category') === 'Server') {
-            if (enable_san_value == '1'){
+        if (g_form.getValue('certificate_category') === 'Server') {
+            if (enable_san_value == '1') {
                 g_form.setDisplay('san_fields', true);
                 if (san_names.includes('DNS')) {
                     g_form.setDisplay('add_dns_values', true);
@@ -257,14 +269,14 @@ function onCondition() {
                     g_form.setDisplay('add_ip_address', true);
                 }
             }
-		} else {
-			g_form.setDisplay('san_fields', false);
-			g_form.setDisplay('add_dns_values', false);
-			g_form.setDisplay('add_ip_address', false);
-		}
-		if (g_form.getValue('certificate_category') === 'CodeSigning') {
-			g_form.setDisplay('subject_alternative_name', false);
-		}
+        } else {
+            g_form.setDisplay('san_fields', false);
+            g_form.setDisplay('add_dns_values', false);
+            g_form.setDisplay('add_ip_address', false);
+        }
+        if (g_form.getValue('certificate_category') === 'CodeSigning') {
+            g_form.setDisplay('subject_alternative_name', false);
+        }
         g_form.setMandatory('key_type', false);
         g_form.setDisplay('key_type', false);
         g_form.setMandatory('bit_length', false);
@@ -351,12 +363,12 @@ function onCondition() {
         g_form.setDisplay('country', false);
     }
     if (g_form.getValue('csr_input_method') == 'Manual' && (g_form.getValue('certificate_authority') === 'GlobalSign' || g_form.getValue('certificate_authority') === 'GlobalSignMSSL')) {
-		g_form.setDisplay('organization_address', true);
+        g_form.setDisplay('organization_address', true);
         g_form.setDisplay('csr_zip_code', true);
     } else {
-		g_form.setDisplay('organization_address', false);
+        g_form.setDisplay('organization_address', false);
         g_form.setDisplay('csr_zip_code', false);
-	}
+    }
     if (g_form.getValue('certificate_authority') === 'GlobalSign') {
         g_form.setDisplay('globalsign_certificate_type', true);
         g_form.setMandatory('globalsign_certificate_type', true);
@@ -427,17 +439,17 @@ function onCondition() {
         g_form.setMandatory('avx_issuer_location', false);
         g_form.setDisplay('avx_issuer_location', false);
     }
-	if (g_form.getValue('certificate_authority') === 'AppViewX PKIaaS Native') {
+    if (g_form.getValue('certificate_authority') === 'AppViewX PKIaaS Native') {
         g_form.setDisplay('issuer_name', true);
         g_form.setMandatory('issuer_name', true);
         g_form.setDisplay('avx_pki_native_issuer_location', true);
         g_form.setMandatory('avx_pki_native_issuer_location', true);
-		g_form.setDisplay('avx_template', true);
+        g_form.setDisplay('avx_template', true);
         g_form.setMandatory('avx_template', true);
     } else {
         g_form.setMandatory('issuer_name', false);
         g_form.setDisplay('issuer_name', false);
-		g_form.setMandatory('avx_template', false);
+        g_form.setMandatory('avx_template', false);
         g_form.setDisplay('avx_template', false);
         g_form.setMandatory('avx_pki_native_issuer_location', false);
         g_form.setDisplay('avx_pki_native_issuer_location', false);
@@ -538,21 +550,20 @@ function onCondition() {
                 g_form.setMandatory('push_assignment_group', false);
                 g_form.setDisplay('push_assignment_group', false);
             }
-			if (vendor_name == 'Silverline') {
-				g_form.setDisplay('push_root_and_intermediate_certificates', false);
-			}
-			else {
-				g_form.setDisplay('push_root_and_intermediate_certificates', true);
-			}
+            if (vendor_name == 'Silverline') {
+                g_form.setDisplay('push_root_and_intermediate_certificates', false);
+            } else {
+                g_form.setDisplay('push_root_and_intermediate_certificates', true);
+            }
             var vendor_name = g_form.getValue('vendor_name');
-            if (vendor_name != 'F5' && vendor_name != 'IIS' && vendor_name != 'Silverline') {
+            if (vendor_name != 'F5' && vendor_name != 'IIS' && vendor_name != 'Silverline' && vendor_name == 'Microsoft Server' || vendor_name == 'Microsoft PC') {
                 g_form.setDisplay('push_certificate_format', true);
                 g_form.setMandatory('push_certificate_format', true);
             } else {
                 g_form.setMandatory('push_certificate_format', false);
                 g_form.setDisplay('push_certificate_format', false);
             }
-            if (vendor_name == 'Apache' || vendor_name == 'LinuxServer' ) {
+            if (vendor_name == 'Apache' || vendor_name == 'LinuxServer') {
                 g_form.setDisplay('service_restart', true);
                 g_form.setDisplay('customize_push_location', true);
                 g_form.setDisplay('private_key_in_device', true);
@@ -606,30 +617,30 @@ function onCondition() {
         g_form.setDisplay('key_directory', false);
         g_form.setMandatory('intermediate_and_ca_certificate_directory', false);
         g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
-		g_form.setMandatory('keystore_password', false);
-		g_form.setDisplay('keystore_password', false);
-		g_form.setMandatory('keystore_location', false);
-		g_form.setDisplay('keystore_location', false);
-		g_form.setMandatory('private_key_location', false);
-		g_form.setDisplay('private_key_location', false);
+        g_form.setMandatory('keystore_password', false);
+        g_form.setDisplay('keystore_password', false);
+        g_form.setMandatory('keystore_location', false);
+        g_form.setDisplay('keystore_location', false);
+        g_form.setMandatory('private_key_location', false);
+        g_form.setDisplay('private_key_location', false);
     }
-	if (g_form.getValue('csr_input_method') == 'Manual') {
-		if (csr_parameter_values.indexOf("Organization") >= 0) {
-			g_form.setDisplay('organization', true);
-		}
-		if (csr_parameter_values.indexOf("Organization Unit") >= 0) {
-			g_form.setDisplay('organization_unit', true);
-		}
-		if (csr_parameter_values.indexOf("Locality") >= 0) {
-			g_form.setDisplay('locality', true);
-		}
-		if (csr_parameter_values.indexOf("Country") >= 0) {
-			g_form.setDisplay('country', true);
-		}
-		if (csr_parameter_values.indexOf("Email Address") >= 0) {
-			g_form.setDisplay('email_address', true);
-		}
-	}
+    if (g_form.getValue('csr_input_method') == 'Manual') {
+        if (csr_parameter_values.indexOf("Organization") >= 0) {
+            g_form.setDisplay('organization', true);
+        }
+        if (csr_parameter_values.indexOf("Organization Unit") >= 0) {
+            g_form.setDisplay('organization_unit', true);
+        }
+        if (csr_parameter_values.indexOf("Locality") >= 0) {
+            g_form.setDisplay('locality', true);
+        }
+        if (csr_parameter_values.indexOf("Country") >= 0) {
+            g_form.setDisplay('country', true);
+        }
+        if (csr_parameter_values.indexOf("Email Address") >= 0) {
+            g_form.setDisplay('email_address', true);
+        }
+    }
     var meta_data_info = {};
     var mandatory_attributes = {};
     var meta_data_field_name = {};
@@ -677,7 +688,7 @@ function onCondition() {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ad22abe5b3bf9510cda7cf626f0762ae</sys_id>
-        <sys_mod_count>58</sys_mod_count>
+        <sys_mod_count>60</sys_mod_count>
         <sys_name>Enroll cert - Requested Item View</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -686,7 +697,7 @@ function onCondition() {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_ad22abe5b3bf9510cda7cf626f0762ae</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-06-04 06:24:07</sys_updated_on>
+        <sys_updated_on>2026-07-23 12:25:39</sys_updated_on>
         <table/>
         <ui_type>0</ui_type>
         <va_supported>true</va_supported>
