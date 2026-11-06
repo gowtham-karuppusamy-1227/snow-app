@@ -60,6 +60,44 @@
             <element>vendor_name</element>
             <hint/>
             <inactive>false</inactive>
+            <label>Fortinet - Fortigate</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-27 19:49:53</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-27 19:49:53</sys_updated_on>
+            <value>Fortinet - Fortigate</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Fortinet - FortiManager</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-27 19:49:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-27 19:49:00</sys_updated_on>
+            <value>Fortinet - FortiManager</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
             <label>Imperva</label>
             <language>en</language>
             <name>x_avx_appviewx_aut_clm_settings</name>
@@ -73,6 +111,44 @@
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2026-06-04 06:27:31</sys_updated_on>
             <value>Imperva</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>PaloAlto - Firewall</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-27 19:46:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-27 19:46:23</sys_updated_on>
+            <value>PaloAlto - Firewall</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>vendor_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>PaloAlto - Panaroma</label>
+            <language>en</language>
+            <name>x_avx_appviewx_aut_clm_settings</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-27 19:45:28</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-27 19:45:28</sys_updated_on>
+            <value>PaloAlto - Panaroma</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>

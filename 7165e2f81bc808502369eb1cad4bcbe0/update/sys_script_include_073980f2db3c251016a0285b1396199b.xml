@@ -20,13 +20,20 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
             var device_name = this.getParameter("sysparm_deviceName");
             var company = this.getParameter("sysparm_company");
             var category = "";
-            if (vendor_name == 'F5' || vendor_name == 'Citrix' ) {
+            if (["Fortinet - FortiManager", "Fortinet - Fortigate", "PaloAlto - Firewall", "PaloAlto - Panaroma"].indexOf(vendor_name) !== -1) {
+                var parts = vendor_name.split(" - ");
+                vendor_name = parts[0];
+                var platform = parts[1];
+            }
+            if (vendor_name == 'F5' || vendor_name == 'Citrix') {
                 category = 'ADC';
             } else if (vendor_name == 'Azure' || vendor_name == 'AWS') {
                 category = 'cloud';
-            }else if (vendor_name == 'Imperva') {
+            } else if (vendor_name == 'Imperva') {
                 category = 'WAF';
-            }else {
+            } else if (vendor_name == 'Fortinet' || vendor_name == 'PaloAlto') {
+                category = 'Firewall';
+            } else {
                 category = 'Server';
             }
             if (gs.getProperty("glide.sys.domain.partitioning") == 'true') {
@@ -133,7 +140,7 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_created_on>2023-02-07 08:50:48</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>073980f2db3c251016a0285b1396199b</sys_id>
-        <sys_mod_count>29</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>get_profile_names</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -141,6 +148,6 @@ get_profile_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_073980f2db3c251016a0285b1396199b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-18 10:16:10</sys_updated_on>
+        <sys_updated_on>2026-11-03 14:47:02</sys_updated_on>
     </sys_script_include>
 </record_update>

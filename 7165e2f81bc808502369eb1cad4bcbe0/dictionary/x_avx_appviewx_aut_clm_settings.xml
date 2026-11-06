@@ -140,6 +140,12 @@
                 <element inactive_on_update="false" label="Send to User Input Email" sequence="5" value="Send to User Input Email"/>
             </choice>
         </element>
+        <element choice="1" label="Change Ticket Type" max_length="100" name="change_ticket_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Normal" value="Normal"/>
+                <element inactive_on_update="false" label="Standard" value="Standard"/>
+            </choice>
+        </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="javascript:new x_avx_appviewx_aut.get_logged_in_user_company().getCompanyName()" label="Company" max_length="32" name="company" reference="core_company" type="reference"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Do you want to create catalog task ticket?" max_length="40" name="create_catalog_task_ticket" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="CSR Parameters" max_length="4000" name="csr_parameters" reference="x_avx_appviewx_aut_csr_parameter" type="glide_list"/>
@@ -149,7 +155,9 @@
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" default="30" label="Days Before Expiry" max_length="40" name="days_before_expiry" type="integer"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Allow User to Edit Certificate Attributes" max_length="40" name="edit_certificate_attributes" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable Automatic Renewal/Regeneration" max_length="40" name="enable_automatic_renewal_regeneration" type="boolean"/>
+        <element label="Enable Change Ticket Creation" max_length="40" name="enable_change_ticket_creation" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable CSR Parameters" max_length="40" name="enable_csr_parameters" type="boolean"/>
+        <element label="Enable Endpoint CSR" max_length="40" name="enable_endpoint_csr" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable San Fields" max_length="40" name="enable_san_fields" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Enable San Fields" max_length="40" name="enable_san_fields_for_renew" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="enroll_approver_selection_two" type="choice">
@@ -195,6 +203,7 @@
         </element>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="User Group" max_length="32" name="renew_user_group_snow_two" reference="sys_user_group" type="reference"/>
         <element active="false" calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" label="Retrieve Devices Based on User(AppViewX)" max_length="40" name="retrieve_devices_based_on_user" type="boolean"/>
+        <element label="Retrieve Old Sans" max_length="40" name="retrieve_old_sans" type="boolean"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Level 2 Approver" max_length="100" name="revoke_approver_selection_two" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Manager" sequence="0" value="Manager"/>
@@ -215,6 +224,7 @@
                 <element inactive_on_update="false" label="No" sequence="1" value="No"/>
             </choice>
         </element>
+        <element label="Standard Template" max_length="32" name="standard_template" reference="std_change_producer_version" type="reference"/>
         <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return '';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" choice="1" label="Subject Alternative Names" max_length="4000" name="subject_alternative_names" type="glide_list">
             <choice>
                 <element inactive_on_update="false" label="DNS" sequence="0" value="DNS"/>
@@ -694,7 +704,11 @@
             <choice>
                 <element inactive_on_update="false" label="AWS" value="AWS"/>
                 <element inactive_on_update="false" label="Citrix" value="Citrix"/>
+                <element inactive_on_update="false" label="Fortinet - Fortigate" value="Fortinet - Fortigate"/>
+                <element inactive_on_update="false" label="Fortinet - FortiManager" value="Fortinet - FortiManager"/>
                 <element inactive_on_update="false" label="Imperva" value="Imperva"/>
+                <element inactive_on_update="false" label="PaloAlto - Firewall" value="PaloAlto - Firewall"/>
+                <element inactive_on_update="false" label="PaloAlto - Panaroma" value="PaloAlto - Panaroma"/>
                 <element inactive_on_update="false" label="F5" sequence="0" value="F5"/>
                 <element inactive_on_update="false" label="IIS" sequence="1" value="IIS"/>
                 <element inactive_on_update="false" label="Apache" sequence="3" value="Apache"/>
@@ -735,18 +749,21 @@
             <element name="revoke_user_group_snow_two"/>
         </index>
         <index name="index9">
-            <element name="sys_domain"/>
+            <element name="standard_template"/>
         </index>
         <index name="index10">
-            <element name="sys_domain_path"/>
+            <element name="sys_domain"/>
         </index>
         <index name="index11">
-            <element name="task_assigned_to"/>
+            <element name="sys_domain_path"/>
         </index>
         <index name="index12">
-            <element name="task_assignment_group"/>
+            <element name="task_assigned_to"/>
         </index>
         <index name="index13">
+            <element name="task_assignment_group"/>
+        </index>
+        <index name="index14">
             <element name="ticket_assignment_group_name"/>
         </index>
     </element>

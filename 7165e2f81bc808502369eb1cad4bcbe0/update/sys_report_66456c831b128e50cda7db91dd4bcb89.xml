@@ -119,7 +119,6 @@
         <sys_id>66456c831b128e50cda7db91dd4bcb89</sys_id>
         <sys_mod_count>6</sys_mod_count>
         <sys_name>Total Certificates</sys_name>
-        <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>

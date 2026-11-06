@@ -22,14 +22,14 @@
     if (isLoading || newValue == '') {
         return;
     }
-	var company_name = g_form.getValue('company_name');
+    var company_name = g_form.getValue('company_name');
     try {
         var reference_field = g_form.getValue('certificate_reference');
         if (reference_field) {
             var ga = new GlideAjax('get_cert_common_name');
             ga.addParam("sysparm_name", "getCertCommonName");
             ga.addParam("sysparm_ref_id", reference_field);
-			ga.addParam("sysparm_company", company_name);
+            ga.addParam("sysparm_company", company_name);
             ga.getXML(getResponse);
         }
     } catch (error) {
@@ -43,6 +43,7 @@
         ga.addParam("sysparm_message", message);
         ga.getXML(function() {});
     }
+
     function getResponse(response) {
         try {
             var res = response.responseXML.documentElement.getAttribute('answer');
@@ -54,10 +55,13 @@
             var common_name = res['common_name'];
             var serial_number = res['serial_number'];
             var certificate_category = res['certificate_category'];
-			var private_key = res['private_key_available'];
+            var private_key = res['private_key_available'];
             var field_value = common_name + "|" + serial_number + "|" + certificate_category;
-			g_form.clearOptions('certificate');
+            g_form.clearOptions('certificate');
             g_form.addOption('certificate', field_value, field_value);
+            g_form.setValue('certificate',field_value);
+            var cert = g_form.getValue('certificate');
+            alert(cert);
         } catch (error) {
             g_form.addErrorMessage("Error: " + error);
             var message = 'Error occured while fetching certificate details from the certificate table - ' + error;
@@ -104,7 +108,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f24ad6a4db19b11016a0285b139619ec</sys_id>
-        <sys_mod_count>20</sys_mod_count>
+        <sys_mod_count>22</sys_mod_count>
         <sys_name>renew_set_common_name</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -113,7 +117,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_f24ad6a4db19b11016a0285b139619ec</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-28 06:37:02</sys_updated_on>
+        <sys_updated_on>2026-08-26 10:02:47</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

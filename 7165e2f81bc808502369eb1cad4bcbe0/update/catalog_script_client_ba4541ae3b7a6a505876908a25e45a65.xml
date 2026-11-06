@@ -22,33 +22,36 @@
     if (isLoading || newValue == '') {
         return;
     }
-    g_form.clearValue('key_vault_name');
-    g_form.clearOptions('key_vault_name');
-    g_form.setMandatory('key_vault_name', false);
-    g_form.setDisplay('key_vault_name', false);
-    var certificate_category = g_form.getValue("certificate_category");
-    var CA = g_form.getValue('certificate_authority');
-    var serverCAs = ['AppViewX', 'DigiCert', 'Microsoft Enterprise', 'Entrust', 'Ejbca', 'GoDaddy', 'Amazon', 'Comodo Certificate Manager', 'GlobalSign', 'GlobalSignMSSL', 'Trustwave', 'HydrantID', 'SwissSign', 'Microsoft Standalone'];
-    var clientCAs = ['DigiCert', 'Microsoft Enterprise', 'Entrust', 'HydrantID', 'SwissSign'];
-    var codeSigningCAs = ['Microsoft Enterprise', 'HydrantID'];
-    var csr_input_method = g_form.getValue('csr_input_method');
-    if (csr_input_method === 'Manual') {
-        if (
-            (certificate_category === "Server" && serverCAs.includes(CA)) ||
-            (certificate_category === "Client" && clientCAs.includes(CA)) ||
-            (certificate_category === "Code Signing" && codeSigningCAs.includes(CA))
-        ) {
-            g_form.setDisplay("device_details", true);
-            g_form.setDisplay("endpoint", true);
+    var enable_enpoint_csr = g_form.getValue('enable_enpoint_csr');
+	alert(enable_enpoint_csr);
+    if (enable_enpoint_csr == "true") {
+        g_form.clearValue('key_vault_name');
+        g_form.clearOptions('key_vault_name');
+        g_form.setMandatory('key_vault_name', false);
+        g_form.setDisplay('key_vault_name', false);
+        var certificate_category = g_form.getValue("certificate_category");
+        var CA = g_form.getValue('certificate_authority');
+        var serverCAs = ['AppViewX', 'DigiCert', 'Microsoft Enterprise', 'Entrust', 'Ejbca', 'GoDaddy', 'Amazon', 'Comodo Certificate Manager', 'GlobalSign', 'GlobalSignMSSL', 'Trustwave', 'HydrantID', 'SwissSign', 'Microsoft Standalone'];
+        var clientCAs = ['DigiCert', 'Microsoft Enterprise', 'Entrust', 'HydrantID', 'SwissSign'];
+        var codeSigningCAs = ['Microsoft Enterprise', 'HydrantID'];
+        var csr_input_method = g_form.getValue('csr_input_method');
+        if (csr_input_method === 'Manual') {
+            if (
+                (certificate_category === "Server" && serverCAs.includes(CA)) ||
+                (certificate_category === "Client" && clientCAs.includes(CA)) ||
+                (certificate_category === "Code Signing" && codeSigningCAs.includes(CA))
+            ) {
+                g_form.setDisplay("device_details", true);
+                g_form.setDisplay("endpoint", true);
+            } else {
+                g_form.setDisplay("device_details", false);
+                g_form.setDisplay("endpoint", false);
+            }
         } else {
             g_form.setDisplay("device_details", false);
             g_form.setDisplay("endpoint", false);
         }
-    } else {
-        g_form.setDisplay("device_details", false);
-        g_form.setDisplay("endpoint", false);
     }
-
 
     //Type appropriate comment here, and begin script below
 
@@ -60,7 +63,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ba4541ae3b7a6a505876908a25e45a65</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>set_endpoint_option</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -69,7 +72,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_ba4541ae3b7a6a505876908a25e45a65</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-11 12:09:00</sys_updated_on>
+        <sys_updated_on>2026-11-05 09:51:57</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

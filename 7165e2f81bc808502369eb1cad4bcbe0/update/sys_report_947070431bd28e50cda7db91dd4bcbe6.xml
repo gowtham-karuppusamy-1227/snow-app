@@ -122,7 +122,6 @@
         <sys_id>947070431bd28e50cda7db91dd4bcbe6</sys_id>
         <sys_mod_count>11</sys_mod_count>
         <sys_name>Upcoming Expirations</sys_name>
-        <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>

@@ -21,7 +21,7 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2026-05-05 06:26:11</sys_updated_on>
         <table>x_avx_appviewx_aut_clm_settings</table>
-        <ui_policy display_value="Enable San Values in Renew Settings">ca0c51dd2fa843d0bbc4680cbfa4e3f1</ui_policy>
+        <ui_policy display_value="Enable San Values and Old San in Renew Settings">ca0c51dd2fa843d0bbc4680cbfa4e3f1</ui_policy>
         <value/>
         <value_action>ignore</value_action>
         <visible>true</visible>

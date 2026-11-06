@@ -30,6 +30,7 @@
             var division_type = g_form.getValue('division');
             var certificate_type = g_form.getValue('certificate_type');
             var sectigo_certificate_type = g_form.getValue('sectigo_certificate_type');
+			var csc_global_certificate_type = g_form.getValue('csc_global_certificate_type');
             var entrust_certificate_type = g_form.getValue('entrust_certificate_type');
             var godaddy_certificate_type = g_form.getValue('godaddy_certificate_type');
             var globalsign_certificate_type = g_form.getValue('globalsign_certificate_type');
@@ -528,6 +529,48 @@
                     }
                 }
             }
+			if (CA === 'CSC Global') {
+                g_form.setMandatory('validity_value', true);
+                g_form.setDisplay('validity_value', true);
+                g_form.clearOptions('validity_value');
+                g_form.addOption('validity_value', '', 'Select');
+                for (i = 0; i < ca_policy.length; i++) {
+                    result = ca_policy[i];
+                    if (!result.certificateAuthority) {
+                        throw 'Certificate Authority Details is not configured in AppViewX Polic.y';
+                    }
+                    if (result.certificateAuthority === CA) {
+                        if (!result.caSettings) {
+                            throw 'CA Account Details is not configured in AppViewX Policy.';
+                        }
+                        var csc_global_settings = result.caSettings;
+                        for (var csc = 0; csc < csc_global_settings.length; csc++) {
+                            if (csc_global_settings[csc].name === ca_account) {
+                                if (!csc_global_settings[csc].certTypes) {
+                                    throw 'CSC Global Certificate types are not configured in AppviewX Policy.';
+                                }
+                                cert_type = csc_global_settings[csc].certTypes;
+                                for (var csc_type = 0; csc_type < cert_type.length; csc_type++) {
+                                    if ((cert_type[csc_type].type).toLowerCase() == certificate_category.toLowerCase() && cert_type[csc_type].name == csc_global_certificate_type) {
+                                        keys = Object.keys(cert_type[csc_type].validityPeriods);
+                                        for (v_unit = 0; v_unit < keys.length; v_unit++) {
+                                            if (keys[v_unit].includes(validity_unit)) {
+                                                validity_unit = keys[v_unit];
+                                                validity = cert_type[csc_type].validityPeriods[validity_unit];
+                                                for (v_val = 0; v_val < validity.length; v_val++) {
+                                                    g_form.addOption('validity_value', validity[v_val], validity[v_val]);
+                                                }
+                                                g_form.setValue('validity_value', '', 'Select');
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         } catch (error) {
             g_form.addErrorMessage("Error: " + error + " Please check with the AppviewX admin/CLM Settings.");
             var message = 'Error occured while setting validity value in the form - ' + error;
@@ -547,7 +590,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>38e184f51b65d550cda7db91dd4bcb26</sys_id>
-        <sys_mod_count>44</sys_mod_count>
+        <sys_mod_count>47</sys_mod_count>
         <sys_name>set_validity_value</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -556,7 +599,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_38e184f51b65d550cda7db91dd4bcb26</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-01 20:17:25</sys_updated_on>
+        <sys_updated_on>2026-11-05 07:03:06</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

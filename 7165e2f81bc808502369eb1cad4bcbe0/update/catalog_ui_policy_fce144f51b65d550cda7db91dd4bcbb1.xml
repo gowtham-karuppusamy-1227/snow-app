@@ -36,7 +36,7 @@
 
     g_form.setDisplay('sectigo_certificate_type', false);
     g_form.setDisplay('godaddy_certificate_type', false);
-	g_form.setDisplay('godaddy_slot_size', false);
+    g_form.setDisplay('godaddy_slot_size', false);
     g_form.setDisplay('ca_signing_algorithm', false);
 
     g_form.setDisplay('sectigo_server_type', false);
@@ -93,17 +93,17 @@
     g_form.setDisplay('certificate_attributes', false);
     g_form.setMandatory('certificate_category', false);
     g_form.setDisplay('certificate_category', false);
-	g_form.setDisplay("device_details",false);
-	g_form.setDisplay('endpoint', false);
-	g_form.setMandatory('vendor_csr', false);
+    g_form.setDisplay("device_details", false);
+    g_form.setDisplay('endpoint', false);
+    g_form.setMandatory('vendor_csr', false);
     g_form.setDisplay('vendor_csr', false);
-	g_form.setMandatory('device_name_csr', false);
-	g_form.setDisplay('device_name_csr',false);
-	g_form.setMandatory('key_vault_name', false);
-	g_form.setDisplay('key_vault_name', false);
-	g_form.setMandatory('csr_location', false);
-	g_form.setDisplay('csr_location', false);
-	g_form.clearValue('csr_location');
+    g_form.setMandatory('device_name_csr', false);
+    g_form.setDisplay('device_name_csr', false);
+    g_form.setMandatory('key_vault_name', false);
+    g_form.setDisplay('key_vault_name', false);
+    g_form.setMandatory('csr_location', false);
+    g_form.setDisplay('csr_location', false);
+    g_form.clearValue('csr_location');
     g_form.setMandatory('email_id', false);
     g_form.setDisplay('email_id', false);
     g_form.setMandatory('ca_account', false);
@@ -111,7 +111,7 @@
     g_form.setDisplay('san_fields', false);
     g_form.setDisplay('add_dns_values', false);
     g_form.setDisplay('add_ip_address', false);
-	g_form.setDisplay('add_email_address',false);
+    g_form.setDisplay('add_email_address', false);
     g_form.setDisplay('cert_attribute_length', false);
     g_form.setMandatory('certificate_issuance_format', false);
     g_form.setDisplay('certificate_issuance_format', false);
@@ -122,46 +122,57 @@
     g_form.setDisplay('certificate_validation_type', false);
     g_form.setMandatory('certificate_transparency_logging_preference', false);
     g_form.setDisplay('certificate_transparency_logging_preference', false);
-	g_form.setDisplay('push_to_end_device', false);
-	g_form.setDisplay('device_name', false);
-	g_form.setDisplay('profile_name', false);
-	g_form.setDisplay('push_assignment_group', false);
-	g_form.setDisplay('vendor_name', false);
-	g_form.setDisplay('push_root_and_intermediate_certificates', false);
-	g_form.setDisplay('push_certificate_format', false);
-	g_form.setDisplay('service_restart', false);
-	g_form.setDisplay('private_key_in_device', false);
-	g_form.setDisplay('customize_push_location', false);
-	g_form.setDisplay('certificate_directory', false);
-	g_form.setDisplay('key_directory', false);
-	g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
-	g_form.setDisplay('keystore_password', false);
-	g_form.setDisplay('keystore_location', false);
-	g_form.setDisplay('private_key_location', false);
-	g_form.setDisplay('ticket_assignment_group', false);
-	g_form.setDisplay('profile_name_reference', false);
-	g_form.setDisplay('globalsign_certificate_type', false);
-	g_form.setDisplay('domain_admin_email', false);
-	g_form.setDisplay('business_category', false);
-	g_form.setDisplay('incorporating_agency_reg_no', false);
-	g_form.setDisplay('designation', false);
-	g_form.setDisplay('globalsign_mssl_certificate_type', false);
-	g_form.setDisplay('globalsign_mssl_profile_name', false);
-	g_form.setDisplay('globalsign_mssl_profile_name', false);
-	g_form.setDisplay('avx_issuer_name', false);
-	g_form.setDisplay('avx_issuer_location', false);
-	g_form.setDisplay('avx_pki_native_issuer_location', false);
-	g_form.setDisplay('organization_address', false);
-	g_form.setDisplay('csr_zip_code', false);
-	g_form.setDisplay('trustwave_certificate_type', false);
-	g_form.setDisplay('hydrantid_policy_name', false);
-	g_form.setDisplay('digicert_mpki_profiles', false);
-	g_form.setDisplay('swisssign_client_name', false);
-	g_form.setDisplay('swisssign_product', false);
-	g_form.setDisplay('parsed_csr_values', false);
-	g_form.setDisplay('avx_template', false);
-	g_form.setDisplay('issuer_name', false);
-	
+    g_form.setDisplay('push_to_end_device', false);
+    g_form.setDisplay('device_name', false);
+    g_form.setDisplay('profile_name', false);
+    g_form.setDisplay('push_assignment_group', false);
+    g_form.setDisplay('vendor_name', false);
+    g_form.setDisplay('push_root_and_intermediate_certificates', false);
+    g_form.setDisplay('push_certificate_format', false);
+    g_form.setDisplay('service_restart', false);
+    g_form.setDisplay('private_key_in_device', false);
+    g_form.setDisplay('customize_push_location', false);
+    g_form.setDisplay('certificate_directory', false);
+    g_form.setDisplay('key_directory', false);
+    g_form.setDisplay('intermediate_and_ca_certificate_directory', false);
+    g_form.setDisplay('keystore_password', false);
+    g_form.setDisplay('keystore_location', false);
+    g_form.setDisplay('private_key_location', false);
+    g_form.setDisplay('ticket_assignment_group', false);
+    g_form.setDisplay('profile_name_reference', false);
+    g_form.setDisplay('globalsign_certificate_type', false);
+    g_form.setDisplay('domain_admin_email', false);
+    g_form.setDisplay('business_category', false);
+    g_form.setDisplay('incorporating_agency_reg_no', false);
+    g_form.setDisplay('designation', false);
+    g_form.setDisplay('globalsign_mssl_certificate_type', false);
+    g_form.setDisplay('globalsign_mssl_profile_name', false);
+    g_form.setDisplay('globalsign_mssl_profile_name', false);
+    g_form.setDisplay('avx_issuer_name', false);
+    g_form.setDisplay('avx_issuer_location', false);
+    g_form.setDisplay('avx_pki_native_issuer_location', false);
+    g_form.setDisplay('organization_address', false);
+    g_form.setDisplay('csr_zip_code', false);
+    g_form.setDisplay('trustwave_certificate_type', false);
+    g_form.setDisplay('hydrantid_policy_name', false);
+    g_form.setDisplay('digicert_mpki_profiles', false);
+    g_form.setDisplay('swisssign_client_name', false);
+    g_form.setDisplay('swisssign_product', false);
+    g_form.setDisplay('parsed_csr_values', false);
+    g_form.setDisplay('avx_template', false);
+    g_form.setDisplay('issuer_name', false);
+    g_form.setMandatory('globalsign_atlas_certificate_profile', false);
+    g_form.setDisplay('globalsign_atlas_certificate_profile', false);
+    g_form.setMandatory('csc_global_certificate_type', false);
+    g_form.setDisplay('csc_global_certificate_type', false);
+    g_form.setMandatory('csc_global_server_type', false);
+    g_form.setDisplay('csc_global_server_type', false);
+    g_form.setMandatory('csc_global_validation_type', false);
+    g_form.setDisplay('csc_global_validation_type', false);
+    g_form.setMandatory('csc_global_domain_mail', false);
+    g_form.setDisplay('csc_global_domain_mail', false);
+
+
     for (var i = 1; i <= 30; i++) {
         g_form.setDisplay('meta_data_' + i.toString(), false);
     }
@@ -178,7 +189,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>fce144f51b65d550cda7db91dd4bcbb1</sys_id>
-        <sys_mod_count>116</sys_mod_count>
+        <sys_mod_count>120</sys_mod_count>
         <sys_name>Enroll cert - Hiding the fields to make the form dynamic</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -187,7 +198,7 @@
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_fce144f51b65d550cda7db91dd4bcbb1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-01 20:35:59</sys_updated_on>
+        <sys_updated_on>2026-11-05 06:17:25</sys_updated_on>
         <table/>
         <ui_type>10</ui_type>
         <va_supported>true</va_supported>

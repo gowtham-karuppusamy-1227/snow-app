@@ -4,13 +4,13 @@
             <element>is_approval_required_in_appviewx</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>359b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>dd3edeb32fc81f50bbc4680cbfa4e333</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,13 @@
             <element>approval_levels_in_appviewx</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b59b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>993edeb32fc81f50bbc4680cbfa4e334</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -32,13 +32,13 @@
             <element>appviewx_one_level_approval_mail_id_for_create</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>399b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>553edeb32fc81f50bbc4680cbfa4e335</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -46,13 +46,13 @@
             <element>appviewx_two_level_approval_mail_id_for_create</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b99b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>113edeb32fc81f50bbc4680cbfa4e336</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -60,13 +60,13 @@
             <element>workflow_name_for_create_appviewx</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>3d9b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>d93edeb32fc81f50bbc4680cbfa4e336</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -74,13 +74,13 @@
             <element>certificate_group_selection</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>bd9b61801be74250cda7db91dd4bcb66</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>953edeb32fc81f50bbc4680cbfa4e337</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -88,167 +88,181 @@
             <element>csr_upload_option</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>319b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>513edeb32fc81f50bbc4680cbfa4e338</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>enable_endpoint_csr</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>1d3edeb32fc81f50bbc4680cbfa4e338</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>enable_san_fields</element>
-            <position>7</position>
+            <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b19b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>d53edeb32fc81f50bbc4680cbfa4e339</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>subject_alternative_names</element>
-            <position>8</position>
+            <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>359b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>913edeb32fc81f50bbc4680cbfa4e33a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>enable_csr_parameters</element>
-            <position>9</position>
+            <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b59b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>5d3edeb32fc81f50bbc4680cbfa4e33a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>csr_parameters</element>
-            <position>10</position>
+            <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>399b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>193edeb32fc81f50bbc4680cbfa4e33b</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>11</position>
+            <position>12</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b99b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>d13edeb32fc81f50bbc4680cbfa4e33c</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>is_approval_required_in_servicenow_enroll</element>
-            <position>12</position>
+            <position>13</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>3d9b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>9d3edeb32fc81f50bbc4680cbfa4e33c</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>approval_levels_in_servicenow</element>
-            <position>13</position>
+            <position>14</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>bd9b61801be74250cda7db91dd4bcb67</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>593edeb32fc81f50bbc4680cbfa4e33d</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>approver_selection</element>
-            <position>14</position>
+            <position>15</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>319b61801be74250cda7db91dd4bcb68</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>153edeb32fc81f50bbc4680cbfa4e33e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>assignment_group</element>
-            <position>15</position>
+            <position>16</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b19b61801be74250cda7db91dd4bcb68</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>dd3edeb32fc81f50bbc4680cbfa4e33e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>enroll_approver_selection_two</element>
-            <position>16</position>
+            <position>17</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>359b61801be74250cda7db91dd4bcb68</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>993edeb32fc81f50bbc4680cbfa4e33f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>enroll_user_group_approval_two</element>
-            <position>17</position>
+            <position>18</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-07-17 11:57:30</sys_created_on>
-            <sys_id>b59b61801be74250cda7db91dd4bcb68</sys_id>
+            <sys_created_on>2026-10-27 12:31:53</sys_created_on>
+            <sys_id>553edeb32fc81f50bbc4680cbfa4e340</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Enroll Settings" display_value="Enroll Settings" name="x_avx_appviewx_aut_clm_settings" sys_domain="global" view="Default view">7b41cdc41be8d5d061858480cd4bcb14</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-07-17 11:57:30</sys_updated_on>
+            <sys_updated_on>2026-10-27 12:31:53</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

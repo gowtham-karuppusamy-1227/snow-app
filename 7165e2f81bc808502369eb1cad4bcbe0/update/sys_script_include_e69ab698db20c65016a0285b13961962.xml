@@ -27,9 +27,9 @@ get_cert_common_name.prototype = Object.extendsObject(global.AbstractAjaxProcess
                 values['serial_number'] = gr.getValue('serial_number');
                 values['certificate_category'] = gr.getValue('certificate_category');
                 if (gr.getValue('private_key_available') == 'Yes') {
-                    values['private_key_available'] = "Private Key Managed in AVX"
+                    values['private_key_available'] = "Private Key Managed in AVX";
                 } else {
-                    values['private_key_available'] = "Private Key Not Managed in AVX"
+                    values['private_key_available'] = "Private Key Not Managed in AVX";
                 }
             }
             return JSON.stringify(values);
@@ -59,7 +59,7 @@ get_cert_common_name.prototype = Object.extendsObject(global.AbstractAjaxProcess
         <sys_created_on>2024-02-20 09:13:36</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>e69ab698db20c65016a0285b13961962</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>get_cert_common_name</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -67,6 +67,17 @@ get_cert_common_name.prototype = Object.extendsObject(global.AbstractAjaxProcess
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_e69ab698db20c65016a0285b13961962</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:15:03</sys_updated_on>
+        <sys_updated_on>2026-08-26 08:35:08</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e69ab698db20c65016a0285b13961962</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-08-26 08:39:02</sys_created_on>
+        <sys_id>3156d2372fb20b10bbc4680cbfa4e33d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-08-26 08:40:08</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

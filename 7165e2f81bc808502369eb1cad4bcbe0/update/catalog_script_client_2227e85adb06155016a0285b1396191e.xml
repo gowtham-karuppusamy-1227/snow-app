@@ -75,6 +75,7 @@ function onChange(control, oldValue, newValue, isLoading) {
     }
     var clm_cert_attributes = g_form.getValue('clm_cert_attributes');
     var cert = g_form.getValue('certificate');
+	alert(cert);
     var serial_number = cert.split("|")[1];
     var cn = cert.split("|")[0];
     var cert_category = cert.split("|")[2];
@@ -232,7 +233,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>2227e85adb06155016a0285b1396191e</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>53</sys_mod_count>
         <sys_name>renew_set_csr_prams</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -241,7 +242,7 @@ function onChange(control, oldValue, newValue, isLoading) {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_script_client_2227e85adb06155016a0285b1396191e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-07-09 13:22:09</sys_updated_on>
+        <sys_updated_on>2026-08-26 08:50:00</sys_updated_on>
         <table/>
         <type>onChange</type>
         <ui_type>10</ui_type>

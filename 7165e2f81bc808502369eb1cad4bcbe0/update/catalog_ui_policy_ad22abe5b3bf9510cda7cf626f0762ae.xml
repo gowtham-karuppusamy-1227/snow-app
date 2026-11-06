@@ -82,17 +82,17 @@ function onCondition() {
     g_form.setDisplay('add_dns_values', false);
     g_form.setDisplay('add_ip_address', false);
     var endpoint_csr = g_form.getValue('endpoint');
-    if (endpoint_csr == 'true'){
+    if (endpoint_csr == 'true') {
         g_form.setDisplay("vendor_csr", true);
         g_form.setDisplay("device_name_csr", true);
         g_form.setDisplay('csr_location', true);
         g_form.setDisplay('key_vault_name', true);
-    }else{
-		g_form.setDisplay("vendor_csr", false);
+    } else {
+        g_form.setDisplay("vendor_csr", false);
         g_form.setDisplay("device_name_csr", false);
         g_form.setDisplay('csr_location', false);
         g_form.setDisplay('key_vault_name', false);
-	}
+    }
     if (g_form.getValue('certificate_authority') == 'DigiCert') {
         g_form.setDisplay('division', true);
         g_form.setMandatory('division', true);
@@ -465,6 +465,34 @@ function onCondition() {
         g_form.setMandatory('swisssign_product', false);
         g_form.setDisplay('swisssign_product', false);
     }
+    if (g_form.getValue('certificate_authority') === 'GlobalSignAtlas') {
+        g_form.setDisplay('globalsign_atlas_certificate_profile', true);
+        g_form.setMandatory('globalsign_atlas_certificate_profile', true);
+    } else {
+        g_form.setMandatory('globalsign_atlas_certificate_profile', false);
+        g_form.setDisplay('globalsign_atlas_certificate_profile', false);
+    }
+	if (g_form.getValue('certificate_authority') === 'CSC Global') {
+        g_form.setDisplay('csc_global_certificate_type', true);
+        g_form.setMandatory('csc_global_certificate_type', true);
+		g_form.setDisplay('csc_global_server_type', true);
+        g_form.setMandatory('csc_global_server_type', true);
+		g_form.setDisplay('csc_global_validation_type', true);
+        g_form.setMandatory('csc_global_validation_type', true);
+		g_form.setDisplay('csc_global_domain_mail', true);
+        g_form.setMandatory('csc_global_domain_mail', true);
+
+    } else {
+        g_form.setMandatory('csc_global_certificate_type', false);
+        g_form.setDisplay('csc_global_certificate_type', false);
+		g_form.setMandatory('csc_global_server_type', false);
+        g_form.setDisplay('csc_global_server_type', false);
+		g_form.setMandatory('csc_global_validation_type', false);
+        g_form.setDisplay('csc_global_validation_type', false);
+		g_form.setMandatory('csc_global_domain_mail', false);
+        g_form.setDisplay('csc_global_domain_mail', false);
+
+    }
     if (g_form.getValue('csr_input_method') == 'Manual' && g_form.getValue('key_type') == 'EC') {
         g_form.setDisplay('ecdsa_curve', true);
         g_form.setMandatory('ecdsa_curve', true);
@@ -688,7 +716,7 @@ function onCondition() {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ad22abe5b3bf9510cda7cf626f0762ae</sys_id>
-        <sys_mod_count>60</sys_mod_count>
+        <sys_mod_count>64</sys_mod_count>
         <sys_name>Enroll cert - Requested Item View</sys_name>
         <sys_overrides/>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
@@ -697,7 +725,7 @@ function onCondition() {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>catalog_ui_policy_ad22abe5b3bf9510cda7cf626f0762ae</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-23 12:25:39</sys_updated_on>
+        <sys_updated_on>2026-11-05 06:13:49</sys_updated_on>
         <table/>
         <ui_type>0</ui_type>
         <va_supported>true</va_supported>

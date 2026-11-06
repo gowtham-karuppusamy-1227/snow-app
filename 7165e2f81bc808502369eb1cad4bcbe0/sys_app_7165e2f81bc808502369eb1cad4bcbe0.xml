@@ -24,6 +24,7 @@
         <scope>x_avx_appviewx_aut</scope>
         <scoped_administration>false</scoped_administration>
         <short_description>Crypto and Infra Automation - Automate Application Delivery and SSL/TLS Certificate Lifecycle</short_description>
+        <sn_managed>false</sn_managed>
         <source>x_avx_appviewx_aut</source>
         <store_correlation_id>REPOAPP0002862414</store_correlation_id>
         <store_url>https://tpp.servicenow.com/sn_appstore_s</store_url>

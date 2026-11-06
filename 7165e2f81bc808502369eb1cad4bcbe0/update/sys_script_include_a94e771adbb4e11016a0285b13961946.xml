@@ -62,16 +62,35 @@ get_device_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                     throw "Error while generating the OAuth Token.";
                 }
                 var r = new sn_ws.RESTMessageV2();
-                var payload = {
-                    "payload": {
-                        "hook": {
-                            "name": "snow_fetch_device_name_for_push"
-                        },
-                        "input": {
-                            "vendor_name": vendor_name
+                var payload;
+                if (["Fortinet - FortiManager","Fortinet - Fortigate", "PaloAlto - Firewall", "PaloAlto - Panaroma"].indexOf(vendor_name) !== -1) {
+                    var parts = vendor_name.split(" - ");
+                    var vendor = parts[0]; 
+                    var platform = parts[1];
+                    payload = {
+                        "payload": {
+                            "hook": {
+                                "name": "snow_fetch_device_name_for_push_firewall"
+                            },
+                            "input": {
+                                "vendor_name": vendor,
+                                "platform": platform
+                            }
                         }
-                    }
-                };
+                    };
+                } else {
+                    payload = {
+                        "payload": {
+                            "hook": {
+                                "name": "snow_fetch_device_name_for_push"
+                            },
+                            "input": {
+                                "vendor_name": vendor_name
+                            }
+                        }
+                    };
+                }
+				gs.info(JSON.stringify(payload));
                 if (mid_server != "") {
                     r.setMIDServer(mid_server);
                     r.setEccParameter('skip_sensor', 'true');
@@ -126,7 +145,7 @@ get_device_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_created_on>2023-02-06 13:23:35</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>a94e771adbb4e11016a0285b13961946</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>get_device_names</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -134,6 +153,6 @@ get_device_names.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_a94e771adbb4e11016a0285b13961946</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:16:40</sys_updated_on>
+        <sys_updated_on>2026-11-03 14:34:14</sys_updated_on>
     </sys_script_include>
 </record_update>

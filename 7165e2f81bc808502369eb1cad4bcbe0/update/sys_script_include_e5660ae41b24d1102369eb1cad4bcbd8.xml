@@ -49,6 +49,7 @@ get_ca_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
                 values['enable_san_fields'] = gr.getValue('enable_san_fields') || '';
                 values['subject_alternative_names'] = gr.getValue('subject_alternative_names') || '';
                 values['csr_parameters'] = gr.getDisplayValue('csr_parameters') || '';
+				values['enable_endpoint_csr'] = gr.getValue('enable_endpoint_csr') || '';
             }
             values["logged_in_user_email"] = gs.getUser().getEmail();
             values["company_name"] = gr.getValue('company') || '';
@@ -91,7 +92,7 @@ get_ca_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         <sys_created_on>2022-07-04 11:31:23</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>e5660ae41b24d1102369eb1cad4bcbd8</sys_id>
-        <sys_mod_count>109</sys_mod_count>
+        <sys_mod_count>112</sys_mod_count>
         <sys_name>get_ca_details</sys_name>
         <sys_package display_value="AppViewX" source="x_avx_appviewx_aut">7165e2f81bc808502369eb1cad4bcbe0</sys_package>
         <sys_policy>read</sys_policy>
@@ -99,6 +100,6 @@ get_ca_details.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         <sys_scope display_value="AppViewX">7165e2f81bc808502369eb1cad4bcbe0</sys_scope>
         <sys_update_name>sys_script_include_e5660ae41b24d1102369eb1cad4bcbd8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-08-06 19:13:01</sys_updated_on>
+        <sys_updated_on>2026-11-05 10:09:53</sys_updated_on>
     </sys_script_include>
 </record_update>
